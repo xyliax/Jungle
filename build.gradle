@@ -14,6 +14,11 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
+task("up", dependsOn: 'classes', type: JavaExec) {
+    mainClass = 'group11.comp3211.JungleApplication'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 test {
     useJUnitPlatform()
 }
