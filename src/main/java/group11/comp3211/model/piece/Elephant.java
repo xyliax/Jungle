@@ -8,17 +8,17 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public final class Elephant extends Piece {
-    public Elephant() {
-        rank = 8;
-    }
+	public Elephant() {
+		rank = 8;
+	}
 
-    @Override
-    public void move(int dx, int dy) throws IllegalMovementException {
+	@Override
+	public void move(int dx, int dy) throws IllegalMovementException {
 
-    }
+	}
 
-    @Override
-    public void capture(Piece piece) throws IllegalCaptureException {
+	@Override
+	public void capture(Piece piece) throws IllegalCaptureException {
 
-    }
+	}
 }
