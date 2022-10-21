@@ -28,7 +28,7 @@ enum JCString {
 			         .d88P"
 			        888P"
 			"""),
-	STRAT_MENU("""
+	START_MENU("""
 					===================================================================================
 					#                       MM    MM  EEEEEEE  NN   NN  UU   UU                       #
 			   		#                       MMM  MMM  EE       NNN  NN  UU   UU                       #
