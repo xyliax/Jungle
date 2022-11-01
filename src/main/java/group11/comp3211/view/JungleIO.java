@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Console;
+import java.lang.reflect.Method;
 import java.util.Scanner;
 
 enum Color {
@@ -85,6 +86,13 @@ public final class JungleIO {
 
     public String readNoPrompt() {
         return scanner.nextLine();
+    }
+
+    public void interceptSignal(String signal, Method method) {
+//        method = ;
+//        Signal.handle(new Signal(signal), handler -> {
+//            method.invoke()
+//        })
     }
 
     public void printLine(String line) {
