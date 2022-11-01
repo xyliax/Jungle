@@ -1,22 +1,21 @@
 package group11.comp3211.view;
 
 public final class Renderer {
-	private Renderer() {
-	}
+    private static final JungleIO io = JungleIO.getInstance();
 
-	public static Renderer getInstance() {
-		return RendererHolder.RENDERER;
-	}
+    public static String renderWelcomeBanner(Color color) {
+        return null;
+    }
 
-	public String renderChessBoard() {
-		return null;
-	}
+    public static String renderStartMenu() {
+        return null;
+    }
 
-	public String renderAnnouncementBoard() {
-		return null;
-	}
+    public static String renderChessBoard() {
+        return null;
+    }
 
-	private static final class RendererHolder {
-		private static final Renderer RENDERER = new Renderer();
-	}
+    public static String renderAnnouncementBoard() {
+        return null;
+    }
 }
