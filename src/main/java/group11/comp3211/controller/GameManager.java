@@ -1,6 +1,7 @@
 package group11.comp3211.controller;
 
 import group11.comp3211.model.Game;
+import group11.comp3211.view.Color;
 import group11.comp3211.view.JungleIO;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,13 +10,13 @@ import lombok.Setter;
 @Setter
 public final class GameManager {
     private Game game;
-    private JungleIO jungleIO;
+    private JungleIO io;
     private Parser parser;
     private Thread welcomeAnimation;
 
     private GameManager() {
         setGame(null);
-        setJungleIO(JungleIO.getInstance());
+        setIo(JungleIO.getInstance());
         setParser(Parser.getInstance());
     }
 
@@ -23,18 +24,36 @@ public final class GameManager {
         return GameManagerHolder.GAME_MANAGER;
     }
 
-    public void boot() {
-        //Thread animation = jungleIO.showWelcomeAnimation();
-        String input = jungleIO.readNoPrompt();
-        while (input.length() != 0) {
-            input = jungleIO.readNoPrompt();
+    public void OSCheck() {
+        String OS = System.getProperty("os.name");
+        if (OS.matches("Windows*")) {
+            io.setFront(Color.RED);
+            io.printLine("[JUNGLE WARNING]");
+            io.setFront(Color.BLACK);
+            io.printLine(String.format("Your OS is %s, some features are limited", OS));
+            io.printLine("You will not receive this message any more");
+            io.setFront(Color.RED);
+            io.printLine("[END OF WARNING]");
+        } else {
+            io.setFront(Color.GREEN);
+            io.printLine("Your OS is " + OS);
+            io.printLine("Full features unlocked!");
         }
-        jungleIO.printLine("ENTER READ");
+        io.reset();
+    }
+
+    public void boot() {
+        OSCheck();
+        //Thread animation = jungleIO.showWelcomeAnimation();
+        io.waitKey('\n');
+        io.printLine("ENTER READ");
+        String s = io.readLine();
+        io.printLine(s);
         //animation.interrupt();
     }
 
     public void startMenu() {
-        jungleIO.showStartMenu();
+        io.showStartMenu();
     }
 
     public void createNewGame() {

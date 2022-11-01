@@ -1,0 +1,17 @@
+#!/bin/bash
+
+size=$(stty size)
+size_arr=($size)
+row=${size_arr[0]}
+col=${size_arr[1]}
+if ((${row} < 30)) || ((${col} < 100)); then
+  echo "Console Size ${row} ${col} Unsatisfied!"
+  echo "Minimum Requirement: 30 100"
+  echo "Please Resize Console or Font Size"
+  exit 255
+fi
+
+mvn clean package appassembler:assemble
+stty cbreak
+stty erase ^H
+./target/appassembler/bin/JungleApp

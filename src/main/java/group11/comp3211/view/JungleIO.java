@@ -2,19 +2,14 @@ package group11.comp3211.view;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
+import java.io.BufferedReader;
 import java.io.Console;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.Scanner;
 
-enum Color {
-    BLACK(0), RED(1), GREEN(2), YELLOW(3), BLUE(4), MAGENTA(5), CYAN(6), GREY(7);
-    final int value;
-
-    Color(int value) {
-        this.value = value;
-    }
-}
 
 @Getter
 @Setter
@@ -22,47 +17,50 @@ public final class JungleIO {
     private Console console;
     private String promptStr;
     private Scanner scanner;
+    private BufferedReader bufferedReader;
 
+    @SneakyThrows
     private JungleIO() {
-        setConsole(System.console());
-        setPromptStr(">>> ");
-        setScanner(new Scanner(System.in));
+        console = System.console();
+        promptStr = ">>> ";
+        scanner = new Scanner(System.in);
+        bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     public static JungleIO getInstance() {
         return JungleIOHolder.JUNGLE_IO;
     }
 
-    void clearScreen() {
+    public void clearScreen() {
         if (console != null) System.out.print("\033c");
     }
 
-    void reset() {
+    public void reset() {
         System.out.print("\033[0m");
     }
 
-    void setFront(Color color) {
+    public void setFront(Color color) {
         System.out.print("\033[3" + color.value + "m");
     }
 
-    void setBack(Color color) {
+    public void setBack(Color color) {
         System.out.print("\033[4" + color.value + "m");
     }
 
-    void setCursor(int x, int y) {
+    public void setCursor(int x, int y) {
         System.out.print("\033[" + y + ";" + x + "H");
     }
 
-    void hideCursor() {
+    public void hideCursor() {
         System.out.print("\033[?25l");
     }
 
-    void showCursor() {
+    public void showCursor() {
         System.out.print("\033[?25h");
     }
 
     @Deprecated
-    void setBlink() {
+    public void setBlink() {
         //Cannot work on macOS
         System.out.print("\033[5m");
     }
@@ -93,6 +91,14 @@ public final class JungleIO {
 //        Signal.handle(new Signal(signal), handler -> {
 //            method.invoke()
 //        })
+    }
+
+    @SneakyThrows
+    public void waitKey(char key) {
+        int buf = bufferedReader.read();
+        while ((char) buf != Character.toUpperCase(key) && (char) buf != Character.toLowerCase(key)) {
+            buf = bufferedReader.read();
+        }
     }
 
     public void printLine(String line) {

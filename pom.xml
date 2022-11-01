@@ -58,7 +58,7 @@
                     <programs>
                         <program>
                             <mainClass>group11.comp3211.JungleApplication</mainClass>
-                            <id>app</id>
+                            <id>JungleApp</id>
                         </program>
                     </programs>
                     <useWildcardClassPath>true</useWildcardClassPath>
