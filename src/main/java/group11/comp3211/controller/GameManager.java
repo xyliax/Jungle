@@ -51,12 +51,12 @@ public final class GameManager {
             io.setFront(Color.RED);
             io.setBold();
             io.setBlink();
-            io.print("ENTER");
+            io.print("A (Try other keys!)");
             io.reset();
             /*
-            Listen to KeyEvent until "ENTER" is pressed
+            Listen to KeyEvent until "a" is pressed
              */
-            if ((key = io.getKey()) == '\n')
+            if ((key = io.getKey()) == 'a')
                 break;
         }
     }
