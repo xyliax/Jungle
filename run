@@ -16,3 +16,4 @@ if [ "$1" = "rebuild" ]; then
 fi
 stty cbreak
 ./target/appassembler/bin/JungleApp
+stty icanon
