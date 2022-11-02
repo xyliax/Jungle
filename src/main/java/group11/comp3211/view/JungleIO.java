@@ -4,11 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
-import java.io.BufferedReader;
 import java.io.Console;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
+import java.io.Reader;
+import java.util.Random;
 import java.util.Scanner;
+
+import static java.lang.Thread.sleep;
 
 
 @Getter
@@ -16,15 +19,17 @@ import java.util.Scanner;
 public final class JungleIO {
     private Console console;
     private String promptStr;
+    private String clearKStr;
     private Scanner scanner;
-    private BufferedReader bufferedReader;
+    private Reader reader;
 
     @SneakyThrows
     private JungleIO() {
         console = System.console();
         promptStr = ">>> ";
+        clearKStr = "\b\b\b\b    \b\b\b\b";
         scanner = new Scanner(System.in);
-        bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        reader = new InputStreamReader(System.in);
     }
 
     public static JungleIO getInstance() {
@@ -59,22 +64,53 @@ public final class JungleIO {
         System.out.print("\033[?25h");
     }
 
-    @Deprecated
+    public void setBold() {
+        System.out.print("\033[1m");
+    }
+
+    public void setDim() {
+        System.out.print("\033[2m");
+    }
+
+    public void setUnderlined() {
+        System.out.print("\033[4m");
+    }
+
     public void setBlink() {
-        //Cannot work on macOS
         System.out.print("\033[5m");
     }
 
-    public Thread showWelcomeAnimation() {
-        Thread welcomePrinterThread = new Thread(new WelcomePrinter(), "WELCOME");
-        welcomePrinterThread.start();
-        return welcomePrinterThread;
+    public void showWelcomeAnimation() {
+        clearScreen();
+        hideCursor();
+        setBack(Color.GREY);
+        Color front = Color.values()[new Random().nextInt(Color.values().length)];
+        while (front == Color.GREY || front == Color.BLACK)
+            front = Color.values()[new Random().nextInt(Color.values().length)];
+        setFront(front);
+        try {
+            int chCount = 0;
+            for (char character : JCString.WELCOME_BANNER.string.toCharArray()) {
+                chCount++;
+                if (character == '\n') {
+                    while (chCount++ < 100) {
+                        System.out.print(" ");
+                    }
+                    chCount = 0;
+                    sleep(20);
+                }
+                System.out.print(character);
+            }
+            sleep(500);
+        } catch (InterruptedException ignored) {
+        } finally {
+            showCursor();
+            reset();
+        }
     }
 
-    public Thread showStartMenu() {
-        Thread startMenuThread = new Thread(new StartMenuPrinter(), "START_MENU");
-        startMenuThread.start();
-        return startMenuThread;
+    public void showStartMenu() {
+
     }
 
     public String readLine() {
@@ -82,23 +118,40 @@ public final class JungleIO {
         return scanner.nextLine();
     }
 
-    public String readNoPrompt() {
-        return scanner.nextLine();
-    }
-
-    public void interceptSignal(String signal, Method method) {
-//        method = ;
-//        Signal.handle(new Signal(signal), handler -> {
-//            method.invoke()
-//        })
-    }
-
-    @SneakyThrows
     public void waitKey(char key) {
-        int buf = bufferedReader.read();
-        while ((char) buf != Character.toUpperCase(key) && (char) buf != Character.toLowerCase(key)) {
-            buf = bufferedReader.read();
+        hideCursor();
+        try {
+            int buf = reader.read();
+            while ((char) buf != Character.toUpperCase(key) && (char) buf != Character.toLowerCase(key)) {
+                System.out.print(clearKStr);
+                buf = reader.read();
+            }
+            System.out.print(clearKStr);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            showCursor();
         }
+    }
+
+    public char getKey() {
+        hideCursor();
+        try {
+            while (System.in.available() > 0)
+                System.in.read();
+            int buf = reader.read();
+            System.out.print(clearKStr);
+            return (char) buf;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            showCursor();
+        }
+    }
+
+
+    public void print(String string) {
+        System.out.print(string);
     }
 
     public void printLine(String line) {

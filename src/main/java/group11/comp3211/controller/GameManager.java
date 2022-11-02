@@ -3,21 +3,18 @@ package group11.comp3211.controller;
 import group11.comp3211.model.Game;
 import group11.comp3211.view.Color;
 import group11.comp3211.view.JungleIO;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public final class GameManager {
     private Game game;
     private JungleIO io;
     private Parser parser;
-    private Thread welcomeAnimation;
+    private char key;
 
     private GameManager() {
-        setGame(null);
-        setIo(JungleIO.getInstance());
-        setParser(Parser.getInstance());
+        game = null;
+        io = JungleIO.getInstance();
+        parser = Parser.getInstance();
+        key = 0;
     }
 
     public static GameManager getInstance() {
@@ -44,12 +41,24 @@ public final class GameManager {
 
     public void boot() {
         OSCheck();
-        //Thread animation = jungleIO.showWelcomeAnimation();
-        io.waitKey('\n');
-        io.printLine("ENTER READ");
-        String s = io.readLine();
-        io.printLine(s);
-        //animation.interrupt();
+        while (key != '\n') {
+            io.showWelcomeAnimation();
+            /*
+            PRESS ENTER
+            Blinking Red "ENTER" (not guaranteed on customized environment)
+             */
+            io.print("PRESS ");
+            io.setFront(Color.RED);
+            io.setBold();
+            io.setBlink();
+            io.print("ENTER");
+            io.reset();
+            /*
+            Listen to KeyEvent until "ENTER" is pressed
+             */
+            if ((key = io.getKey()) == '\n')
+                break;
+        }
     }
 
     public void startMenu() {
