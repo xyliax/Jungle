@@ -12,7 +12,7 @@ if ((${row} < 30)) || ((${col} < 100)); then
   exit 255
 fi
 if [ "$1" = "rebuild" ]; then
-  ./apache-maven-3.8.6/bin/mvn clean package appassembler:assemble
+  mvn clean package appassembler:assemble
 fi
 stty cbreak
 ./target/appassembler/bin/JungleApp
