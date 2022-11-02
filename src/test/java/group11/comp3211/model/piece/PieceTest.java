@@ -1,8 +1,6 @@
 package group11.comp3211.model.piece;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 
 class PieceTest {
 
