@@ -2,7 +2,7 @@ package group11.comp3211.model.piece;
 
 import org.junit.Test;
 
-class DogTest {
+class ElephantTest {
 
     @Test
     void move() {
@@ -27,4 +27,5 @@ class DogTest {
     @Test
     void testHashCode() {
     }
+
 }

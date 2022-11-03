@@ -2,11 +2,15 @@
 
 Git Repository - COMP3211 Software Engineering Group Project "Jungle" - 2022 Fall
 
-## How to run
+## Prerequisites (very important)
 
-```shell
-mvn clean package appassembler:assemble
-```
+### Java17
+
+### Apache-Maven
+
+### Terminal environment
+
+## How to run
 
 ### Unix
 
@@ -18,10 +22,16 @@ For Mac OS X, it is highly recommended to use the default terminal.
 ./run
 ```
 
-#### Rebuild and Run
+#### Rebuild and Run (without tests)
 
 ```shell
-./run rebuild
+./run build
+```
+
+#### Rebuild and Run (with tests)
+
+```shell
+./run build testing
 ```
 
 ### Windows

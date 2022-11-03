@@ -41,7 +41,7 @@ public final class GameManager {
 
     public void boot() {
         OSCheck();
-        while (key != '\n') {
+        while (key != 'a') {
             io.showWelcomeAnimation();
             /*
             PRESS ENTER

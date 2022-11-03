@@ -2,7 +2,7 @@ package group11.comp3211.model.piece;
 
 import org.junit.Test;
 
-class DogTest {
+class LeopardTest {
 
     @Test
     void move() {
