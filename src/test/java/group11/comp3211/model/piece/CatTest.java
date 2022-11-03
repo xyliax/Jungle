@@ -23,7 +23,8 @@ public class CatTest {
         Cat cat = new Cat(1, 2, player);
         playBoard.put(cat);
         cat.move(Direction.LEFT);
-        Landscape landscape = (Landscape) playBoard.get(1, 1);
-        assert landscape.getLoad() == cat;
+        Landscape before = (Landscape) playBoard.get(1, 2);
+        Landscape after = (Landscape) playBoard.get(1, 1);
+        assert after.getLoad() == cat && before.getLoad() == null;
     }
 }
