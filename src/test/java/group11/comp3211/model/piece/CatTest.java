@@ -1,17 +1,15 @@
 package group11.comp3211.model.piece;
 
 import group11.comp3211.model.Game;
-import
+import org.junit.Test;
+import org.junit.Before;
 
 
 class CatTest {
 
-    @BeforeEach
-
     @Test
     void move() {
         Game game = new Game();
-        game.getTerrain()[]
         Cat cat = new Cat();
     }
 
