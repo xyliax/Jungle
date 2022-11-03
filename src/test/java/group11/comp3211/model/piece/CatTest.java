@@ -15,6 +15,7 @@ public class CatTest {
     @Before
     public void init() {
         playBoard = new PlayBoard();
+        player = new Player("player");
     }
 
     @Test
@@ -25,5 +26,4 @@ public class CatTest {
         Landscape landscape = (Landscape) playBoard.get(1, 1);
         assert landscape.getLoad() == cat;
     }
-
 }

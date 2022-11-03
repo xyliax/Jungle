@@ -5,29 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="add sample test Class CatTest.java">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Direction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/PlayBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/JungleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/JungleApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Movable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Movable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Loader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Den.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Den.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Land.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Land.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Landscape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Landscape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/River.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/River.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Trap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Trap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Cat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Cat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Dog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Dog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Elephant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Elephant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Leopard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Leopard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Lion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Lion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Piece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Rat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Rat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Tiger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Tiger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Wolf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Wolf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +94,7 @@
       <workItem from="1667479955974" duration="1458000" />
       <workItem from="1667487922437" duration="1978000" />
       <workItem from="1667490997340" duration="6232000" />
-      <workItem from="1667500482654" duration="1446000" />
+      <workItem from="1667500482654" duration="1532000" />
     </task>
     <task id="LOCAL-00001" summary="reset to 709226239cf71089e016c4005df3378e8c20fdbc">
       <created>1667479239901</created>
@@ -133,7 +110,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667480192746</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add sample test Class CatTest.java">
+      <created>1667501954053</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1667501954053</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +139,9 @@
     <MESSAGE value="solve TA issue" />
     <MESSAGE value="add sample test Class CatTest.java" />
     <option name="LAST_COMMIT_MESSAGE" value="add sample test Class CatTest.java" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
