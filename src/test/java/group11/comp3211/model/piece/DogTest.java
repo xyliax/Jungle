@@ -1,30 +1,30 @@
 package group11.comp3211.model.piece;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 class DogTest {
 
     @Test
-    void move() {
+    public void move() {
     }
 
     @Test
-    void capture() {
+    public void capture() {
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
     }
 
     @Test
-    void testEquals() {
+    public void testEquals() {
     }
 
     @Test
-    void canEqual() {
+    public void canEqual() {
     }
 
     @Test
-    void testHashCode() {
+    public void testHashCode() {
     }
 }
