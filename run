@@ -11,10 +11,7 @@ if ((${row} < 30)) || ((${col} < 100)); then
   echo "Please Resize Console or Font Size"
   exit 255
 fi
-if [ "$1" = "build" ]; then
-  mvn clean package appassembler:assemble -DskipTests
-fi
-if [ "$2" = "testing" ]; then
+if [ "$1" = "rebuild" ]; then
   mvn clean package appassembler:assemble
 fi
 stty cbreak
