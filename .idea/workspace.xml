@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afca021a-8608-4c02-9421-3745ce61bb8e" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/intellij-javadocs-4.0.1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run" beforeDir="false" afterPath="$PROJECT_DIR$/run" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/DogTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/DogTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/ElephantTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/ElephantTest.java" afterDir="false" />
@@ -29,7 +31,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2H1z4WIVrGQKMBYRGyIifi6MKV7" />
+  <component name="ProjectId" id="2H253YKpyna4mA5rDkLSu00YxGA" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -39,20 +41,18 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "nodejs_package_manager_path": "npm"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="afca021a-8608-4c02-9421-3745ce61bb8e" name="变更" comment="" />
-      <created>1667467139317</created>
+      <changelist id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="" />
+      <created>1667470138686</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1667467139317</updated>
-      <workItem from="1667467140477" duration="6000" />
-      <workItem from="1667467193495" duration="498000" />
+      <updated>1667470138686</updated>
+      <workItem from="1667470139896" duration="611000" />
     </task>
     <servers />
   </component>

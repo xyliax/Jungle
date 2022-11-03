@@ -1,32 +1,30 @@
 package group11.comp3211.model.piece;
 
-import group11.comp3211.model.Game;
 import org.junit.Test;
-import org.junit.Before;
 
 class DogTest {
 
     @Test
-    public void move() {
+    void move() {
     }
 
     @Test
-    public void capture() {
+    void capture() {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
     }
 
     @Test
-    public void canEqual() {
+    void canEqual() {
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
     }
 }
