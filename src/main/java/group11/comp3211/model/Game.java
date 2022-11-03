@@ -9,20 +9,18 @@ import java.io.*;
 @Getter
 @Setter
 public final class Game implements Serializable {
-	private static final int ROW_NUM = 9;
-	private static final int COL_NUM = 7;
-	private final Terrain[][] terrain;
+	private final PlayBoard playboard;
 	private boolean running;
 	private Player playerX;
 	private Player playerY;
 	private Player currentPlayer;
 
 	public Game() {
-		setRunning(false);
-		setPlayerX(null);
-		setPlayerY(null);
-		setCurrentPlayer(null);
-		terrain = new Terrain[ROW_NUM][COL_NUM];
+		this.playboard = new PlayBoard();
+		this.running = false;
+		this.playerX = null;
+		this.playerY = null;
+		this.currentPlayer = null;
 	}
 
 	public void runTurn() throws LogicException {
