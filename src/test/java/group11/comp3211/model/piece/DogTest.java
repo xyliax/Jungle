@@ -1,6 +1,6 @@
 package group11.comp3211.model.piece;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 class DogTest {
 
