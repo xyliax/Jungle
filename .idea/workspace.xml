@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+    <list default="true" id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="reset to 709226239cf71089e016c4005df3378e8c20fdbc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run" beforeDir="false" afterPath="$PROJECT_DIR$/run" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/JungleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/JungleApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/JungleIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/JungleIO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +33,26 @@
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="JungleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="group11.comp3211.JungleApplication" />
+      <module name="Jungle" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group11.comp3211.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.JungleApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -51,6 +63,14 @@
       <updated>1667470138686</updated>
       <workItem from="1667470139896" duration="611000" />
     </task>
+    <task id="LOCAL-00001" summary="reset to 709226239cf71089e016c4005df3378e8c20fdbc">
+      <created>1667479239901</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1667479239901</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -66,5 +86,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="reset to 709226239cf71089e016c4005df3378e8c20fdbc" />
+    <option name="LAST_COMMIT_MESSAGE" value="reset to 709226239cf71089e016c4005df3378e8c20fdbc" />
   </component>
 </project>
