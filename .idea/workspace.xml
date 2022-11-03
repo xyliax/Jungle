@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="afca021a-8608-4c02-9421-3745ce61bb8e" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/JungleApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/GrammarException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/IllegalCaptureException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/IllegalMovementException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/JungleException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/LogicException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/NoOptionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/SystemRuntimeException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/UserInputException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/common/exceptions/VoidObjectException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/controller/GameManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/controller/Parser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/controller/ParsingRule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Game.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Movable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Terrain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Den.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Land.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Landscape.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/River.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/landscape/Trap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Cat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Dog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Elephant.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Leopard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Lion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Piece.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Rat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Tiger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/piece/Wolf.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/Color.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/JCString.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/JungleIO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/Renderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/DogTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/ElephantTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/LeopardTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/LionTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/PieceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/RatTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/TigerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/WolfTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="afca021a-8608-4c02-9421-3745ce61bb8e" name="变更" comment="" />
+      <created>1667467139317</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1667467139317</updated>
+      <workItem from="1667467140477" duration="6000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
