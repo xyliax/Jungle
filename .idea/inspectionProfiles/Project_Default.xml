@@ -1399,15 +1399,10 @@
     <inspection_tool class="MavenModelInspection" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="MavenRedundantGroupId" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="MissingFinalNewline" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="MissingJavadoc" enabled="true" level="ERROR" enabled_by_default="true">
-      <option name="PACKAGE_SETTINGS">
-        <Options>
-          <option name="ENABLED" value="false" />
-        </Options>
-      </option>
+    <inspection_tool class="MissingJavadoc" enabled="true" level="WEAK WARNING" enabled_by_default="true" editorAttributes="INFO_ATTRIBUTES">
       <option name="MODULE_SETTINGS">
         <Options>
-          <option name="ENABLED" value="false" />
+          <option name="REQUIRED_TAGS" value="@author@since" />
         </Options>
       </option>
       <option name="TOP_LEVEL_CLASS_SETTINGS">

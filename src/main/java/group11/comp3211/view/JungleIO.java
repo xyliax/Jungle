@@ -17,6 +17,8 @@ import static java.lang.Thread.sleep;
 @Getter
 @Setter
 public final class JungleIO {
+    public static final int FRAME_DELAY = 20;
+    public static final int KEY_DELAY = 500;
     private Console console;
     private String promptStr;
     private String clearKStr;
@@ -80,6 +82,7 @@ public final class JungleIO {
         System.out.print("\033[5m");
     }
 
+
     public void showWelcomeAnimation() {
         clearScreen();
         hideCursor();
@@ -97,11 +100,14 @@ public final class JungleIO {
                         System.out.print(" ");
                     }
                     chCount = 0;
-                    sleep(20);
+                    sleep(FRAME_DELAY);
                 }
                 System.out.print(character);
             }
-            sleep(500);
+            /*
+            Keyboard delay: hits in one KEY_DELAY will take effect only once
+             */
+            sleep(KEY_DELAY);
         } catch (InterruptedException ignored) {
         } finally {
             showCursor();
@@ -150,12 +156,34 @@ public final class JungleIO {
     }
 
 
+    /**
+     * Prints a string. Act exactly the same as System.out.print(String).
+     *
+     * @param string the {@code String} to be printed
+     * @see java.io.PrintStream#print(String)
+     */
     public void print(String string) {
         System.out.print(string);
     }
 
+    /**
+     * Prints a string and then terminates the line.
+     *
+     * @param line the {@code String} to be printed
+     * @see java.io.PrintStream#print(String)
+     */
     public void printLine(String line) {
         System.out.println(line);
+    }
+
+    /**
+     *
+     */
+    public void insertFrameDelay() {
+        try {
+            sleep(FRAME_DELAY);
+        } catch (InterruptedException ignored) {
+        }
     }
 
     private static final class JungleIOHolder {

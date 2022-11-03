@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/intellij-javadocs-4.0.1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j2.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/DogTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/DogTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/ElephantTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/ElephantTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/LeopardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/LeopardTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/LionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/LionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/PieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/PieceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/RatTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/RatTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/TigerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/TigerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/WolfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/WolfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run" beforeDir="false" afterPath="$PROJECT_DIR$/run" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/JungleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/JungleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/JungleIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/JungleIO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +27,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2H253YKpyna4mA5rDkLSu00YxGA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,6 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
