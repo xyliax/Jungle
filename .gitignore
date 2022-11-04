@@ -27,3 +27,5 @@ build
 
 target
 *.xml
+
+.idea
