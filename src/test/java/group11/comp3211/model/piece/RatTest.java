@@ -22,7 +22,7 @@ public class RatTest {
 
     /**
      * 1. Create the playboard
-     * 2. Create a player helding the piece
+     * 2. Create a player holding the piece
      */
     @Before
     public void before() {
@@ -38,7 +38,7 @@ public class RatTest {
      * >> 3. the Rat is allowed to move for x or y
      * >> 4. a failed move does not work and will change nothing
      * 5. If there is an animal which ranks higher that it, Rat cannot move.
-     * 6. River test： Rat cannot go accross the river
+     * 6. River test： Rat cannot go across the river
      * 7. If there is an animal which ranks lower that it, Rat can move
      */
     @SneakyThrows
@@ -103,16 +103,16 @@ public class RatTest {
         playBoard.put(tiger);
 
         rat.move(Direction.DOWN);
-        Landscape ratLoration = (Landscape) playBoard.get(3, 0);
-        Landscape tigerLoration = (Landscape) playBoard.get(2, 0);
-        Assert.assertTrue(ratLoration.getLoad() == rat && tigerLoration.getLoad() == tiger);
+        Landscape ratLocation = (Landscape) playBoard.get(3, 0);
+        Landscape tigerLocation = (Landscape) playBoard.get(2, 0);
+        Assert.assertTrue(ratLocation.getLoad() == rat && tigerLocation.getLoad() == tiger);
     }
 
     /**
      * Ignore the Exception
      * Test for Rat moving on play board
      * >> 4. a failed move does not work and will change nothing
-     * >> 6. River test： rat can go accross the river
+     * >> 6. River test： rat can go across the river
      */
 
     @SneakyThrows

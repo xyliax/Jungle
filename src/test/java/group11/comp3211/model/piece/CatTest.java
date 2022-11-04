@@ -111,7 +111,7 @@ public class CatTest {
      * Ignore the Exception
      * Test for Cat moving on play board
      * >> 4. a failed move does not work and will change nothing
-     * >> 6. Obstacle test： cat cannot go accross the obstacle
+     * >> 6. Obstacle test： cat cannot go across the obstacle
      */
 
     @SneakyThrows
