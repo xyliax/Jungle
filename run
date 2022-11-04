@@ -49,7 +49,7 @@ if [ "$1" = "build" ]; then
   Official download link: https://maven.apache.org/download.cgi\033[0m"
       exit 1
     fi
-    mv apache-maven-3.8.6 ./lib-maven
+    mv -f apache-maven-3.8.6 ./lib-maven
     mvn_path=./lib-maven/apache-maven-3.8.6/bin/
   fi
 
@@ -62,7 +62,7 @@ if [ "$1" = "build" ]; then
   fi
 fi
 
-bin_path=./target/appassembler/bin
+bin_path=./target/appassembler/bin/
 
 stty cbreak && ${bin_path}JungleApp
 # shellcheck disable=SC2181
