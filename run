@@ -35,10 +35,12 @@ fi
 
 if [ "$1" = "build" ]; then
   if mvn -v >/dev/null; then
-    mvn_path=./apache-maven-3.8.6/bin/
     echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
-  Use apache-maven-3.8.6 for building.\033[0m"
+  Use apache-maven-3.8.6 for building.
+  Unarchiving ./lib-maven/apache-maven-3.8.6.tar.gz\033[0m"
+    tar -xzf /lib-maven/apache-maven-3.8.6.tar.gz
+    mvn_path=./lib-maven/apache-maven-3.8.6/bin/
     #    echo -e "\033[31;1m\
     #    Please install Apache-Maven or add it to PATH if you have already installed\n\
     #    You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
