@@ -37,8 +37,7 @@ if [ "$1" = "build" ]; then
   if ! mvn -v >/dev/null; then
     echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
-  Use provided apache-maven-3.8.6 for building.
-  Unarchiving ./lib-maven/apache-maven-3.8.6-bin.tar.gz\033[0m"
+  Use provided apache-maven-3.8.6 for building.\033[0m"
 
     if ! tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz &&
       mv apache-maven-3.8.6 ./lib-maven; then
