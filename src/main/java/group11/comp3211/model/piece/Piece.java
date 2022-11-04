@@ -21,4 +21,5 @@ public abstract class Piece implements Movable {
         this.direction = Direction.STAY;
         this.player = player;
     }
+    
 }
