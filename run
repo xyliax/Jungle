@@ -34,7 +34,7 @@ if ((row < 30)) || ((col < 100)); then
 fi
 
 if [ "$1" = "build" ]; then
-  if mvn -v >/dev/null; then
+  if ! mvn -v >/dev/null; then
     echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.
