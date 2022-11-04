@@ -73,6 +73,7 @@
                     <platforms>
                         <platform>all</platform>
                     </platforms>
+                    <assembleDirectory>${project.basedir}/package</assembleDirectory>
                     <copyConfigurationDirectory>true</copyConfigurationDirectory>
                     <configurationSourceDirectory>src/main/resources</configurationSourceDirectory>
                     <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
