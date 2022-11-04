@@ -5,6 +5,5 @@ import org.junit.Before;
 public class MovableTest {
     @Before
     public void before() {
-
     }
 }

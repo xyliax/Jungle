@@ -1,10 +1,11 @@
 package group11.comp3211.model;
 
 import org.junit.Before;
+import org.junit.Test;
 
 public class LoaderTest {
-    @Before
-    public void before() {
-
+    @Test
+    public void name() {
     }
+
 }
