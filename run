@@ -37,18 +37,23 @@ if [ "$1" = "build" ]; then
   if mvn -v >/dev/null; then
     echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
-  Use apache-maven-3.8.6 for building.
+  Use provided apache-maven-3.8.6 for building.
   Unarchiving ./lib-maven/apache-maven-3.8.6-bin.tar.gz\033[0m"
-    tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz && mv apache-maven-3.8.6 ./lib-maven
+
+    if ! tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz &&
+      mv apache-maven-3.8.6 ./lib-maven; then
+      echo -e "\033[31;1m\
+  Unable to unarchiving ./lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
+  Please manually install Apache-Maven or add it to PATH\n\
+  You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
+  Use the following command (e.g., for Homebrew users):\n\
+    \033[32;1mbrew install maven\033[31;1m\n\
+  Official download link: https://maven.apache.org/download.cgi\033[0m"
+      exit 1
+    fi
     mvn_path=./lib-maven/apache-maven-3.8.6/bin/
-    #    echo -e "\033[31;1m\
-    #    Please install Apache-Maven or add it to PATH if you have already installed\n\
-    #    You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
-    #    Use the following command (e.g., for Homebrew users):\n\
-    #      brew install maven\n\
-    #    Official download link: https://maven.apache.org/download.cgi\033[0m"
-    #    exit 1
   fi
+
   if [ "$2" = "testing" ]; then
     ${mvn_path}mvn clean package appassembler:assemble
   else
