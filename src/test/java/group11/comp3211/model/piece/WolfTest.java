@@ -33,17 +33,17 @@ public class WolfTest {
     /**
      * Ignore the Exception
      * Test for Wolf moving on play board
-     *     1. the wolf cannot move to out of the playboard
-     *  >> 2. the wolf cannot move more than one step
-     *  >> 3. the wolf is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
-     *     5. If there is an animal which ranks higher that it, wolf cannot move.
-     *     6. Obstacle test： wolf cannot go accross the obstacle
-     *     7. If there is an animal which ranks lower that it, wolf can move
+     * 1. the wolf cannot move to out of the playboard
+     * >> 2. the wolf cannot move more than one step
+     * >> 3. the wolf is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
+     * 5. If there is an animal which ranks higher that it, wolf cannot move.
+     * 6. Obstacle test： wolf cannot go accross the obstacle
+     * 7. If there is an animal which ranks lower that it, wolf can move
      */
     @SneakyThrows
     @Test
-    public void moveTest1(){
+    public void moveTest1() {
         Wolf wolf = new Wolf(1, 2, player);
         playBoard.put(wolf);
         wolf.move(Direction.LEFT);
@@ -55,13 +55,13 @@ public class WolfTest {
     /**
      * Ignore the Exception
      * Test for Wolf moving on play board
-     *  >> 2. the wolf cannot move more than one step
-     *  >> 3. the wolf is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
+     * >> 2. the wolf cannot move more than one step
+     * >> 3. the wolf is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
      */
     @SneakyThrows
     @Test
-    public void moveTest2(){
+    public void moveTest2() {
         Wolf wolf = new Wolf(1, 2, player);
         playBoard.put(wolf);
         wolf.move(Direction.UP);
@@ -73,13 +73,13 @@ public class WolfTest {
     /**
      * Ignore the Exception
      * Test for Wolf moving on play board
-     *  >> 1. the wolf cannot move to out of the playboard
-     *  >> 3. the wolf is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
+     * >> 1. the wolf cannot move to out of the playboard
+     * >> 3. the wolf is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
      */
     @SneakyThrows
     @Test
-    public void moveTest3(){
+    public void moveTest3() {
         Wolf wolf = new Wolf(8, 0, player);
         playBoard.put(wolf);
         wolf.move(Direction.LEFT);
@@ -91,15 +91,15 @@ public class WolfTest {
     /**
      * Ignore the Exception
      * Test for Wolf moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 5. If there is an animal which ranks higher that it, wolf cannot move
+     * >> 4. a failed move does not work and will change nothing
+     * >> 5. If there is an animal which ranks higher that it, wolf cannot move
      */
     @SneakyThrows
     @Test
-    public void moveTest4(){
+    public void moveTest4() {
         Wolf wolf = new Wolf(3, 0, player);
         playBoard.put(wolf);
-        Tiger tiger = new Tiger(2,0,player);
+        Tiger tiger = new Tiger(2, 0, player);
         playBoard.put(tiger);
 
         wolf.move(Direction.DOWN);
@@ -111,13 +111,13 @@ public class WolfTest {
     /**
      * Ignore the Exception
      * Test for Wolf moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 6. Obstacle test： wolf cannot go accross the obstacle
+     * >> 4. a failed move does not work and will change nothing
+     * >> 6. Obstacle test： wolf cannot go accross the obstacle
      */
 
     @SneakyThrows
     @Test
-    public void moveTest5(){
+    public void moveTest5() {
         Wolf wolf = new Wolf(3, 0, player);
         playBoard.put(wolf);
 
@@ -130,15 +130,15 @@ public class WolfTest {
     /**
      * Ignore the Exception
      * Test for Wolf moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 7. If there is an animal which ranks lower that it, wolf can move
+     * >> 4. a failed move does not work and will change nothing
+     * >> 7. If there is an animal which ranks lower that it, wolf can move
      */
     @SneakyThrows
     @Test
-    public void moveTest6(){
+    public void moveTest6() {
         Wolf wolf = new Wolf(1, 2, player);
         playBoard.put(wolf);
-        Rat rat = new Rat(2,3,player);
+        Rat rat = new Rat(2, 3, player);
         playBoard.put(rat);
 
         wolf.move(Direction.UP);

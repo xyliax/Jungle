@@ -109,8 +109,8 @@ areas on the Jungle board:
 Each side should have eight pieces represent different animals, each with a different rank.
 
 - Higher ranking pieces should have the ability to capture all pieces of identical or lower ranking.
-   - One exception: The rat should have the ability to capture the elephant, while the elephant shall not have the
-     ability to capture the rat.
+    - One exception: The rat should have the ability to capture the elephant, while the elephant shall not have the
+      ability to capture the rat.
 
 - The animal ranking, from highest to lowest, should be as shown in Table 1.
 - Pieces should be placed onto the corresponding pictures of the animals which are invariably shown on the board.
@@ -132,10 +132,10 @@ There are special rules related to the water squares:
 3. A rat on land shall not attack a rat in the water.
 4. The rat shall have the ability to attack the opponent rat if both pieces are in the water or on the land.
 5. The lion and tiger pieces should jump over a river by moving horizontally or vertically.
-   1. They should move from a square on one edge of the river to the next non-water square on the other side.
-   2. Such a move shall not be allowed if there is a rat (whether friendly or enemy) on any of the intervening water
-      squares.
-   3. The lion and tiger should be allowed to capture enemy pieces by such jumping moves.
+    1. They should move from a square on one edge of the river to the next non-water square on the other side.
+    2. Such a move shall not be allowed if there is a rat (whether friendly or enemy) on any of the intervening water
+       squares.
+    3. The lion and tiger should be allowed to capture enemy pieces by such jumping moves.
 
 #### Capturing
 

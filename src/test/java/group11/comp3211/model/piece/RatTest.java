@@ -19,7 +19,7 @@ public class RatTest {
 
     private PlayBoard playBoard;
     private Player player;
-    
+
     /**
      * 1. Create the playboard
      * 2. Create a player helding the piece
@@ -33,17 +33,17 @@ public class RatTest {
     /**
      * Ignore the Exception
      * Test for Rat moving on play board
-     *     1. the Rat cannot move to out of the playboard
-     *  >> 2. the Rat cannot move more than one step
-     *  >> 3. the Rat is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
-     *     5. If there is an animal which ranks higher that it, Rat cannot move.
-     *     6. River test： Rat cannot go accross the river
-     *     7. If there is an animal which ranks lower that it, Rat can move
+     * 1. the Rat cannot move to out of the playboard
+     * >> 2. the Rat cannot move more than one step
+     * >> 3. the Rat is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
+     * 5. If there is an animal which ranks higher that it, Rat cannot move.
+     * 6. River test： Rat cannot go accross the river
+     * 7. If there is an animal which ranks lower that it, Rat can move
      */
     @SneakyThrows
     @Test
-    public void moveTest1(){
+    public void moveTest1() {
         Rat rat = new Rat(1, 2, player);
         playBoard.put(rat);
         rat.move(Direction.LEFT);
@@ -55,13 +55,13 @@ public class RatTest {
     /**
      * Ignore the Exception
      * Test for Rat moving on play board
-     *  >> 2. the rat cannot move more than one step
-     *  >> 3. the rat is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
+     * >> 2. the rat cannot move more than one step
+     * >> 3. the rat is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
      */
     @SneakyThrows
     @Test
-    public void moveTest2(){
+    public void moveTest2() {
         Rat rat = new Rat(1, 2, player);
         playBoard.put(rat);
         rat.move(Direction.UP);
@@ -73,13 +73,13 @@ public class RatTest {
     /**
      * Ignore the Exception
      * Test for Rat moving on play board
-     *  >> 1. the rat cannot move to out of the playboard
-     *  >> 3. the rat is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
+     * >> 1. the rat cannot move to out of the playboard
+     * >> 3. the rat is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
      */
     @SneakyThrows
     @Test
-    public void moveTest3(){
+    public void moveTest3() {
         Rat rat = new Rat(8, 0, player);
         playBoard.put(rat);
         rat.move(Direction.LEFT);
@@ -91,15 +91,15 @@ public class RatTest {
     /**
      * Ignore the Exception
      * Test for Rat moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 5. If there is an animal which ranks higher that it, rat cannot move
+     * >> 4. a failed move does not work and will change nothing
+     * >> 5. If there is an animal which ranks higher that it, rat cannot move
      */
     @SneakyThrows
     @Test
-    public void moveTest4(){
+    public void moveTest4() {
         Rat rat = new Rat(3, 0, player);
         playBoard.put(rat);
-        Tiger tiger = new Tiger(2,0,player);
+        Tiger tiger = new Tiger(2, 0, player);
         playBoard.put(tiger);
 
         rat.move(Direction.DOWN);
@@ -111,13 +111,13 @@ public class RatTest {
     /**
      * Ignore the Exception
      * Test for Rat moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 6. River test： rat can go accross the river
+     * >> 4. a failed move does not work and will change nothing
+     * >> 6. River test： rat can go accross the river
      */
 
     @SneakyThrows
     @Test
-    public void moveTest5(){
+    public void moveTest5() {
         Rat rat = new Rat(3, 0, player);
         playBoard.put(rat);
 
@@ -130,15 +130,15 @@ public class RatTest {
     /**
      * Ignore the Exception
      * Test for Rat moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 7. If there is an animal which ranks lower that it, rat can move
+     * >> 4. a failed move does not work and will change nothing
+     * >> 7. If there is an animal which ranks lower that it, rat can move
      */
     @SneakyThrows
     @Test
-    public void moveTest6(){
+    public void moveTest6() {
         Rat rat = new Rat(1, 2, player);
         playBoard.put(rat);
-        Elephant elephant = new Elephant(2,3,player);
+        Elephant elephant = new Elephant(2, 3, player);
         playBoard.put(elephant);
 
         rat.move(Direction.UP);

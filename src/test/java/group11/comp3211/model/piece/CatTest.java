@@ -1,9 +1,9 @@
 package group11.comp3211.model.piece;
+
 import group11.comp3211.model.Direction;
 import group11.comp3211.model.PlayBoard;
 import group11.comp3211.model.Player;
 import group11.comp3211.model.landscape.Landscape;
-
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,17 +32,17 @@ public class CatTest {
     /**
      * Ignore the Exception
      * Test for Cat moving on play board
-     *     1. the cat cannot move to out of the playboard
-     *  >> 2. the cat cannot move more than one step
-     *  >> 3. the cat is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
-     *     5. If there is an animal which ranks higher that it, cat cannot move.
-     *     6. Obstacle test： cat cannot go accross the obstacle
-     *     7. If there is an animal which ranks lower that it, cat can move
+     * 1. the cat cannot move to out of the playboard
+     * >> 2. the cat cannot move more than one step
+     * >> 3. the cat is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
+     * 5. If there is an animal which ranks higher that it, cat cannot move.
+     * 6. Obstacle test： cat cannot go accross the obstacle
+     * 7. If there is an animal which ranks lower that it, cat can move
      */
     @SneakyThrows
     @Test
-    public void moveTest1(){
+    public void moveTest1() {
         Cat cat = new Cat(1, 2, player);
         playBoard.put(cat);
         cat.move(Direction.LEFT);
@@ -54,13 +54,13 @@ public class CatTest {
     /**
      * Ignore the Exception
      * Test for Cat moving on play board
-     *  >> 2. the cat cannot move more than one step
-     *  >> 3. the cat is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
+     * >> 2. the cat cannot move more than one step
+     * >> 3. the cat is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
      */
     @SneakyThrows
     @Test
-    public void moveTest2(){
+    public void moveTest2() {
         Cat cat = new Cat(1, 2, player);
         playBoard.put(cat);
         cat.move(Direction.UP);
@@ -72,13 +72,13 @@ public class CatTest {
     /**
      * Ignore the Exception
      * Test for Cat moving on play board
-     *  >> 1. the cat cannot move to out of the playboard
-     *  >> 3. the cat is allowed to move for x or y
-     *  >> 4. a failed move does not work and will change nothing
+     * >> 1. the cat cannot move to out of the playboard
+     * >> 3. the cat is allowed to move for x or y
+     * >> 4. a failed move does not work and will change nothing
      */
     @SneakyThrows
     @Test
-    public void moveTest3(){
+    public void moveTest3() {
         Cat cat = new Cat(8, 0, player);
         playBoard.put(cat);
         cat.move(Direction.LEFT);
@@ -90,15 +90,15 @@ public class CatTest {
     /**
      * Ignore the Exception
      * Test for Cat moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 5. If there is an animal which ranks higher that it, cat cannot move
+     * >> 4. a failed move does not work and will change nothing
+     * >> 5. If there is an animal which ranks higher that it, cat cannot move
      */
     @SneakyThrows
     @Test
-    public void moveTest4(){
+    public void moveTest4() {
         Cat cat = new Cat(3, 0, player);
         playBoard.put(cat);
-        Tiger tiger = new Tiger(2,0,player);
+        Tiger tiger = new Tiger(2, 0, player);
         playBoard.put(tiger);
 
         cat.move(Direction.DOWN);
@@ -110,13 +110,13 @@ public class CatTest {
     /**
      * Ignore the Exception
      * Test for Cat moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 6. Obstacle test： cat cannot go accross the obstacle
+     * >> 4. a failed move does not work and will change nothing
+     * >> 6. Obstacle test： cat cannot go accross the obstacle
      */
 
     @SneakyThrows
     @Test
-    public void moveTest5(){
+    public void moveTest5() {
         Cat cat = new Cat(3, 0, player);
         playBoard.put(cat);
 
@@ -129,15 +129,15 @@ public class CatTest {
     /**
      * Ignore the Exception
      * Test for Cat moving on play board
-     *  >> 4. a failed move does not work and will change nothing
-     *  >> 7. If there is an animal which ranks lower that it, cat can move
+     * >> 4. a failed move does not work and will change nothing
+     * >> 7. If there is an animal which ranks lower that it, cat can move
      */
     @SneakyThrows
     @Test
-    public void moveTest6(){
+    public void moveTest6() {
         Cat cat = new Cat(1, 2, player);
         playBoard.put(cat);
-        Rat rat = new Rat(2,3,player);
+        Rat rat = new Rat(2, 3, player);
         playBoard.put(rat);
 
         cat.move(Direction.UP);

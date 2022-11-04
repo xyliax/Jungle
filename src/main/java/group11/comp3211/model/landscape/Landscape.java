@@ -11,18 +11,18 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public abstract class Landscape implements Loader {
-	protected int row;
-	protected int col;
-	protected Movable load;
-	protected Set<Movable> allowed;
+    protected int row;
+    protected int col;
+    protected Movable load;
+    protected Set<Movable> allowed;
 
-	@Override
-	public boolean canLoad(Movable movable) {
-		return false;
-	}
+    @Override
+    public boolean canLoad(Movable movable) {
+        return false;
+    }
 
-	@Override
-	public void load(Movable movable) throws LogicException {
+    @Override
+    public void load(Movable movable) throws LogicException {
 
-	}
+    }
 }

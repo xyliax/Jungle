@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="code review, merge test code, fix bugs" />
+    <list default="true" id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="code review, merge test code, fix bugs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/controller/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/controller/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/JungleIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group11/comp3211/view/JungleIO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/RatTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/RatTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/WolfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/WolfTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +59,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "actions.on.save"
+    "settings.editor.selected.configurable": "preferences.general"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -140,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667544431452</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="code review, merge test code, fix bugs">
+      <created>1667544478739</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667544478739</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

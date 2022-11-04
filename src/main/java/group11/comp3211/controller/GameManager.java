@@ -5,9 +5,9 @@ import group11.comp3211.view.Color;
 import group11.comp3211.view.JungleIO;
 
 public final class GameManager {
-    private Game game;
-    private JungleIO io;
-    private Parser parser;
+    private final Game game;
+    private final JungleIO io;
+    private final Parser parser;
     private char key;
 
     private GameManager() {
@@ -21,7 +21,14 @@ public final class GameManager {
         return GameManagerHolder.GAME_MANAGER;
     }
 
-    public void OSCheck() {
+    public void envCheck() {
+        if (System.console() == null) {
+            io.printLine("不要使用ide环境，看README😅");
+            System.exit(1);
+        }
+    }
+
+    public void osCheck() {
         String OS = System.getProperty("os.name");
         if (OS.matches("Windows*")) {
             io.setFront(Color.RED);
@@ -40,7 +47,8 @@ public final class GameManager {
     }
 
     public void boot() {
-        OSCheck();
+        envCheck();
+        osCheck();
         while (key != 'a') {
             io.showWelcomeAnimation();
             /*

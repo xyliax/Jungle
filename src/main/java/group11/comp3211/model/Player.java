@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public final class Player {
-	private String name;
+    private String name;
 }

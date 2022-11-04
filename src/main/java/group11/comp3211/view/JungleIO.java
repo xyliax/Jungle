@@ -17,8 +17,8 @@ import static java.lang.Thread.sleep;
 @Getter
 @Setter
 public final class JungleIO {
-    public static final int FRAME_DELAY = 20;
-    public static final int KEY_DELAY = 500;
+    public static final int FRAME_DELAY = 10;
+    public static final int KEY_DELAY = 200;
     private Console console;
     private String promptStr;
     private String clearKStr;
@@ -38,51 +38,6 @@ public final class JungleIO {
         return JungleIOHolder.JUNGLE_IO;
     }
 
-    public void clearScreen() {
-        if (console != null) System.out.print("\033c");
-    }
-
-    public void reset() {
-        System.out.print("\033[0m");
-    }
-
-    public void setFront(Color color) {
-        System.out.print("\033[3" + color.value + "m");
-    }
-
-    public void setBack(Color color) {
-        System.out.print("\033[4" + color.value + "m");
-    }
-
-    public void setCursor(int x, int y) {
-        System.out.print("\033[" + y + ";" + x + "H");
-    }
-
-    public void hideCursor() {
-        System.out.print("\033[?25l");
-    }
-
-    public void showCursor() {
-        System.out.print("\033[?25h");
-    }
-
-    public void setBold() {
-        System.out.print("\033[1m");
-    }
-
-    public void setDim() {
-        System.out.print("\033[2m");
-    }
-
-    public void setUnderlined() {
-        System.out.print("\033[4m");
-    }
-
-    public void setBlink() {
-        System.out.print("\033[5m");
-    }
-
-
     public void showWelcomeAnimation() {
         clearScreen();
         hideCursor();
@@ -100,7 +55,7 @@ public final class JungleIO {
                         System.out.print(" ");
                     }
                     chCount = 0;
-                    sleep(FRAME_DELAY);
+                    insertFrameDelay();
                 }
                 System.out.print(character);
             }
@@ -160,6 +115,7 @@ public final class JungleIO {
      * Prints a string. Act exactly the same as System.out.print(String).
      *
      * @param string the {@code String} to be printed
+     *
      * @see java.io.PrintStream#print(String)
      */
     public void print(String string) {
@@ -170,6 +126,7 @@ public final class JungleIO {
      * Prints a string and then terminates the line.
      *
      * @param line the {@code String} to be printed
+     *
      * @see java.io.PrintStream#print(String)
      */
     public void printLine(String line) {
@@ -184,6 +141,50 @@ public final class JungleIO {
             sleep(FRAME_DELAY);
         } catch (InterruptedException ignored) {
         }
+    }
+
+    public void clearScreen() {
+        if (console != null) System.out.print("\033c");
+    }
+
+    public void reset() {
+        System.out.print("\033[0m");
+    }
+
+    public void setFront(Color color) {
+        System.out.print("\033[3" + color.value + "m");
+    }
+
+    public void setBack(Color color) {
+        System.out.print("\033[4" + color.value + "m");
+    }
+
+    public void setCursor(int x, int y) {
+        System.out.print("\033[" + y + ";" + x + "H");
+    }
+
+    public void hideCursor() {
+        System.out.print("\033[?25l");
+    }
+
+    public void showCursor() {
+        System.out.print("\033[?25h");
+    }
+
+    public void setBold() {
+        System.out.print("\033[1m");
+    }
+
+    public void setDim() {
+        System.out.print("\033[2m");
+    }
+
+    public void setUnderlined() {
+        System.out.print("\033[4m");
+    }
+
+    public void setBlink() {
+        System.out.print("\033[5m");
     }
 
     private static final class JungleIOHolder {
