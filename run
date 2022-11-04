@@ -39,8 +39,7 @@ if [ "$1" = "build" ]; then
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.\033[0m"
 
-    if ! tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz &&
-      mv apache-maven-3.8.6 ./lib-maven; then
+    if ! tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz; then
       echo -e "\033[31;1m\
   Unable to unarchiving ./lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
   Please manually install Apache-Maven or add it to PATH\n\
@@ -50,6 +49,7 @@ if [ "$1" = "build" ]; then
   Official download link: https://maven.apache.org/download.cgi\033[0m"
       exit 1
     fi
+    mv apache-maven-3.8.6 ./lib-maven
     mvn_path=./lib-maven/apache-maven-3.8.6/bin/
   fi
 
