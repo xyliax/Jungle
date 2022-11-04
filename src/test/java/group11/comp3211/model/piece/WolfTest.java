@@ -38,7 +38,7 @@ public class WolfTest {
      * >> 3. the wolf is allowed to move for x or y
      * >> 4. a failed move does not work and will change nothing
      * 5. If there is an animal which ranks higher that it, wolf cannot move.
-     * 6. Obstacle test： wolf cannot go accross the obstacle
+     * 6. Obstacle test： wolf cannot go across the obstacle
      * 7. If there is an animal which ranks lower that it, wolf can move
      */
     @SneakyThrows
@@ -112,7 +112,7 @@ public class WolfTest {
      * Ignore the Exception
      * Test for Wolf moving on play board
      * >> 4. a failed move does not work and will change nothing
-     * >> 6. Obstacle test： wolf cannot go accross the obstacle
+     * >> 6. Obstacle test： wolf cannot go across the obstacle
      */
 
     @SneakyThrows

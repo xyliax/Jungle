@@ -38,7 +38,7 @@ public class DogTest {
      * >> 3. the dog is allowed to move for x or y
      * >> 4. a failed move does not work and will change nothing
      * 5. If there is an animal which ranks higher that it, dog cannot move.
-     * 6. Obstacle test： dog cannot go accross the obstacle
+     * 6. Obstacle test： dog cannot go across the obstacle
      * 7. If there is an animal which ranks lower that it, dog can move
      */
     @SneakyThrows
@@ -112,7 +112,7 @@ public class DogTest {
      * Ignore the Exception
      * Test for Dog moving on play board
      * >> 4. a failed move does not work and will change nothing
-     * >> 6. Obstacle test： dog cannot go accross the obstacle
+     * >> 6. Obstacle test： dog cannot go across the obstacle
      */
 
     @SneakyThrows
