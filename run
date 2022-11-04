@@ -14,7 +14,8 @@ if ! mvn -v >/dev/null; then
   echo -e "\033[31;1m\
   Please install Apache-Maven or add it to PATH if you have already installed\n\
   You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
-  Use - brew install maven (e.g., for Homebrew users)\n\
+  Use the following command (e.g., for Homebrew users):\n\
+    brew install maven\n\
   Official download link: https://maven.apache.org/download.cgi\033[0m"
   exit 1
 fi
