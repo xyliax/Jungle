@@ -147,4 +147,78 @@ public class TigerTest {
         Assert.assertTrue(before.getLoad() == tiger && after.getLoad() != tiger);
     }
 
+    /**
+     * Ignore the Exception
+     * Test for Tiger moving on play board
+     * >> 8. Lions and tigers can go across river
+     */
+    @SneakyThrows
+    @Test
+    public void moveTest7() {
+        Tiger tiger = new Tiger(3, 1, player);
+        playBoard.put(tiger);
+
+        tiger.move(Direction.UP);
+        Landscape before = (Landscape) playBoard.get(3, 1);
+        Landscape after = (Landscape) playBoard.get(7, 1);
+        Assert.assertTrue(before.getLoad() != tiger && after.getLoad() == tiger);
+    }
+
+    /**
+     * Ignore the Exception
+     * Test for Tiger moving on play board
+     * >> 8. Lions and tigers can go across river
+     */
+    @SneakyThrows
+    @Test
+    public void moveTest8() {
+        Tiger tiger = new Tiger(4, 0, player);
+        playBoard.put(tiger);
+
+        tiger.move(Direction.RIGHT);
+        Landscape before = (Landscape) playBoard.get(4, 0);
+        Landscape after = (Landscape) playBoard.get(4, 3);
+        Assert.assertTrue(before.getLoad() != tiger && after.getLoad() == tiger);
+    }
+
+    /**
+     * Ignore the Exception
+     * Test for Tiger moving on play board
+     * >> 4. a failed move does not work and will change nothing
+     * >> 9. Lions and tigers cannot go across river if a rat is in the middle of the way
+     */
+    @SneakyThrows
+    @Test
+    public void moveTest9() {
+        Tiger tiger = new Tiger(4, 0, player);
+        Rat rat = new Rat(4,1,player);
+        playBoard.put(tiger);
+        playBoard.put(rat);
+
+        tiger.move(Direction.RIGHT);
+        Landscape before = (Landscape) playBoard.get(4, 0);
+        Landscape after = (Landscape) playBoard.get(4, 3);
+        Assert.assertTrue(before.getLoad() == tiger && after.getLoad() != tiger);
+    }
+
+    /**
+     * Ignore the Exception
+     * Test for Tiger moving on play board
+     * >> 4. a failed move does not work and will change nothing
+     * >> 9. Lions and tigers cannot go across river if a rat is in the middle of the way
+     */
+    @SneakyThrows
+    @Test
+    public void moveTest10() {
+        Tiger tiger = new Tiger(3, 1, player);
+        Rat rat = new Rat(4,1,player);
+        playBoard.put(tiger);
+        playBoard.put(rat);
+
+        tiger.move(Direction.UP);
+        Landscape before = (Landscape) playBoard.get(3, 1);
+        Landscape after = (Landscape) playBoard.get(7, 1);
+        Assert.assertTrue(before.getLoad() == tiger && after.getLoad() != tiger);
+    }
+
 }
