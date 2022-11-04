@@ -7,4 +7,40 @@ public class GameTest {
     public void before() {
 
     }
+
+    public void testRunTurn() {
+    }
+
+    public void testSaveToFile() {
+    }
+
+    public void testLoadFromFile() {
+    }
+
+    public void testGetPlayboard() {
+    }
+
+    public void testIsRunning() {
+    }
+
+    public void testGetPlayerX() {
+    }
+
+    public void testGetPlayerY() {
+    }
+
+    public void testGetCurrentPlayer() {
+    }
+
+    public void testSetRunning() {
+    }
+
+    public void testSetPlayerX() {
+    }
+
+    public void testSetPlayerY() {
+    }
+
+    public void testSetCurrentPlayer() {
+    }
 }

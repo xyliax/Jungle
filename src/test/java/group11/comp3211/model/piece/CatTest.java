@@ -21,7 +21,7 @@ public class CatTest {
 
     /**
      * 1. Create the playboard
-     * 2. Create a player helding the piece
+     * 2. Create a player holding the piece
      */
     @Before
     public void before() {
@@ -32,13 +32,13 @@ public class CatTest {
     /**
      * Ignore the Exception
      * Test for Cat moving on play board
-     * 1. the cat cannot move to out of the playboard
+     *    1. the cat cannot move to out of the playboard
      * >> 2. the cat cannot move more than one step
      * >> 3. the cat is allowed to move for x or y
      * >> 4. a failed move does not work and will change nothing
-     * 5. If there is an animal which ranks higher that it, cat cannot move.
-     * 6. Obstacle test： cat cannot go accross the obstacle
-     * 7. If there is an animal which ranks lower that it, cat can move
+     *    5. If there is an animal which ranks higher that it, cat cannot move.
+     *    6. Obstacle test： cat cannot go across the obstacle
+     *    7. If there is an animal which ranks lower that it, cat can move
      */
     @SneakyThrows
     @Test
