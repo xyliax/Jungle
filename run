@@ -46,7 +46,7 @@ if [ "$1" = "build" ]; then
   You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
   Use the following command (e.g., for Homebrew users):\n\
     \033[32;1mbrew install maven\033[31;1m\n\
-  Official download link: https://maven.apache.org/download.cgi\033[0m"
+  Official link: https://maven.apache.org/download.cgi\033[0m"
       exit 1
     fi
     rm -rf ./lib-maven/apache-maven-3.8.6
@@ -68,9 +68,16 @@ bin_path=./target/appassembler/bin/
 stty cbreak && ${bin_path}JungleApp
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
-  echo -e "\033[31;1m\
+  if [ "$1" != "build" ]; then
+    echo -e "\033[31;1m\
   It seems that you have not built the software.\n\
   Use the following command to build & run:
     ./run build\033[0m"
+  else
+    echo -e "\033[31;1m\
+  The minimum requirement of this software is Java17.\n\
+  Please update to Java17 (LTS) or higher!
+  Official link: https://www.oracle.com/java/technologies/downloads/\033[0m"
+  fi
 fi
 stty icanon
