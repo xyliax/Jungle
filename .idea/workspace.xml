@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96b63310-9a89-40f1-9f3e-82ebb9de0ccc" name="变更" comment="add sample test Class CatTest.java">
-      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/CatTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/group11/comp3211/model/piece/PieceTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +78,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CatTest.move" />
-        <item itemvalue="Application.JungleApplication" />
       </list>
     </recent_temporary>
   </component>
