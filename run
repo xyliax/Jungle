@@ -1,22 +1,57 @@
 #!/bin/bash
 
 #This is only for Unix platform
+
+if [ $# -gt 0 ]; then
+  if [ "$1" != "help" ] && [ "$1" != "build" ]; then
+    echo -e "\033[31;1m\
+  Unknown argument $1!\033[0m"
+    exit 255
+  fi
+fi
+
+
+if ! mvn -v >/dev/null; then
+  echo -e "\033[31;1m\
+  Please install Apache-Maven or add it to PATH if you have already installed\n\
+  You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
+  Use - brew install maven (e.g., for Homebrew users)\n\
+  Official download link: https://maven.apache.org/download.cgi\033[0m"
+  exit 1
+fi
+
+if [ "$1" = "help" ] || [ "$1" == "-h" ]; then
+  if [ "$2" = "pdf" ]; then
+    open ./docs/README.pdf
+  else
+    open README.md
+  fi
+  exit 0
+fi
+
 size=$(stty size)
+# shellcheck disable=SC2206
 size_arr=($size)
 row=${size_arr[0]}
 col=${size_arr[1]}
+
 if ((row < 30)) || ((col < 100)); then
-  echo "Console Size ${row} ${col} Unsatisfied!"
-  echo "Minimum Requirement: 30 100"
-  echo "Please Resize Console or Font Size"
-  exit 255
+  echo -e "\033[31;1m\
+  Console Size ${row} ${col} Unsatisfied!\n\
+  Minimum Requirement: 30 100
+  Please Resize Console or Font Size\033[0m"
+  exit 2
 fi
+
 if [ "$1" = "build" ]; then
-  mvn clean package appassembler:assemble -DskipTests
+  if [ "$2" = "testing" ]; then
+    mvn clean package appassembler:assemble
+  else
+    mvn clean package appassembler:assemble -DskipTests
+  fi
 fi
-if [ "$2" = "testing" ]; then
-  mvn clean package appassembler:assemble
-fi
-stty cbreak
-./target/appassembler/bin/JungleApp
+
+bin_path=./target/appassembler/bin
+
+stty cbreak && ${bin_path}/JungleApp
 stty icanon
