@@ -39,7 +39,7 @@ if [ "$1" = "build" ]; then
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.\033[0m"
 
-    if ! tar -xzf ./package/lib-maven/apache-maven-3.8.6-bin.tar.gz; then
+    if ! tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz; then
       echo -e "\033[31;1m\
   Unable to unarchiving ./lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
   Please manually install Apache-Maven or add it to PATH\n\
@@ -49,8 +49,9 @@ if [ "$1" = "build" ]; then
   Official download link: https://maven.apache.org/download.cgi\033[0m"
       exit 1
     fi
-    mv apache-maven-3.8.6 ./package/lib-maven
-    mvn_path=./package/lib-maven/apache-maven-3.8.6/bin/
+    rm -rf ./lib-maven/apache-maven-3.8.6
+    mv apache-maven-3.8.6 ./lib-maven
+    mvn_path=./lib-maven/apache-maven-3.8.6/bin/
   fi
 
   if [ "$2" = "test" ]; then
@@ -62,11 +63,9 @@ if [ "$1" = "build" ]; then
   fi
 fi
 
-bin_path=./package/bin/
+bin_path=./target/appassembler/bin/
 
 stty cbreak && ${bin_path}JungleApp
-stty icanon
-
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
   echo -e "\033[31;1m\
@@ -74,3 +73,4 @@ if [ $? != 0 ]; then
   Use the following command to build & run:
     ./run build\033[0m"
 fi
+stty icanon
