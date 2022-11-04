@@ -54,8 +54,10 @@ if [ "$1" = "build" ]; then
     mvn_path=./lib-maven/apache-maven-3.8.6/bin/
   fi
 
-  if [ "$2" = "testing" ]; then
+  if [ "$2" = "test" ]; then
     ${mvn_path}mvn clean package appassembler:assemble
+  elif [ "$2" = "clean" ]; then
+    ${mvn_path}mvn clean
   else
     ${mvn_path}mvn clean package appassembler:assemble -DskipTests
   fi
