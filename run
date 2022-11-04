@@ -38,8 +38,8 @@ if [ "$1" = "build" ]; then
     echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
   Use apache-maven-3.8.6 for building.
-  Unarchiving ./lib-maven/apache-maven-3.8.6.tar.gz\033[0m"
-    tar -xzf /lib-maven/apache-maven-3.8.6.tar.gz
+  Unarchiving ./lib-maven/apache-maven-3.8.6-bin.tar.gz\033[0m"
+    tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz && mv apache-maven-3.8.6 ./lib-maven
     mvn_path=./lib-maven/apache-maven-3.8.6/bin/
     #    echo -e "\033[31;1m\
     #    Please install Apache-Maven or add it to PATH if you have already installed\n\

@@ -19,13 +19,16 @@
 *.tar.gz
 *.rar
 
+lib-maven/apache-maven-3.8.6/
+!lib-maven/apache-maven-3.8.6-bin.tar.gz
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 .DS_Store
 
 build
 
-target
+target/
 *.xml
 
 .idea/
