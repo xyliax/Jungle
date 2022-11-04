@@ -65,8 +65,6 @@ fi
 bin_path=./target/appassembler/bin
 
 stty cbreak && ${bin_path}JungleApp
-stty icanon
-
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
   echo -e "\033[31;1m\
@@ -74,3 +72,4 @@ if [ $? != 0 ]; then
   Use the following command to build & run:
     ./run build\033[0m"
 fi
+stty icanon
