@@ -18,72 +18,74 @@ public class LandTest {
         player = new Player("player");
     }
 
-    /*
-    Test if a land can load a particular piece.
+    /**
+     * Test if a land can load a particular piece.
      */
     @Test
     public void canLoadTest1() {
         Piece piece = new Cat(1, 1, player);
-        Land land = (Land) playBoard.get(1,1);
+        Land land = (Land) playBoard.get(1, 1);
         Assert.assertTrue("Land cannot load a cat! ", land.canLoad(piece));
     }
 
     @Test
     public void canLoadTest2() {
         Piece piece = new Dog(1, 1, player);
-        Land land = (Land) playBoard.get(1,1);
+        Land land = (Land) playBoard.get(1, 1);
         Assert.assertTrue("Land cannot load a dog! ", land.canLoad(piece));
     }
 
     @Test
     public void canLoadTest3() {
         Piece piece = new Elephant(1, 1, player);
-        Land land = (Land) playBoard.get(1,1);
+        Land land = (Land) playBoard.get(1, 1);
         Assert.assertTrue("Land cannot load an elephant! ", land.canLoad(piece));
     }
 
     @Test
     public void canLoadTest4() {
         Piece piece = new Leopard(1, 1, player);
-        Land land = (Land) playBoard.get(1,1);
+        Land land = (Land) playBoard.get(1, 1);
         Assert.assertTrue("Land cannot load a leopard! ", land.canLoad(piece));
     }
 
     @Test
     public void canLoadTest5() {
         Piece piece = new Lion(1, 1, player);
-        Land land = (Land) playBoard.get(1,1);
+        Land land = (Land) playBoard.get(1, 1);
         Assert.assertTrue("Land cannot load a lion! ", land.canLoad(piece));
     }
 
     @Test
     public void canLoadTest6() {
         Piece piece = new Rat(1, 1, player);
-        Land land = (Land) playBoard.get(1,1);
+        Land land = (Land) playBoard.get(1, 1);
         Assert.assertTrue("Land cannot load a rat! ", land.canLoad(piece));
     }
 
     @Test
     public void canLoadTest7() {
         Piece piece = new Tiger(1, 1, player);
-        Land land = (Land) playBoard.get(1,1);
+        Land land = (Land) playBoard.get(1, 1);
         Assert.assertTrue("Land cannot load a tiger! ", land.canLoad(piece));
     }
 
     @Test
     public void canLoadTest8() {
         Piece piece = new Wolf(1, 1, player);
-        Land land = (Land) playBoard.get(1,1);
+        Land land = (Land) playBoard.get(1, 1);
         Assert.assertTrue("Land cannot load a wolf! ", land.canLoad(piece));
     }
 
-    /*
-    Test if the attribute land.load is modified after calling land.load().
+    /**
+     * Test if the attribute land.load is modified after calling land.load().
+     *
+     * @throws LogicException should not be throwed
      */
     @Test
     public void loadTest1() throws LogicException {
         Piece piece = new Dog(2, 3, player);
-        Land land = (Land) playBoard.get(2,3);
+        Land land = (Land) playBoard.get(2, 3);
         land.load(piece);
         Assert.assertSame("land.load() has no effect to land.load! ", land.getLoad(), piece);
     }
@@ -91,13 +93,15 @@ public class LandTest {
     @Test
     public void loadTest2() throws LogicException {
         Piece piece = new Rat(2, 3, player);
-        Land land = (Land) playBoard.get(2,3);
+        Land land = (Land) playBoard.get(2, 3);
         land.load(piece);
         Assert.assertSame("land.load() has no effect to land.load! ", land.getLoad(), piece);
     }
 
-    /*
-    Test after loaded, whether a land can still load.
+    /**
+     * Test after loaded, whether a land can still load.
+     *
+     * @throws LogicException should not be throwed
      */
     @Test
     public void LoadTest3() throws LogicException {
@@ -117,8 +121,10 @@ public class LandTest {
         Assert.assertFalse("Land can still load after loaded! ", land.canLoad(piece2));
     }
 
-    /*
-    Test whether a land can load more than one pieces.
+    /**
+     * Test whether a land can load more than one pieces.
+     *
+     * @throws LogicException should not be throwed
      */
     @Test
     public void LoadTest5() throws LogicException {
