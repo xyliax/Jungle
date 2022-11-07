@@ -3,33 +3,40 @@ package group11.comp3211.controller;
 import group11.comp3211.model.Game;
 import group11.comp3211.view.Color;
 import group11.comp3211.view.JungleIO;
+import lombok.SneakyThrows;
 
 public final class GameManager {
-    private final Game game;
+    private static final char[] loadingStr = {'-', '\\', '|', '/'};
     private final JungleIO io;
-    private final Parser parser;
-    private char key;
+    private Game game;
 
     private GameManager() {
         game = null;
         io = JungleIO.getInstance();
-        parser = Parser.getInstance();
-        key = 0;
     }
 
     public static GameManager getInstance() {
         return GameManagerHolder.GAME_MANAGER;
     }
 
-    public void envCheck() {
+    /**
+     * Check running environment. Any environmental checking should be performed in this method.
+     */
+    private void environmentCheck() {
         if (System.console() == null) {
-            io.printLine("不要使用ide环境，看README😅");
+            io.printLine("不要使用ide环境，仔细看README😅");
             System.exit(1);
         }
+        osCheck();
     }
 
-    public void osCheck() {
+    /**
+     * Check host OS
+     */
+    @SneakyThrows
+    private void osCheck() {
         String OS = System.getProperty("os.name");
+        io.clearScreen();
         if (OS.matches("Windows*")) {
             io.setFront(Color.RED);
             io.printLine("[JUNGLE WARNING]");
@@ -43,45 +50,53 @@ public final class GameManager {
             io.printLine("Your OS is " + OS);
             io.printLine("Full features unlocked!");
         }
+        for (int i = 0; i < 72; i++) {
+            io.reset();
+            io.hideCursor();
+            io.setBold();
+            io.print("\rLoading ");
+            io.setBack(Color.RED);
+            for (int j = 0; j < i; j++)
+                io.print(" ");
+            Thread.sleep(50);
+            io.showCursor();
+        }
         io.reset();
     }
 
     public void boot() {
-        envCheck();
-        osCheck();
-        while (key != 'a') {
+        environmentCheck();
+        welcomeBanner();
+        startMenu();
+    }
+
+    private void welcomeBanner() {
+        do {
             io.showWelcomeAnimation();
-            /*
-            PRESS ENTER
-            Blinking Red "ENTER" (not guaranteed on customized environment)
-             */
-            io.print("PRESS ");
-            io.setFront(Color.RED);
-            io.setBold();
-            io.setBlink();
-            io.print("A (Try other keys!)");
-            io.reset();
-            /*
-            Listen to KeyEvent until "a" is pressed
-             */
-            if ((key = io.getKey()) == 'a')
-                break;
-        }
+        } while (io.getKey(false) != '\n');
     }
 
-    public void startMenu() {
-        io.showStartMenu();
+    private void startMenu() {
+        int select = 0;
+        char key;
+        do {
+            io.showStartMenu(select);
+            key = io.getKey(true);
+            if (key == ' ') {
+                select = (select + 1) % 4;
+            }
+        } while (key != '\n');
     }
 
-    public void createNewGame() {
+    private void createNewGame() {
+        game = new Game();
+    }
+
+    private void loadSavedGame() {
 
     }
 
-    public void loadSavedGame() {
-
-    }
-
-    public void runGame() {
+    private void runGame() {
         while (game.isRunning()) {
             //step 1 render view
             //step 2 get input
@@ -91,15 +106,15 @@ public final class GameManager {
         }
     }
 
-    public void settlement() {
+    private void settlement() {
 
     }
 
-    public void manual() {
+    private void manual() {
 
     }
 
-    public void exit() {
+    private void exit() {
 
     }
 
