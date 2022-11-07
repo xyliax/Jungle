@@ -19,19 +19,19 @@ For Mac OS X, it is highly recommended to use the default terminal.
 #### Run application
 
 ```shell
-./run
+./jungle
 ```
 
 #### Rebuild and Run (without tests)
 
 ```shell
-./run build
+./jungle build
 ```
 
 #### Rebuild and Run (with tests)
 
 ```shell
-./run build testing
+./jungle build testing
 ```
 
 ### Windows

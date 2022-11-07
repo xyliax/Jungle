@@ -41,11 +41,11 @@ if [ "$1" = "build" ]; then
 
     if ! tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz; then
       echo -e "\033[31;1m\
-  Unable to unarchiving ./lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
+  Unable to extract file ./lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
   Please manually install Apache-Maven or add it to PATH\n\
   You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
   Use the following command (e.g., for Homebrew users):\n\
-    \033[32;1mbrew install maven\033[31;1m\n\
+    \033[32;1m  brew install maven\033[31;1m\n\
   Official link: https://maven.apache.org/download.cgi\033[0m"
       exit 1
     fi
@@ -54,7 +54,7 @@ if [ "$1" = "build" ]; then
     mvn_path=./lib-maven/apache-maven-3.8.6/bin/
   fi
 
-  if [ "$2" = "test" ]; then
+  if [ "$2" = "testing" ]; then
     ${mvn_path}mvn clean package appassembler:assemble
   elif [ "$2" = "clean" ]; then
     ${mvn_path}mvn clean
