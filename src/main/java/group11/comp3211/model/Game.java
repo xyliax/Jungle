@@ -15,11 +15,11 @@ public final class Game implements Serializable {
     private Player playerY;
     private Player currentPlayer;
 
-    public Game() {
+    public Game(String nameX, String nameY) {
         this.playboard = new PlayBoard();
         this.running = false;
-        this.playerX = null;
-        this.playerY = null;
+        this.playerX = new Player(nameX);
+        this.playerY = new Player(nameY);
         this.currentPlayer = null;
     }
 

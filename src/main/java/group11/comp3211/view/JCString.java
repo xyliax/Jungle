@@ -20,12 +20,12 @@ enum JCString {
                                   $MM    MM  EE       NN  NNN  UU   UU%
                                   $MM    MM  EEEEEEE  NN   NN   UUUUU %
             ===============================================================================
-            #                                                                             #
-            #                                                                             #
-            #                                                                             #
-            #                                                                             #
-            #                                                                             #
-            #                                                                             #
+            #                        Option 1   ===>   NEW     GAME                       @
+            #                        Option 2   ===>   LOAD    GAME                       @
+            #                        Option 3   ===>   SHOW    HELP                       @
+            #                        Option 4   ===>   QUIT    GAME                       @
+            |                    Press 1/2/3/4 => Select Option 1/2/3/4                   @
+            |                    Press 'SPACE' => Move to the Next Option                 @
             ===============================================================================
             """);
     final String string;
