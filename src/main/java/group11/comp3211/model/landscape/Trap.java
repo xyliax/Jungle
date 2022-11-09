@@ -1,10 +1,16 @@
 package group11.comp3211.model.landscape;
 
-import lombok.Data;
+import group11.comp3211.model.Player;
 import lombok.EqualsAndHashCode;
+import lombok.Value;
 
-@Data
+@Value
 @EqualsAndHashCode(callSuper = false)
-public final class Trap extends Landscape {
+public class Trap extends Landscape {
+    Player player;
 
+    public Trap(int row, int col, Player player) {
+        super(row, col);
+        this.player = player;
+    }
 }

@@ -1,18 +1,25 @@
 package group11.comp3211.model;
 
 import group11.comp3211.common.exceptions.LogicException;
+import group11.comp3211.model.landscape.Den;
+import group11.comp3211.model.landscape.Land;
+import group11.comp3211.model.landscape.River;
+import group11.comp3211.model.landscape.Trap;
+import group11.comp3211.model.piece.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
 import java.io.*;
+import java.util.ArrayList;
 
 @Getter
 @Setter
 public final class Game implements Serializable {
     private final PlayBoard playboard;
+    private final Player playerX;
+    private final Player playerY;
     private boolean running;
-    private Player playerX;
-    private Player playerY;
     private Player currentPlayer;
 
     public Game(String nameX, String nameY) {
@@ -21,6 +28,7 @@ public final class Game implements Serializable {
         this.playerX = new Player(nameX);
         this.playerY = new Player(nameY);
         this.currentPlayer = null;
+        initBoard();
     }
 
     public void runTurn() throws LogicException {
@@ -40,5 +48,45 @@ public final class Game implements Serializable {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @SneakyThrows
+    public void initBoard() {
+        playboard.put(new Den(0, 3, playerX));
+        playboard.put(new Trap(0, 2, playerX));
+        playboard.put(new Trap(0, 4, playerX));
+        playboard.put(new Trap(1, 3, playerX));
+        playboard.put(new Den(8, 3, playerY));
+        playboard.put(new Trap(8, 2, playerX));
+        playboard.put(new Trap(8, 4, playerX));
+        playboard.put(new Trap(7, 3, playerX));
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 7; col++) {
+                if (playboard.get(row, col) != null) continue;
+                if (row >= 3 && row <= 5) {
+                    if (col == 0 || col == 3 || col == 6) playboard.put(new Land(row, col));
+                    else playboard.put(new River(row, col));
+                } else playboard.put(new Land(row, col));
+            }
+        }
+        ArrayList<Piece> initPieces = new ArrayList<>();
+        initPieces.add(new Elephant(2, 6, playerX));
+        initPieces.add(new Lion(0, 0, playerX));
+        initPieces.add(new Tiger(0, 6, playerX));
+        initPieces.add(new Leopard(2, 2, playerX));
+        initPieces.add(new Wolf(2, 4, playerX));
+        initPieces.add(new Dog(1, 1, playerX));
+        initPieces.add(new Cat(1, 5, playerX));
+        initPieces.add(new Rat(2, 0, playerX));
+        initPieces.add(new Elephant(6, 0, playerY));
+        initPieces.add(new Lion(8, 6, playerY));
+        initPieces.add(new Tiger(8, 0, playerY));
+        initPieces.add(new Leopard(6, 4, playerY));
+        initPieces.add(new Wolf(6, 2, playerY));
+        initPieces.add(new Dog(7, 5, playerY));
+        initPieces.add(new Cat(7, 1, playerY));
+        initPieces.add(new Rat(6, 6, playerY));
+        for (Piece piece : initPieces)
+            playboard.get(piece.getRow(), piece.getCol()).load(piece);
     }
 }

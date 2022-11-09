@@ -1,5 +1,12 @@
 package group11.comp3211.view;
 
+import group11.comp3211.model.Game;
+import group11.comp3211.model.Loader;
+import group11.comp3211.model.landscape.Den;
+import group11.comp3211.model.landscape.Landscape;
+import group11.comp3211.model.landscape.River;
+import group11.comp3211.model.landscape.Trap;
+import group11.comp3211.model.piece.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -11,6 +18,7 @@ import java.io.PrintStream;
 import java.util.Random;
 import java.util.Scanner;
 
+import static group11.comp3211.view.Color.*;
 import static java.lang.Thread.sleep;
 
 
@@ -40,15 +48,15 @@ public final class JungleIO {
     }
 
     public void showLoadingAnimation() {
-        for (int i = 0; i < 72; i++) {
+        for (int i = 0; i < 80; i++) {
             reset();
             hideCursor();
             setBold();
-            print("\rLoading ");
-            setBack(Color.RED);
+            print("\r");
+            setBack(RED);
             for (int j = 0; j < i; j++)
                 print(" ");
-            insertFrameDelay();
+            insertFrameDelay(4);
             showCursor();
         }
         reset();
@@ -56,21 +64,20 @@ public final class JungleIO {
 
     public void showWelcomeAnimation() {
         clearScreen();
+        reset();
         hideCursor();
-        setBack(Color.GREY);
+        setBack(GREY);
         Color front = Color.values()[new Random().nextInt(Color.values().length)];
-        while (front == Color.GREY || front == Color.BLACK)
+        while (front == GREY || front == Color.BLACK)
             front = Color.values()[new Random().nextInt(Color.values().length)];
         setFront(front);
         int chCount = 0;
         for (char character : JCString.WELCOME_BANNER.string.toCharArray()) {
             chCount++;
             if (character == '\n') {
-                while (chCount++ < 80) {
-                    writer.print(" ");
-                }
+                while (chCount++ < 80) writer.print(" ");
                 chCount = 0;
-                insertFrameDelay();
+                insertFrameDelay(1);
             }
             writer.print(character);
         }
@@ -80,13 +87,13 @@ public final class JungleIO {
         for (int i = 0; i < 27; i++)
             print(" ");
         print("PRESS");
-        setFront(Color.RED);
+        setFront(RED);
         setBold();
         setBlink();
         print(" ENTER/RETURN ");
         reset();
         printLine("TO START!");
-        setBack(Color.GREY);
+        setBack(GREY);
         setBold();
         printLine("Tips: You can always use Ctrl-C to quit Jungle.");
         reset();
@@ -94,34 +101,33 @@ public final class JungleIO {
 
     public void showStartMenu(int select) {
         clearScreen();
+        reset();
         hideCursor();
         int chCount = 0;
         int opt = 0;
         for (char character : JCString.START_MENU.string.toCharArray()) {
             chCount++;
             if (character == '\n') {
-                while (chCount++ < 80) {
-                    writer.print(" ");
-                }
+                while (chCount++ < 80) print(" ");
                 chCount = 0;
             }
             switch (character) {
                 case '$' -> {
-                    setBack(Color.CYAN);
-                    setFront(Color.GREY);
+                    setBack(CYAN);
+                    setFront(GREY);
                     setBold();
                 }
                 case '%', '@' -> reset();
                 case '#' -> {
                     if (opt == select) {
-                        setFront(Color.RED);
+                        setFront(RED);
                         setBold();
-                        setBack(Color.YELLOW);
+                        setBack(YELLOW);
                     }
                     opt++;
                 }
                 case '|' -> {
-                    setFront(Color.BLUE);
+                    setFront(BLUE);
                     setBold();
                 }
                 default -> writer.print(character);
@@ -131,10 +137,69 @@ public final class JungleIO {
         reset();
     }
 
+    public void showPlayBoard(Game game) {
+        clearScreen();
+        reset();
+        for (int r = 1; r <= 19; r++) {
+            if (r % 2 == 1) {
+                for (int c = 1; c <= 32; c++) {
+                    reset();
+                    setBack(GREY);
+                    print(" ");
+                }
+            } else {
+                for (int c = 1; c <= 32; c++) {
+                    reset();
+                    if (c <= 3 || c >= 30) {
+                        setBack(GREY);
+                        print(" ");
+                    } else {
+                        if (c % 4 != 2 && c % 4 != 3) {
+                            Loader block = game.getPlayboard().get(r / 2 - 1, c / 4 - 1);
+                            showBlock(block, game);
+                            c++;
+                        } else {
+                            setBack(GREY);
+                            print(" ");
+                        }
+                    }
+                }
+            }
+            printLine("");
+        }
+    }
+
+    private void showBlock(Loader block, Game game) {
+        reset();
+        Landscape landscape = (Landscape) block;
+        if (landscape instanceof River) setBack(CYAN);
+        else if (landscape instanceof Trap) setBack(MAGENTA);
+        else if (landscape instanceof Den) {
+            if (((Den) landscape).getPlayer() == game.getPlayerX()) setFront(RED);
+            else if (((Den) landscape).getPlayer() == game.getPlayerY()) setFront(GREEN);
+            print("穴");
+            return;
+        }
+        Piece piece = (Piece) landscape.getLoad();
+        if (piece == null) print(" " + " ");
+        else {
+            if (piece.getPlayer() == game.getPlayerX()) setFront(RED);
+            else if (piece.getPlayer() == game.getPlayerY()) setFront(GREEN);
+            if (piece instanceof Elephant) print("象");
+            else if (piece instanceof Lion) print("狮");
+            else if (piece instanceof Tiger) print("虎");
+            else if (piece instanceof Leopard) print("豹");
+            else if (piece instanceof Wolf) print("狼");
+            else if (piece instanceof Dog) print("狗");
+            else if (piece instanceof Cat) print("猫");
+            else if (piece instanceof Rat) print("鼠");
+        }
+    }
+
     public void showExitMessage(String reason) {
         clearScreen();
         reset();
-        setFront(Color.RED);
+        setFront(RED);
         setBold();
         printLine("Exit Jungle: " + reason);
         reset();
@@ -145,7 +210,7 @@ public final class JungleIO {
     public String readLine() {
         String line;
         do {
-            writer.print(promptStr);
+            print(promptStr);
             line = scanner.nextLine();
         } while (line.isBlank());
         return line;
@@ -153,17 +218,15 @@ public final class JungleIO {
 
     public synchronized void waitKey(char key) {
         hideCursor();
-        if (Character.isAlphabetic(key))
-            key = Character.toLowerCase(key);
+        if (Character.isAlphabetic(key)) key = Character.toLowerCase(key);
         try {
-            while (System.in.available() > 0)
-                System.in.read();
+            while (System.in.available() > 0) System.in.read();
             int buf = reader.read();
             while ((char) buf != Character.toUpperCase(key)) {
-                writer.print(CLEAR_K_STR);
+                print(CLEAR_K_STR);
                 buf = reader.read();
             }
-            writer.print(CLEAR_K_STR);
+            print(CLEAR_K_STR);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -174,13 +237,10 @@ public final class JungleIO {
     public synchronized char getKey(boolean echo) {
         hideCursor();
         try {
-            while (System.in.available() > 0)
-                reader.read();
+            while (System.in.available() > 0) reader.read();
             char buf0 = (char) reader.read();
-            if (!echo)
-                writer.print(CLEAR_K_STR);
-            if (buf0 == 27)
-                return getKey(echo);
+            if (!echo) print(CLEAR_K_STR);
+            if (buf0 == 27) return getKey(echo);
             return buf0;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -209,9 +269,9 @@ public final class JungleIO {
         writer.println(line);
     }
 
-    private void insertFrameDelay() {
+    private void insertFrameDelay(int times) {
         try {
-            sleep(FRAME_DELAY);
+            sleep((long) FRAME_DELAY * times);
         } catch (InterruptedException ignored) {
         }
     }
@@ -234,43 +294,43 @@ public final class JungleIO {
      * {@link #hideCursor()}, {@link #showCursor()}, {@link #setCursor(int, int)} cannot be reset by this method.
      */
     public void reset() {
-        writer.print("\033[0m");
+        print("\033[0m");
     }
 
     public void setFront(Color color) {
-        writer.print("\033[3" + color.value + "m");
+        print("\033[3" + color.value + "m");
     }
 
     public void setBack(Color color) {
-        writer.print("\033[4" + color.value + "m");
+        print("\033[4" + color.value + "m");
     }
 
     public void setBold() {
-        writer.print("\033[1m");
+        print("\033[1m");
     }
 
     public void setDim() {
-        writer.print("\033[2m");
+        print("\033[2m");
     }
 
     public void setUnderlined() {
-        writer.print("\033[4m");
+        print("\033[4m");
     }
 
     public void setBlink() {
-        writer.print("\033[5m");
+        print("\033[5m");
     }
 
     public void setCursor(int x, int y) {
-        writer.print("\033[" + y + ";" + x + "H");
+        print("\033[" + y + ";" + x + "H");
     }
 
     public void hideCursor() {
-        writer.print("\033[?25l");
+        print("\033[?25l");
     }
 
     public void showCursor() {
-        writer.print("\033[?25h");
+        print("\033[?25h");
     }
 
     private static final class JungleIOHolder {

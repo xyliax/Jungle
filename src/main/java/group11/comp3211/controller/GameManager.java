@@ -37,7 +37,6 @@ public final class GameManager {
     private void operatingSystemCheck() {
         String OS = System.getProperty("os.name");
         String ARCH = System.getProperty("os.arch");
-        io.clearScreen();
         if (OS.matches("Windows*")) {
             io.setFront(Color.RED);
             io.printLine("[JUNGLE WARNING]");
@@ -93,30 +92,35 @@ public final class GameManager {
     }
 
     private void createNewGame() {
+        io.clearScreen();
         io.setBold();
         io.setFront(Color.RED);
         io.printLine("Creating New Game...");
         io.printLine("Follow the instructions ***");
+        io.printLine("The username should no longer than '12' characters.");
         io.printLine("In this mode, you cannot user 'BACKSPACE' to delete a character.");
         io.printLine("To re-enter, input a different string when 'Confirm'.");
-        io.setFront(Color.GREEN);
         io.reset();
         String nameX, nameY, confirm;
         do {
+            io.setFront(Color.GREEN);
             io.printLine(" - Please Input Player 1's Username");
             nameX = io.readLine();
+            io.setFront(Color.GREEN);
             io.printLine(" - Confirm Player 1's Username (Enter Again)");
             confirm = io.readLine();
         } while (!confirm.equals(nameX));
         do {
+            io.setFront(Color.GREEN);
             io.printLine(" - Please Input Player 2's Username");
             nameY = io.readLine();
+            io.setFront(Color.GREEN);
             io.printLine(" - Confirm Player 2's Username (Enter Again)");
             confirm = io.readLine();
         } while (!confirm.equals(nameY));
         game = new Game(nameX, nameY);
-        io.printLine(nameX);
-        io.printLine(nameY);
+        io.reset();
+        runGame();
     }
 
     private void loadSavedGame() {
@@ -124,7 +128,9 @@ public final class GameManager {
     }
 
     private void runGame() {
+        io.showPlayBoard(game);
         while (game.isRunning()) {
+
             //step 1 render view
             //step 2 get input
             //step 3 game.runTurn()

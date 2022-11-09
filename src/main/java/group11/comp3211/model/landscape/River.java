@@ -1,10 +1,12 @@
 package group11.comp3211.model.landscape;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Value;
 
-@Data
+@Value
 @EqualsAndHashCode(callSuper = false)
-public final class River extends Landscape {
-
+public class River extends Landscape {
+    public River(int row, int col) {
+        super(row, col);
+    }
 }
