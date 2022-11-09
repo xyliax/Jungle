@@ -177,6 +177,8 @@ public final class JungleIO {
         else if (landscape instanceof Den) {
             if (((Den) landscape).getPlayer() == game.getPlayerX()) setFront(RED);
             else if (((Den) landscape).getPlayer() == game.getPlayerY()) setFront(GREEN);
+            setBold();
+            setUnderlined();
             print("穴");
             return;
         }
