@@ -1,17 +1,22 @@
 package group11.comp3211.model;
 
 import group11.comp3211.common.exceptions.LogicException;
-import group11.comp3211.model.landscape.Den;
-import group11.comp3211.model.landscape.Land;
-import group11.comp3211.model.landscape.River;
-import group11.comp3211.model.landscape.Trap;
+import group11.comp3211.common.exceptions.VoidObjectException;
+import group11.comp3211.model.landscape.*;
 import group11.comp3211.model.piece.*;
+import group11.comp3211.view.Language;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static group11.comp3211.model.Direction.STAY;
+import static group11.comp3211.view.Color.GREEN;
+import static group11.comp3211.view.Color.RED;
+import static group11.comp3211.view.Language.CHINESE_SIMPLE;
 
 @Getter
 @Setter
@@ -19,16 +24,43 @@ public final class Game implements Serializable {
     private final PlayBoard playboard;
     private final Player playerX;
     private final Player playerY;
+    private final HashMap<String, Piece> keyPieceTable;
     private boolean running;
     private Player currentPlayer;
+    private Piece selectedPiece;
+    private Language language;
 
-    public Game(String nameX, String nameY) {
+    public Game() {
         this.playboard = new PlayBoard();
         this.running = false;
-        this.playerX = new Player(nameX);
-        this.playerY = new Player(nameY);
+        this.playerX = new Player(RED);
+        this.playerY = new Player(GREEN);
         this.currentPlayer = null;
+        this.selectedPiece = null;
+        this.language = CHINESE_SIMPLE;
+        keyPieceTable = new HashMap<>();
         initBoard();
+        initKeyPieceTable();
+    }
+
+    @SneakyThrows
+    public void selectPiece(char key) {
+        String ks = key + currentPlayer.getName();
+        Piece piece = keyPieceTable.get(ks);
+        if (piece == null)
+            throw new VoidObjectException();
+        selectedPiece = piece;
+    }
+
+    public void clearSelectStatus() {
+        if (selectedPiece != null) {
+            if (selectedPiece.isSelected()) {
+                if (selectedPiece.getDirection() != STAY)
+                    selectedPiece.setDirection(STAY);
+                selectedPiece.setSelected(false);
+            }
+            selectedPiece = null;
+        }
     }
 
     public void runTurn() throws LogicException {
@@ -51,7 +83,7 @@ public final class Game implements Serializable {
     }
 
     @SneakyThrows
-    public void initBoard() {
+    private void initBoard() {
         playboard.put(new Den(0, 3, playerX));
         playboard.put(new Trap(0, 2, playerX));
         playboard.put(new Trap(0, 4, playerX));
@@ -88,5 +120,17 @@ public final class Game implements Serializable {
         initPieces.add(new Rat(6, 6, playerY));
         for (Piece piece : initPieces)
             playboard.get(piece.getRow(), piece.getCol()).load(piece);
+    }
+
+    private void initKeyPieceTable() {
+        for (int row = 0; row < PlayBoard.ROW_NUM; row++) {
+            for (int col = 0; col < PlayBoard.COL_NUM; col++) {
+                Landscape landscape = (Landscape) playboard.get(row, col);
+                Piece piece = (Piece) landscape.getLoad();
+                if (piece == null) continue;
+                String ks = piece.getRank() + piece.getPlayer().getName();
+                keyPieceTable.put(ks, piece);
+            }
+        }
     }
 }

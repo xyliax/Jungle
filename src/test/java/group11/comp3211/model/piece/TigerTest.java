@@ -26,7 +26,7 @@ public class TigerTest {
     @Before
     public void before() {
         playBoard = new PlayBoard();
-        player = new Player("player");
+        player = new Player(null);
     }
 
     /**

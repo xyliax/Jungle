@@ -1,11 +1,18 @@
 package group11.comp3211.controller;
 
 import group11.comp3211.model.Game;
+import group11.comp3211.model.piece.Piece;
 import group11.comp3211.view.Color;
 import group11.comp3211.view.JungleIO;
 import sun.misc.Signal;
 
 import java.util.Date;
+import java.util.Random;
+
+import static group11.comp3211.model.Direction.*;
+import static group11.comp3211.view.Color.BLUE;
+import static group11.comp3211.view.Color.RED;
+
 
 public final class GameManager {
     private static final char[] loadingStr = {'-', '\\', '|', '/'};
@@ -31,27 +38,31 @@ public final class GameManager {
         }
     }
 
-    /**
-     * Check host OS
-     */
+
     private void operatingSystemCheck() {
         String OS = System.getProperty("os.name");
         String ARCH = System.getProperty("os.arch");
         if (OS.matches("Windows*")) {
-            io.setFront(Color.RED);
+            io.setFront(RED);
             io.printLine("[JUNGLE WARNING]");
-            io.setFront(Color.BLACK);
+            io.setFront(RED);
             io.printLine(String.format("Your OS is %s - %s, some features are limited", OS, ARCH));
-            io.printLine("You will not receive this message any more");
-            io.setFront(Color.RED);
+            io.printLine("We STRONGLY recommend you to use Linux / MacOS for compatibility concerns");
+            io.printLine("You will not receive this message any more, Continue in 10 Seconds...");
+            io.setFront(RED);
             io.printLine("[END OF WARNING]");
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             io.setFront(Color.GREEN);
             io.printLine(String.format("Your OS is %s - %s", OS, ARCH));
             io.printLine("Full features unlocked!");
+            Signal.handle(new Signal("INT"), handle -> exit("SIGINT received at " + new Date()));
+            io.showLoadingAnimation();
         }
-        Signal.handle(new Signal("INT"), handle -> exit("SIGINT received at " + new Date()));
-        io.showLoadingAnimation();
     }
 
     public void boot() {
@@ -92,33 +103,32 @@ public final class GameManager {
     }
 
     private void createNewGame() {
+        Game game = new Game();
         io.clearScreen();
-        io.setBold();
-        io.setFront(Color.RED);
-        io.printLine("Creating New Game...");
-        io.printLine("Follow the instructions ***");
-        io.printLine("The username should no longer than '12' characters.");
-        io.printLine("In this mode, you cannot user 'BACKSPACE' to delete a character.");
-        io.printLine("To re-enter, input a different string when 'Confirm'.");
+        io.announce("""
+                Creating New Game...
+                Follow the instructions         ***
+                No longer than '8' characters   ***
+                To clear a character    click 'BACKSPACE'
+                To clear a line         click 'ESCAPE'""", BLUE);
         io.reset();
-        String nameX, nameY, confirm;
+        String nameX, nameY;
         do {
-            io.setFront(Color.GREEN);
+            io.setFront(game.getPlayerX().getColor());
             io.printLine(" - Please Input Player 1's Username");
             nameX = io.readLine();
-            io.setFront(Color.GREEN);
-            io.printLine(" - Confirm Player 1's Username (Enter Again)");
-            confirm = io.readLine();
-        } while (!confirm.equals(nameX));
+            if (nameX.length() > 8)
+                io.announce("The username should no longer than '8' characters!", BLUE);
+        } while (nameX.length() > 8);
         do {
-            io.setFront(Color.GREEN);
+            io.setFront(game.getPlayerY().getColor());
             io.printLine(" - Please Input Player 2's Username");
             nameY = io.readLine();
-            io.setFront(Color.GREEN);
-            io.printLine(" - Confirm Player 2's Username (Enter Again)");
-            confirm = io.readLine();
-        } while (!confirm.equals(nameY));
-        game = new Game(nameX, nameY);
+            if (nameY.length() > 8)
+                io.announce("The username should no longer than '8' characters!", BLUE);
+        } while (nameY.length() > 8);
+        game.getPlayerX().setName(nameX);
+        game.getPlayerY().setName(nameY);
         io.reset();
         runGame();
     }
@@ -128,15 +138,44 @@ public final class GameManager {
     }
 
     private void runGame() {
-        io.showPlayBoard(game);
+        game.setRunning(true);
+        game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ? game.getPlayerX() : game.getPlayerY());
         while (game.isRunning()) {
-
-            //step 1 render view
-            //step 2 get input
-            //step 3 game.runTurn()
-            //step 4 log
-            //step 5 check winner -> setRunning()
+            io.showPlayBoard(game);
+            char key = io.getKey(true);
+            switch (key) {
+                case ':' -> pauseGame();
+                case '-' | '0' -> game.clearSelectStatus();
+                default -> {
+                    if (game.getSelectedPiece() == null)
+                        game.selectPiece(key);
+                    else {
+                        Piece piece = game.getSelectedPiece();
+                        if (key == ' ')
+                            piece.setSelected(!piece.isSelected());
+                        else if (piece.isSelected()) {
+                            if (piece.getDirection() == STAY) {
+                                switch (Character.toLowerCase(key)) {
+                                    case 'w' -> piece.setDirection(UP);
+                                    case 'a' -> piece.setDirection(LEFT);
+                                    case 's' -> piece.setDirection(DOWN);
+                                    case 'd' -> piece.setDirection(RIGHT);
+                                }
+                            } else if (key == '\n') game.getPlayboard().doMove(piece);
+                        } else game.selectPiece(key);
+                    }
+                }
+            }
         }
+    }
+
+    private void pauseGame() {
+        game.clearSelectStatus();
+        io.announce("""
+                You are attempting to leave.
+                Save and Quit:      click 'w'
+                Do not Save:        click 'q'
+                Back to Game:       click 'ESCAPE'""", BLUE);
     }
 
     private void settlement() {

@@ -6,7 +6,7 @@ import group11.comp3211.model.landscape.Den;
 import group11.comp3211.model.landscape.Landscape;
 import group11.comp3211.model.landscape.River;
 import group11.comp3211.model.landscape.Trap;
-import group11.comp3211.model.piece.*;
+import group11.comp3211.model.piece.Piece;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -27,7 +27,9 @@ import static java.lang.Thread.sleep;
 public final class JungleIO {
     public static final int FRAME_DELAY = 10;
     public static final int KEY_DELAY = 200;
+    public static final String WHITE_SPACE = " ";
     private static final String CLEAR_K_STR = "\b\b\b\b    \b\b\b\b";
+    private static final String CLEAR_L_STR = "\r" + " ".repeat(64) + "\r";
     private Console console;
     private String promptStr;
     private Scanner scanner;
@@ -36,18 +38,18 @@ public final class JungleIO {
 
     @SneakyThrows
     private JungleIO() {
-        console = System.console();
-        promptStr = "\033[33m>>> \033[0m";
-        scanner = new Scanner(System.in);
-        reader = System.in;
-        writer = System.out;
+        this.console = System.console();
+        this.promptStr = "\033[33m>>> \033[0m";
+        this.scanner = new Scanner(System.in);
+        this.reader = System.in;
+        this.writer = System.out;
     }
 
     public static JungleIO getInstance() {
         return JungleIOHolder.JUNGLE_IO;
     }
 
-    public void showLoadingAnimation() {
+    public synchronized void showLoadingAnimation() {
         for (int i = 0; i < 80; i++) {
             reset();
             hideCursor();
@@ -62,7 +64,7 @@ public final class JungleIO {
         reset();
     }
 
-    public void showWelcomeAnimation() {
+    public synchronized void showWelcomeAnimation() {
         clearScreen();
         reset();
         hideCursor();
@@ -71,11 +73,12 @@ public final class JungleIO {
         while (front == GREY || front == Color.BLACK)
             front = Color.values()[new Random().nextInt(Color.values().length)];
         setFront(front);
+        setBold();
         int chCount = 0;
         for (char character : JCString.WELCOME_BANNER.string.toCharArray()) {
             chCount++;
             if (character == '\n') {
-                while (chCount++ < 80) writer.print(" ");
+                while (chCount++ < 80) writer.print(' ');
                 chCount = 0;
                 insertFrameDelay(1);
             }
@@ -84,8 +87,7 @@ public final class JungleIO {
         insertKeyDelay();
         showCursor();
         reset();
-        for (int i = 0; i < 27; i++)
-            print(" ");
+        print(" ".repeat(27));
         print("PRESS");
         setFront(RED);
         setBold();
@@ -93,13 +95,14 @@ public final class JungleIO {
         print(" ENTER/RETURN ");
         reset();
         printLine("TO START!");
+        print(" ".repeat(18));
         setBack(GREY);
         setBold();
         printLine("Tips: You can always use Ctrl-C to quit Jungle.");
         reset();
     }
 
-    public void showStartMenu(int select) {
+    public synchronized void showStartMenu(int select) {
         clearScreen();
         reset();
         hideCursor();
@@ -137,7 +140,7 @@ public final class JungleIO {
         reset();
     }
 
-    public void showPlayBoard(Game game) {
+    public synchronized void showPlayBoard(Game game) {
         clearScreen();
         reset();
         for (int r = 1; r <= 19; r++) {
@@ -169,55 +172,104 @@ public final class JungleIO {
         }
     }
 
-    private void showBlock(Loader block, Game game) {
+    private synchronized void showBlock(Loader block, Game game) {
         reset();
         Landscape landscape = (Landscape) block;
         if (landscape instanceof River) setBack(CYAN);
         else if (landscape instanceof Trap) setBack(MAGENTA);
-        else if (landscape instanceof Den) {
-            if (((Den) landscape).getPlayer() == game.getPlayerX()) setFront(RED);
-            else if (((Den) landscape).getPlayer() == game.getPlayerY()) setFront(GREEN);
+        else if (landscape instanceof Den den) {
+            if (den.getPlayer() == game.getPlayerX()) setFront(RED);
+            else if (den.getPlayer() == game.getPlayerY()) setFront(GREEN);
             setBold();
-            setUnderlined();
-            print("穴");
+            print(den.getSymbol(game.getLanguage()));
             return;
         }
         Piece piece = (Piece) landscape.getLoad();
-        if (piece == null) print(" " + " ");
+        if (piece == null) print(WHITE_SPACE + WHITE_SPACE);
         else {
+            if (game.getSelectedPiece() == piece) {
+                setBack(YELLOW);
+                if (piece.isSelected()) {
+                    setBold();
+                    setUnderlined();
+                }
+            }
             if (piece.getPlayer() == game.getPlayerX()) setFront(RED);
             else if (piece.getPlayer() == game.getPlayerY()) setFront(GREEN);
-            if (piece instanceof Elephant) print("象");
-            else if (piece instanceof Lion) print("狮");
-            else if (piece instanceof Tiger) print("虎");
-            else if (piece instanceof Leopard) print("豹");
-            else if (piece instanceof Wolf) print("狼");
-            else if (piece instanceof Dog) print("狗");
-            else if (piece instanceof Cat) print("猫");
-            else if (piece instanceof Rat) print("鼠");
+            print(piece.getSymbol(game.getLanguage()));
         }
     }
 
     public void showExitMessage(String reason) {
-        clearScreen();
-        reset();
-        setFront(RED);
-        setBold();
-        printLine("Exit Jungle: " + reason);
+        announce("Exit Jungle: " + reason, BLUE);
         reset();
         showCursor();
         System.exit(0);
     }
 
-    public String readLine() {
-        String line;
-        do {
-            print(promptStr);
-            line = scanner.nextLine();
-        } while (line.isBlank());
-        return line;
+    public void announce(String msg, Color color) {
+        reset();
+        writer.println();
+        setBack(GREY);
+        setFront(MAGENTA);
+        setBold();
+        setUnderlined();
+        writer.println("[SYSTEM NOTICE]");
+        reset();
+        setFront(color);
+        writer.println(msg);
+        reset();
+        setBack(GREY);
+        setFront(MAGENTA);
+        setBold();
+        setUnderlined();
+        writer.println("[END OF NOTICE]");
+        reset();
     }
 
+    @SneakyThrows
+    public synchronized String readLine() {
+        StringBuilder line = new StringBuilder();
+        char buf0;
+        do {
+            writer.print(promptStr);
+            boolean lb = false;
+            while (!lb) {
+                while (reader.available() > 0) reader.read();
+                buf0 = (char) reader.read();
+                switch (buf0) {
+                    case 27 -> {
+                        writer.print(CLEAR_L_STR);
+                        line.delete(0, line.length());
+                        writer.print(promptStr);
+                    }
+                    case 127 -> {
+                        writer.print(CLEAR_L_STR);
+                        line.deleteCharAt(line.length() - 1);
+                        writer.print(promptStr);
+                        writer.print(line);
+                    }
+                    case '\n' -> lb = true;
+                    default -> line.append(buf0);
+                }
+            }
+        } while (line.toString().isBlank());
+        return line.toString();
+    }
+
+    @SneakyThrows
+    public synchronized char getKey(boolean echo) {
+        hideCursor();
+        char buf0;
+        while (reader.available() > 0) reader.read();
+        buf0 = (char) reader.read();
+        if (!echo) writer.print(CLEAR_K_STR);
+        if (buf0 == 27) return getKey(echo);
+        showCursor();
+        return buf0;
+    }
+
+    @Deprecated
     public synchronized void waitKey(char key) {
         hideCursor();
         if (Character.isAlphabetic(key)) key = Character.toLowerCase(key);
@@ -229,21 +281,6 @@ public final class JungleIO {
                 buf = reader.read();
             }
             print(CLEAR_K_STR);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            showCursor();
-        }
-    }
-
-    public synchronized char getKey(boolean echo) {
-        hideCursor();
-        try {
-            while (System.in.available() > 0) reader.read();
-            char buf0 = (char) reader.read();
-            if (!echo) print(CLEAR_K_STR);
-            if (buf0 == 27) return getKey(echo);
-            return buf0;
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -323,6 +360,7 @@ public final class JungleIO {
         print("\033[5m");
     }
 
+    @Deprecated
     public void setCursor(int x, int y) {
         print("\033[" + y + ";" + x + "H");
     }
