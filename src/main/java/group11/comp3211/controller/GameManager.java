@@ -1,5 +1,6 @@
 package group11.comp3211.controller;
 
+import group11.comp3211.common.exceptions.VoidObjectException;
 import group11.comp3211.model.Game;
 import group11.comp3211.model.piece.Piece;
 import group11.comp3211.view.Color;
@@ -146,9 +147,13 @@ public final class GameManager {
                 case ':' -> pauseGame();
                 case '-' | '0' -> game.clearSelectStatus();
                 default -> {
-                    if (game.getSelectedPiece() == null)
-                        game.selectPiece(key);
-                    else {
+                    if (game.getSelectedPiece() == null) {
+                        try {
+                            game.selectPiece(key);
+                        } catch (VoidObjectException voidObjectException) {
+                            io.announce(String.format("Unknown Piece Key '%c'", key), game.getCurrentPlayer().getColor());
+                        }
+                    } else {
                         Piece piece = game.getSelectedPiece();
                         if (key == ' ')
                             piece.setSelected(!piece.isSelected());
@@ -161,7 +166,11 @@ public final class GameManager {
                                     case 'd' -> piece.setDirection(RIGHT);
                                 }
                             } else if (key == '\n') game.getPlayboard().doMove(piece);
-                        } else game.selectPiece(key);
+                        } else try {
+                            game.selectPiece(key);
+                        } catch (VoidObjectException voidObjectException) {
+                            io.announce(String.format("Unknown Piece Key '%c'", key), game.getCurrentPlayer().getColor());
+                        }
                     }
                 }
             }
