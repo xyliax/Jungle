@@ -155,7 +155,7 @@ public final class JungleIO {
     }
 
     public synchronized void showPlayBoard(Game game) {
-        clearScreen();
+        setCursor(0, 0);
         reset();
         for (int r = 1; r <= 19; r++) {
             if (r % 2 == 1) {
@@ -379,7 +379,6 @@ public final class JungleIO {
         print("\033[5m");
     }
 
-    @Deprecated
     public void setCursor(int x, int y) {
         print("\033[" + y + ";" + x + "H");
     }

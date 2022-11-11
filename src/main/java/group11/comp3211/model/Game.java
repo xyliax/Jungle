@@ -64,7 +64,11 @@ public final class Game implements Serializable {
     }
 
     public void runTurn() throws LogicException {
-
+        playboard.doMove(selectedPiece);
+        clearSelectStatus();
+        if (currentPlayer == playerX)
+            currentPlayer = playerY;
+        else currentPlayer = playerX;
     }
 
     @SneakyThrows

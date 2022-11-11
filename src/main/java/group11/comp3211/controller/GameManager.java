@@ -1,5 +1,6 @@
 package group11.comp3211.controller;
 
+import group11.comp3211.common.exceptions.LogicException;
 import group11.comp3211.common.exceptions.VoidObjectException;
 import group11.comp3211.model.Game;
 import group11.comp3211.model.piece.Piece;
@@ -140,12 +141,13 @@ public final class GameManager {
     private void runGame() {
         game.setRunning(true);
         game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ? game.getPlayerX() : game.getPlayerY());
+        char key = '-';
         while (game.isRunning()) {
+            io.clearScreen();
             io.showPlayBoard(game);
-            char key = io.getKey(true);
             switch (key) {
                 case ':' -> pauseGame();
-                case '-' | '0' -> game.clearSelectStatus();
+                case '-' -> game.clearSelectStatus();
                 default -> {
                     if (game.getSelectedPiece() == null) {
                         try {
@@ -165,20 +167,29 @@ public final class GameManager {
                                     case 's' -> piece.setDirection(DOWN);
                                     case 'd' -> piece.setDirection(RIGHT);
                                 }
-                            } else if (key == '\n') game.getPlayboard().doMove(piece);
-                        } else try {
-                            game.selectPiece(key);
-                        } catch (VoidObjectException voidObjectException) {
-                            io.announce(String.format("Unknown Piece Key '%c'", key), game.getCurrentPlayer().getColor());
+                            } else if (key == '\n') {
+                                try {
+                                    game.runTurn();
+                                } catch (LogicException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        } else {
+                            try {
+                                game.selectPiece(key);
+                            } catch (VoidObjectException voidObjectException) {
+                                io.announce(String.format("Unknown Piece Key '%c'", key), game.getCurrentPlayer().getColor());
+                            }
                         }
                     }
                 }
             }
+            io.showPlayBoard(game);
+            key = io.getKey(true);
         }
     }
 
     private void pauseGame() {
-        game.clearSelectStatus();
         io.announce("""
                 You are attempting to leave.
                 Save and Quit:      ' w '
@@ -197,6 +208,7 @@ public final class GameManager {
                 case 'q' | 'Q' -> exit("QUIT GAME without SAVE");
             }
         } while (key != ':');
+        io.clearScreen();
     }
 
     private void settlement() {
