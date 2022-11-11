@@ -21,6 +21,7 @@ import static group11.comp3211.view.Language.CHINESE_SIMPLE;
 @Getter
 @Setter
 public final class Game implements Serializable {
+    private static final File gamePath = new File("game_file");
     private final PlayBoard playboard;
     private final Player playerX;
     private final Player playerY;
@@ -45,7 +46,7 @@ public final class Game implements Serializable {
 
     @SneakyThrows
     public void selectPiece(char key) {
-        String ks = key + currentPlayer.getName();
+        String ks = key + (currentPlayer == playerX ? "@X" : "@Y");
         Piece piece = keyPieceTable.get(ks);
         if (piece == null)
             throw new VoidObjectException();
@@ -67,19 +68,19 @@ public final class Game implements Serializable {
 
     }
 
-    public void saveToFile(String fileName) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+    @SneakyThrows
+    public void saveToFile(String fileName) {
+        if (!gamePath.exists()) gamePath.mkdir();
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(gamePath, fileName));
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
     }
 
-    public Game loadFromFile(String fileName) throws IOException {
+    @SneakyThrows
+    public Game loadFromFile(String fileName) {
         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName));
-        try {
-            return (Game) objectInputStream.readObject();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        return (Game) objectInputStream.readObject();
     }
 
     @SneakyThrows
@@ -128,7 +129,7 @@ public final class Game implements Serializable {
                 Landscape landscape = (Landscape) playboard.get(row, col);
                 Piece piece = (Piece) landscape.getLoad();
                 if (piece == null) continue;
-                String ks = piece.getRank() + piece.getPlayer().getName();
+                String ks = piece.getRank() + (piece.getPlayer() == playerX ? "@X" : "@Y");
                 keyPieceTable.put(ks, piece);
             }
         }

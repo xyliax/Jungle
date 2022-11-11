@@ -6,10 +6,11 @@ import group11.comp3211.model.Movable;
 import group11.comp3211.view.Language;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Data
-public abstract class Landscape implements Loader {
+public abstract class Landscape implements Loader, Serializable {
     protected int row;
     protected int col;
     protected Movable load;

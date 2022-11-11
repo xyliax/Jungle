@@ -90,25 +90,24 @@ public final class GameManager {
                 case '2' -> select = 1;
                 case '3' -> select = 2;
                 case '4' -> select = 3;
-                default -> {
-                }
             }
         } while (key != '\n');
         switch (select) {
             case 0 -> createNewGame();
             case 1 -> loadSavedGame();
             case 2 -> manual();
-            case 3 -> exit("QUIT GAME from Start Menu");
+            case 3 -> exit(String.format("QUIT GAME from Start Menu - %s", new Date()));
         }
     }
 
     private void createNewGame() {
-        Game game = new Game();
+        this.game = new Game();
         io.clearScreen();
         io.announce("""
                 Creating New Game...
                 Follow the instructions         ***
                 No longer than '8' characters   ***
+                You may edit the preload name   ***
                 To clear a character    click 'BACKSPACE'
                 To clear a line         click 'ESCAPE'""", BLUE);
         io.reset();
@@ -116,14 +115,14 @@ public final class GameManager {
         do {
             io.setFront(game.getPlayerX().getColor());
             io.printLine(" - Please Input Player 1's Username");
-            nameX = io.readLine();
+            nameX = io.readLine("userX");
             if (nameX.length() > 8)
                 io.announce("The username should no longer than '8' characters!", BLUE);
         } while (nameX.length() > 8);
         do {
             io.setFront(game.getPlayerY().getColor());
             io.printLine(" - Please Input Player 2's Username");
-            nameY = io.readLine();
+            nameY = io.readLine("userY");
             if (nameY.length() > 8)
                 io.announce("The username should no longer than '8' characters!", BLUE);
         } while (nameY.length() > 8);
@@ -173,9 +172,22 @@ public final class GameManager {
         game.clearSelectStatus();
         io.announce("""
                 You are attempting to leave.
-                Save and Quit:      click 'w'
-                Do not Save:        click 'q'
-                Back to Game:       click 'ESCAPE'""", BLUE);
+                Save and Quit:      ' w '
+                Do not Save:        ' q '
+                Back to Game:       ' : '""", BLUE);
+        char key;
+        do {
+            key = io.getKey(false);
+            switch (key) {
+                case 'w' | 'W' -> {
+                    String fileName = String.format("%s-%s.game",
+                            game.getPlayerX().getName(), game.getPlayerY().getName());
+                    game.saveToFile(fileName);
+                    exit(String.format("SAVE and QUIT GAME - %s - %s", fileName, new Date()));
+                }
+                case 'q' | 'Q' -> exit("QUIT GAME without SAVE");
+            }
+        } while (key != ':');
     }
 
     private void settlement() {
@@ -188,6 +200,7 @@ public final class GameManager {
 
     private void exit(String reason) {
         io.showExitMessage(reason);
+        System.exit(0);
     }
 
     private static final class GameManagerHolder {

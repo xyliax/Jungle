@@ -3,7 +3,9 @@ package group11.comp3211.model;
 import group11.comp3211.model.landscape.Landscape;
 import group11.comp3211.model.piece.Piece;
 
-public final class PlayBoard {
+import java.io.Serializable;
+
+public final class PlayBoard implements Serializable {
     public static final int ROW_NUM = 9;
     public static final int COL_NUM = 7;
     private final Loader[][] board;

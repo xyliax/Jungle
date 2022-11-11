@@ -50,18 +50,31 @@ public final class JungleIO {
     }
 
     public synchronized void showLoadingAnimation() {
-        for (int i = 0; i < 80; i++) {
-            reset();
-            hideCursor();
-            setBold();
-            print("\r");
-            setBack(RED);
-            for (int j = 0; j < i; j++)
-                print(" ");
-            insertFrameDelay(4);
+        Thread skip = new Thread(() -> getKey(false));
+        skip.start();
+        Thread loading = new Thread(() -> {
+            announce("Press any KEY", YELLOW);
+            for (int i = 0; i < 80; i++) {
+                reset();
+                hideCursor();
+                setBold();
+                print("\r");
+                setBack(RED);
+                for (int j = 0; j < i; j++)
+                    print(WHITE_SPACE);
+                if (!insertFrameDelay(8)) return;
+            }
+            skip.interrupt();
+        });
+        loading.start();
+        try {
+            skip.join();
+            loading.interrupt();
+        } catch (InterruptedException ignored) {
+        } finally {
             showCursor();
+            reset();
         }
-        reset();
     }
 
     public synchronized void showWelcomeAnimation() {
@@ -87,15 +100,16 @@ public final class JungleIO {
         insertKeyDelay();
         showCursor();
         reset();
-        print(" ".repeat(27));
+        print(WHITE_SPACE.repeat(27));
         print("PRESS");
         setFront(RED);
         setBold();
         setBlink();
+        setUnderlined();
         print(" ENTER/RETURN ");
         reset();
         printLine("TO START!");
-        print(" ".repeat(18));
+        print(WHITE_SPACE.repeat(18));
         setBack(GREY);
         setBold();
         printLine("Tips: You can always use Ctrl-C to quit Jungle.");
@@ -111,7 +125,7 @@ public final class JungleIO {
         for (char character : JCString.START_MENU.string.toCharArray()) {
             chCount++;
             if (character == '\n') {
-                while (chCount++ < 80) print(" ");
+                while (chCount++ < 80) print(WHITE_SPACE);
                 chCount = 0;
             }
             switch (character) {
@@ -148,14 +162,14 @@ public final class JungleIO {
                 for (int c = 1; c <= 32; c++) {
                     reset();
                     setBack(GREY);
-                    print(" ");
+                    print(WHITE_SPACE);
                 }
             } else {
                 for (int c = 1; c <= 32; c++) {
                     reset();
                     if (c <= 3 || c >= 30) {
                         setBack(GREY);
-                        print(" ");
+                        print(WHITE_SPACE);
                     } else {
                         if (c % 4 != 2 && c % 4 != 3) {
                             Loader block = game.getPlayboard().get(r / 2 - 1, c / 4 - 1);
@@ -163,12 +177,12 @@ public final class JungleIO {
                             c++;
                         } else {
                             setBack(GREY);
-                            print(" ");
+                            print(WHITE_SPACE);
                         }
                     }
                 }
             }
-            printLine("");
+            writer.println();
         }
     }
 
@@ -204,7 +218,6 @@ public final class JungleIO {
         announce("Exit Jungle: " + reason, BLUE);
         reset();
         showCursor();
-        System.exit(0);
     }
 
     public void announce(String msg, Color color) {
@@ -214,25 +227,29 @@ public final class JungleIO {
         setFront(MAGENTA);
         setBold();
         setUnderlined();
-        writer.println("[SYSTEM NOTICE]");
+        writer.print("[SYSTEM NOTICE]");
         reset();
+        writer.println();
         setFront(color);
-        writer.println(msg);
+        writer.print(msg);
         reset();
+        writer.println();
         setBack(GREY);
         setFront(MAGENTA);
         setBold();
         setUnderlined();
-        writer.println("[END OF NOTICE]");
+        writer.print("[END OF NOTICE]");
         reset();
+        writer.println();
     }
 
     @SneakyThrows
-    public synchronized String readLine() {
-        StringBuilder line = new StringBuilder();
+    public synchronized String readLine(String preload) {
+        StringBuilder line = new StringBuilder(preload);
         char buf0;
         do {
             writer.print(promptStr);
+            writer.print(preload);
             boolean lb = false;
             while (!lb) {
                 while (reader.available() > 0) reader.read();
@@ -258,7 +275,7 @@ public final class JungleIO {
     }
 
     @SneakyThrows
-    public synchronized char getKey(boolean echo) {
+    public char getKey(boolean echo) {
         hideCursor();
         char buf0;
         while (reader.available() > 0) reader.read();
@@ -308,11 +325,13 @@ public final class JungleIO {
         writer.println(line);
     }
 
-    private void insertFrameDelay(int times) {
+    private boolean insertFrameDelay(long times) {
         try {
-            sleep((long) FRAME_DELAY * times);
-        } catch (InterruptedException ignored) {
+            sleep(FRAME_DELAY * times);
+        } catch (InterruptedException interruptedException) {
+            return false;
         }
+        return true;
     }
 
     private void insertKeyDelay() {

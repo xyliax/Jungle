@@ -6,8 +6,10 @@ import group11.comp3211.model.Player;
 import group11.comp3211.view.Language;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public abstract class Piece implements Movable {
+public abstract class Piece implements Movable, Serializable {
     protected int rank;
     protected int row;
     protected int col;
