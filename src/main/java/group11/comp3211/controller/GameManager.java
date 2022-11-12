@@ -154,14 +154,12 @@ public final class GameManager {
                             Piece piece = game.getSelectedPiece();
                             if (key == ' ') piece.setSelected(!piece.isSelected());
                             else if (piece.isSelected()) {
-                                if (piece.getDirection() == STAY) {
-                                    switch (key) {
-                                        case 'w', 'W' -> piece.setDirection(UP);
-                                        case 'a', 'A' -> piece.setDirection(LEFT);
-                                        case 's', 'S' -> piece.setDirection(DOWN);
-                                        case 'd', 'D' -> piece.setDirection(RIGHT);
-                                    }
-                                    game.runTurn();
+                                switch (key) {
+                                    case 'w', 'W' -> piece.setDirection(UP);
+                                    case 'a', 'A' -> piece.setDirection(LEFT);
+                                    case 's', 'S' -> piece.setDirection(DOWN);
+                                    case 'd', 'D' -> piece.setDirection(RIGHT);
+                                    case '\n' -> game.runTurn();
                                 }
                             } else game.selectPiece(key);
                         }
