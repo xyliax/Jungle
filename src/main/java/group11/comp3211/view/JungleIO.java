@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static group11.comp3211.view.Color.*;
 import static java.lang.Thread.sleep;
@@ -259,6 +260,66 @@ public final class JungleIO {
         writer.println();
     }
 
+    public void announceInGame(String msg, Color color) {
+        setCursor(20, 0);
+        announce(msg, color);
+    }
+
+    public char getKeyInGame(char key, Color color) {
+        setCursor(16, 50);
+        setBack(GREY);
+        setFront(YELLOW);
+        setUnderlined();
+        writer.print("KEY ECHOING");
+        reset();
+        setBack(GREY);
+        setFront(color);
+        setUnderlined();
+        setCursor(17, 50);
+        writer.print(key);
+        setCursor(16, 50);
+        return getKey(true);
+    }
+
+    public void showNoticeBoard(String notice) {
+        String stripped = notice;
+        if (notice.lines().count() > 10) {
+            Stream<String> lines = notice.lines();
+            stripped = lines.skip(lines.count() - 10).toString();
+        }
+        int col = 50, row = 1;
+        reset();
+        setCursor(row++, col);
+        setBack(GREY);
+        setFront(YELLOW);
+        setBold();
+        setUnderlined();
+        writer.print("[NOTICE BOARD]");
+        reset();
+        setCursor(row++, col);
+        setBack(GREY);
+        setFront(BLUE);
+        setBold();
+        int cnt = 0;
+        for (char c : stripped.toCharArray()) {
+            if (c == '\n') {
+                while (cnt++ < 50)
+                    writer.print(WHITE_SPACE);
+                cnt = -1;
+                setCursor(row++, col);
+            } else writer.print(c);
+            cnt++;
+        }
+        while (row < 15) {
+            while (cnt++ < 50)
+                writer.print(WHITE_SPACE);
+            cnt = 0;
+            setCursor(row++, col);
+        }
+        reset();
+        setCursor(row + 1, col);
+    }
+
     @SneakyThrows
     public synchronized String readLine(String preload) {
         StringBuilder line = new StringBuilder(preload);
@@ -298,17 +359,20 @@ public final class JungleIO {
         while (reader.available() > 0) reader.read();
         buf0 = (char) reader.read();
         if (!echo) writer.print(CLEAR_K_STR);
+        else writer.print("\b" + buf0);
         if (buf0 == 27) {
-            if (reader.available() > 0 && reader.read() == '[') {
-                char m = switch (reader.read()) {
-                    case 'A' -> 'w';
-                    case 'B' -> 's';
-                    case 'C' -> 'd';
-                    case 'D' -> 'a';
-                    default -> 27;
-                };
-                reset();
-                return m;
+            if (dRemap) {
+                if (reader.available() > 0 && reader.read() == '[') {
+                    char m = switch (reader.read()) {
+                        case 'A', 'Z' -> 'w';
+                        case 'B' -> 's';
+                        case 'C' -> 'd';
+                        case 'D' -> 'a';
+                        default -> 27;
+                    };
+                    reset();
+                    return m;
+                }
             } else return getKey(echo);
         }
         reset();
@@ -390,8 +454,8 @@ public final class JungleIO {
         print("\033[5m");
     }
 
-    public void setCursor(int x, int y) {
-        print("\033[" + y + ";" + x + "H");
+    public void setCursor(int row, int col) {
+        print("\033[" + row + ";" + col + "H");
     }
 
     public void hideCursor() {

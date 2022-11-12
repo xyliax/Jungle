@@ -24,8 +24,9 @@ enum JCString {
             #                        Option 2   ===>   LOAD    GAME                       @
             #                        Option 3   ===>   SHOW    HELP                       @
             #                        Option 4   ===>   QUIT    GAME                       @
-            |                    Press 1/2/3/4 => Select Option 1/2/3/4                   @
-            |                    Press 'SPACE' => Move to the Next Option                 @
+            |                    Press 1/2/3/4   => Select Option 1/2/3/4                 @
+            |                Press 'SPACE'/'TAB' => Move to the Next Option               @
+            |                Press  'SHIFT+TAB'  => Move to the Previous Option           @
             ===============================================================================
             """);
     final String string;
