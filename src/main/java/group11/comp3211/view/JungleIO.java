@@ -12,7 +12,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.io.Console;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Random;
@@ -35,6 +34,7 @@ public final class JungleIO {
     private Scanner scanner;
     private InputStream reader;
     private PrintStream writer;
+    private boolean dRemap;
 
     @SneakyThrows
     private JungleIO() {
@@ -43,6 +43,7 @@ public final class JungleIO {
         this.scanner = new Scanner(System.in);
         this.reader = System.in;
         this.writer = System.out;
+        this.dRemap = false;
     }
 
     public static JungleIO getInstance() {
@@ -72,7 +73,6 @@ public final class JungleIO {
             loading.interrupt();
         } catch (InterruptedException ignored) {
         } finally {
-            showCursor();
             reset();
         }
     }
@@ -98,7 +98,6 @@ public final class JungleIO {
             writer.print(character);
         }
         insertKeyDelay();
-        showCursor();
         reset();
         print(WHITE_SPACE.repeat(27));
         print("PRESS");
@@ -150,7 +149,6 @@ public final class JungleIO {
                 default -> writer.print(character);
             }
         }
-        showCursor();
         reset();
     }
 
@@ -159,22 +157,22 @@ public final class JungleIO {
         reset();
         for (int r = 1; r <= 19; r++) {
             if (r % 2 == 1) {
-                for (int c = 1; c <= 32; c++) {
+                for (int c = 1; c <= 46; c++) {
                     reset();
                     setBack(GREY);
                     print(WHITE_SPACE);
                 }
             } else {
-                for (int c = 1; c <= 32; c++) {
+                for (int c = 1; c <= 46; c++) {
                     reset();
-                    if (c <= 3 || c >= 30) {
+                    if (c <= 3 || c >= 44) {
                         setBack(GREY);
                         print(WHITE_SPACE);
                     } else {
-                        if (c % 4 != 2 && c % 4 != 3) {
-                            Loader block = game.getPlayboard().get(r / 2 - 1, c / 4 - 1);
+                        if (c % 6 != 2 && c % 6 != 3) {
+                            Loader block = game.getPlayboard().get(r / 2 - 1, (c - 4) / 6);
                             showBlock(block, game);
-                            c++;
+                            c += 3;
                         } else {
                             setBack(GREY);
                             print(WHITE_SPACE);
@@ -195,11 +193,11 @@ public final class JungleIO {
             if (den.getPlayer() == game.getPlayerX()) setFront(RED);
             else if (den.getPlayer() == game.getPlayerY()) setFront(GREEN);
             setBold();
-            print(den.getSymbol(game.getLanguage()));
+            print(WHITE_SPACE + den.getSymbol(game.getLanguage()) + WHITE_SPACE);
             return;
         }
         Piece piece = (Piece) landscape.getLoad();
-        if (piece == null) print(WHITE_SPACE + WHITE_SPACE);
+        if (piece == null) print(WHITE_SPACE.repeat(4));
         else {
             if (game.getSelectedPiece() == piece) {
                 setBack(YELLOW);
@@ -210,14 +208,13 @@ public final class JungleIO {
             }
             if (piece.getPlayer() == game.getPlayerX()) setFront(RED);
             else if (piece.getPlayer() == game.getPlayerY()) setFront(GREEN);
-            print(piece.getSymbol(game.getLanguage()));
+            print(WHITE_SPACE + piece.getSymbol(game.getLanguage()) + WHITE_SPACE);
         }
     }
 
     public void showExitMessage(String reason) {
         announce("Exit Jungle: " + reason, BLUE);
         reset();
-        showCursor();
     }
 
     public void announce(String msg, Color color) {
@@ -262,7 +259,8 @@ public final class JungleIO {
                     }
                     case 127 -> {
                         writer.print(CLEAR_L_STR);
-                        line.deleteCharAt(line.length() - 1);
+                        if (line.length() > 0)
+                            line.deleteCharAt(line.length() - 1);
                         writer.print(promptStr);
                         writer.print(line);
                     }
@@ -281,28 +279,21 @@ public final class JungleIO {
         while (reader.available() > 0) reader.read();
         buf0 = (char) reader.read();
         if (!echo) writer.print(CLEAR_K_STR);
-        if (buf0 == 27) return getKey(echo);
-        showCursor();
-        return buf0;
-    }
-
-    @Deprecated
-    public synchronized void waitKey(char key) {
-        hideCursor();
-        if (Character.isAlphabetic(key)) key = Character.toLowerCase(key);
-        try {
-            while (System.in.available() > 0) System.in.read();
-            int buf = reader.read();
-            while ((char) buf != Character.toUpperCase(key)) {
-                print(CLEAR_K_STR);
-                buf = reader.read();
-            }
-            print(CLEAR_K_STR);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            showCursor();
+        if (buf0 == 27) {
+            if (reader.available() > 0 && reader.read() == '[') {
+                char m = switch (reader.read()) {
+                    case 'A' -> 'w';
+                    case 'B' -> 's';
+                    case 'C' -> 'd';
+                    case 'D' -> 'a';
+                    default -> 27;
+                };
+                reset();
+                return m;
+            } else return getKey(echo);
         }
+        reset();
+        return buf0;
     }
 
     /**
@@ -342,17 +333,18 @@ public final class JungleIO {
     }
 
     public void clearScreen() {
-        if (console != null) writer.print("\033c");
+        writer.print("\033c");
     }
 
     /**
      * Reset all console attributes set by {@link #setFront(Color)}, {@link #setBack(Color)}, {@link #setBold()},
-     * {@link #setDim()}, {@link #setUnderlined()}, {@link #setBlink()}.
+     * {@link #setDim()}, {@link #setUnderlined()}, {@link #setBlink()}, {@link #hideCursor()}, {@link #showCursor()}.
      * <br>
-     * {@link #hideCursor()}, {@link #showCursor()}, {@link #setCursor(int, int)} cannot be reset by this method.
+     * {@link #setCursor(int, int)} cannot be reset by this method.
      */
     public void reset() {
         print("\033[0m");
+        showCursor();
     }
 
     public void setFront(Color color) {

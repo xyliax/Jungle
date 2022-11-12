@@ -86,6 +86,11 @@ public final class Game implements Serializable {
         return (Game) objectInputStream.readObject();
     }
 
+    public String[] getFileList() {
+        String[] fileList = gamePath.list((dir, name) -> name.endsWith(".game"));
+        return fileList;
+    }
+
     @SneakyThrows
     private void initBoard() {
         playboard.put(new Den(0, 3, playerX));

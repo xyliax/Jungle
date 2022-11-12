@@ -103,8 +103,8 @@ public final class GameManager {
     }
 
     private void createNewGame() {
-        this.game = new Game();
         io.clearScreen();
+        this.game = new Game();
         io.announce("""
                 Creating New Game...
                 Follow the instructions         ***
@@ -118,15 +118,13 @@ public final class GameManager {
             io.setFront(game.getPlayerX().getColor());
             io.printLine(" - Please Input Player 1's Username");
             nameX = io.readLine("userX");
-            if (nameX.length() > 8)
-                io.announce("The username should no longer than '8' characters!", BLUE);
+            if (nameX.length() > 8) io.announce("The username should no longer than '8' characters!", BLUE);
         } while (nameX.length() > 8);
         do {
             io.setFront(game.getPlayerY().getColor());
             io.printLine(" - Please Input Player 2's Username");
             nameY = io.readLine("userY");
-            if (nameY.length() > 8)
-                io.announce("The username should no longer than '8' characters!", BLUE);
+            if (nameY.length() > 8) io.announce("The username should no longer than '8' characters!", BLUE);
         } while (nameY.length() > 8);
         game.getPlayerX().setName(nameX);
         game.getPlayerY().setName(nameY);
@@ -141,52 +139,44 @@ public final class GameManager {
     private void runGame() {
         game.setRunning(true);
         game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ? game.getPlayerX() : game.getPlayerY());
+        io.setDRemap(true);
         char key = '-';
         while (game.isRunning()) {
             io.clearScreen();
             io.showPlayBoard(game);
-            switch (key) {
-                case ':' -> pauseGame();
-                case '-' -> game.clearSelectStatus();
-                default -> {
-                    if (game.getSelectedPiece() == null) {
-                        try {
-                            game.selectPiece(key);
-                        } catch (VoidObjectException voidObjectException) {
-                            io.announce(String.format("Unknown Piece Key '%c'", key), game.getCurrentPlayer().getColor());
-                        }
-                    } else {
-                        Piece piece = game.getSelectedPiece();
-                        if (key == ' ')
-                            piece.setSelected(!piece.isSelected());
-                        else if (piece.isSelected()) {
-                            if (piece.getDirection() == STAY) {
-                                switch (Character.toLowerCase(key)) {
-                                    case 'w' -> piece.setDirection(UP);
-                                    case 'a' -> piece.setDirection(LEFT);
-                                    case 's' -> piece.setDirection(DOWN);
-                                    case 'd' -> piece.setDirection(RIGHT);
-                                }
-                            } else if (key == '\n') {
-                                try {
-                                    game.runTurn();
-                                } catch (LogicException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        } else {
-                            try {
-                                game.selectPiece(key);
-                            } catch (VoidObjectException voidObjectException) {
-                                io.announce(String.format("Unknown Piece Key '%c'", key), game.getCurrentPlayer().getColor());
-                            }
+            try {
+                switch (key) {
+                    case ':' -> pauseGame();
+                    case '-', '0' -> game.clearSelectStatus();
+                    default -> {
+                        if (game.getSelectedPiece() == null) game.selectPiece(key);
+                        else {
+                            Piece piece = game.getSelectedPiece();
+                            if (key == ' ') piece.setSelected(!piece.isSelected());
+                            else if (piece.isSelected()) {
+                                if (piece.getDirection() == STAY) {
+                                    switch (Character.toLowerCase(key)) {
+                                        case 'w', 'W' -> piece.setDirection(UP);
+                                        case 'a', 'A' -> piece.setDirection(LEFT);
+                                        case 's', 'S' -> piece.setDirection(DOWN);
+                                        case 'd', 'D' -> piece.setDirection(RIGHT);
+                                    }
+                                } else if (key == '\n') game.runTurn();
+                            } else game.selectPiece(key);
                         }
                     }
                 }
+            } catch (VoidObjectException voidObjectException) {
+                io.announce(String.format("Unknown Piece Key '%c'", key), game.getCurrentPlayer().getColor());
+                game.clearSelectStatus();
+            } catch (LogicException logicException) {
+                io.announce(logicException.toString(), game.getCurrentPlayer().getColor());
+            } finally {
+                io.showPlayBoard(game);
+                key = io.getKey(true);
             }
-            io.showPlayBoard(game);
-            key = io.getKey(true);
         }
+        io.setDRemap(false);
     }
 
     private void pauseGame() {
@@ -199,13 +189,14 @@ public final class GameManager {
         do {
             key = io.getKey(false);
             switch (key) {
-                case 'w' | 'W' -> {
-                    String fileName = String.format("%s-%s.game",
-                            game.getPlayerX().getName(), game.getPlayerY().getName());
+                case 'w', 'W' -> {
+                    String fileName = String.format("%s-%s.game", game.getPlayerX().getName(), game.getPlayerY().getName());
+                    io.printLine("Use default file name?");
+                    fileName = io.readLine(fileName);
                     game.saveToFile(fileName);
                     exit(String.format("SAVE and QUIT GAME - %s - %s", fileName, new Date()));
                 }
-                case 'q' | 'Q' -> exit("QUIT GAME without SAVE");
+                case 'q', 'Q' -> exit("QUIT GAME without SAVE");
             }
         } while (key != ':');
         io.clearScreen();
