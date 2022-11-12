@@ -44,7 +44,7 @@ public final class Game implements Serializable {
         initKeyPieceTable();
     }
 
-    public void selectPiece(char key) throws VoidObjectException {
+    public void selectPieceByKey(char key) throws VoidObjectException {
         String ks = key + (currentPlayer == playerX ? "@X" : "@Y");
         Piece piece = keyPieceTable.get(ks);
         if (piece == null)

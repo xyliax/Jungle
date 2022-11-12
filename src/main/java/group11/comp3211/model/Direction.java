@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum Direction {
     UP("^"), LEFT("<"), DOWN("v"), RIGHT(">"), STAY(null);
-    String symbol;
+    final String symbol;
 
     Direction(String symbol) {
         this.symbol = symbol;

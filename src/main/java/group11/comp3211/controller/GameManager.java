@@ -149,7 +149,7 @@ public final class GameManager {
                     case ':' -> pauseGame();
                     case '-', '0' -> game.clearSelectStatus();
                     default -> {
-                        if (game.getSelectedPiece() == null) game.selectPiece(key);
+                        if (game.getSelectedPiece() == null) game.selectPieceByKey(key);
                         else {
                             Piece piece = game.getSelectedPiece();
                             if (key == ' ') piece.setSelected(!piece.isSelected());
@@ -162,7 +162,7 @@ public final class GameManager {
                                     case '\n' -> game.runTurn();
                                     default -> piece.setDirection(STAY);
                                 }
-                            } else game.selectPiece(key);
+                            } else game.selectPieceByKey(key);
                         }
                     }
                 }

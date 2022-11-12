@@ -205,6 +205,7 @@ public final class JungleIO {
                 case LEFT -> tCol--;
                 case DOWN -> tRow++;
                 case RIGHT -> tCol++;
+                case STAY -> tRow = tCol = -1;
             }
             if (tRow == landscape.getRow() && tCol == landscape.getCol()) {
                 setFront(YELLOW);
