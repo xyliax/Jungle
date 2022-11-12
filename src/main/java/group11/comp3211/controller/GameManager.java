@@ -160,6 +160,7 @@ public final class GameManager {
                                     case 's', 'S' -> piece.setDirection(DOWN);
                                     case 'd', 'D' -> piece.setDirection(RIGHT);
                                     case '\n' -> game.runTurn();
+                                    default -> piece.setDirection(STAY);
                                 }
                             } else game.selectPiece(key);
                         }
