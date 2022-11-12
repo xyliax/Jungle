@@ -155,13 +155,14 @@ public final class GameManager {
                             if (key == ' ') piece.setSelected(!piece.isSelected());
                             else if (piece.isSelected()) {
                                 if (piece.getDirection() == STAY) {
-                                    switch (Character.toLowerCase(key)) {
+                                    switch (key) {
                                         case 'w', 'W' -> piece.setDirection(UP);
                                         case 'a', 'A' -> piece.setDirection(LEFT);
                                         case 's', 'S' -> piece.setDirection(DOWN);
                                         case 'd', 'D' -> piece.setDirection(RIGHT);
                                     }
-                                } else if (key == '\n') game.runTurn();
+                                    game.runTurn();
+                                }
                             } else game.selectPiece(key);
                         }
                     }

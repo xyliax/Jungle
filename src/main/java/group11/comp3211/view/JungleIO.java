@@ -187,15 +187,14 @@ public final class JungleIO {
     private synchronized void showBlock(Loader block, Game game) {
         reset();
         Landscape landscape = (Landscape) block;
-        if (landscape instanceof River) setBack(CYAN);
-        else if (landscape instanceof Trap) setBack(MAGENTA);
+        if (landscape instanceof Trap) setBack(MAGENTA);
         else if (landscape instanceof Den den) {
             if (den.getPlayer() == game.getPlayerX()) setFront(RED);
             else if (den.getPlayer() == game.getPlayerY()) setFront(GREEN);
             setBold();
             print(WHITE_SPACE + den.getSymbol(game.getLanguage()) + WHITE_SPACE);
             return;
-        }
+        } else if (landscape instanceof River) setBack(CYAN);
         Piece piece = (Piece) landscape.getLoad();
         if (piece == null) print(WHITE_SPACE.repeat(4));
         else {
