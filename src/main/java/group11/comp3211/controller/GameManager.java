@@ -143,6 +143,8 @@ public final class GameManager {
         String[] fileList = Game.getFileList();
         if (fileList == null || fileList.length == 0) {
             io.announce("No game files found!", RED);
+            io.announce("Press any KEY", YELLOW);
+            io.getKey(false);
             return;
         }
         int select = 0;

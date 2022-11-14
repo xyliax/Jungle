@@ -37,9 +37,10 @@ if [ "$1" = 'uninstall' ]; then
   exit 0
 fi
 
-size=$(stty size)
-rm -f "$JUNGLE_HOME"/src/main/resources/.console_siz && sleep 0.1
+rm -f "$JUNGLE_HOME"/src/main/resources/.console_siz
 stty size >"$JUNGLE_HOME"/src/main/resources/.console_siz
+
+size=$(stty size)
 # shellcheck disable=SC2206
 size_arr=($size)
 row=${size_arr[0]}
@@ -109,7 +110,7 @@ fi
 
 bin_path="$JUNGLE_HOME"/target/appassembler/bin/
 reset
-stty cbreak && "${bin_path}"JungleApp && rm -f "$JUNGLE_HOME"/src/main/resources/.console_siz
+stty cbreak && "${bin_path}"JungleApp
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
   if [ "$1" != 'build' ]; then
