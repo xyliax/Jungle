@@ -51,7 +51,7 @@ if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.\033[0m"
 
-    if rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6 &&
+    if ! rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6 &&
      tar -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz -C "$JUNGLE_HOME"/lib-maven; then
       echo -e "\033[31;1m\
   Unable to extract file $JUNGLE_HOME/lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
