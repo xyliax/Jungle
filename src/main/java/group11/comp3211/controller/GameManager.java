@@ -4,7 +4,6 @@ import group11.comp3211.common.exceptions.LogicException;
 import group11.comp3211.common.exceptions.VoidObjectException;
 import group11.comp3211.model.Game;
 import group11.comp3211.model.piece.Piece;
-import group11.comp3211.view.Color;
 import group11.comp3211.view.JungleIO;
 import sun.misc.Signal;
 
@@ -12,8 +11,7 @@ import java.util.Date;
 import java.util.Random;
 
 import static group11.comp3211.model.Direction.*;
-import static group11.comp3211.view.Color.BLUE;
-import static group11.comp3211.view.Color.RED;
+import static group11.comp3211.view.Color.*;
 
 
 public final class GameManager {
@@ -59,9 +57,12 @@ public final class GameManager {
                 throw new RuntimeException(e);
             }
         } else {
-            io.setFront(Color.GREEN);
-            io.printLine(String.format("Your OS is %s - %s", OS, ARCH));
-            io.printLine("Full features unlocked!");
+            io.announce(String.format("""
+                            Your OS is ' %s ' ARCH ' %s '
+                            Console Window Size %d * %d
+                            You are not recommended to resize window ***
+                            Full features unlocked!!!""", OS, ARCH,
+                    io.getConsole_row(), io.getConsole_col()), GREEN);
             Signal.handle(new Signal("INT"), handle -> exit("SIGINT received at " + new Date()));
             io.showLoadingAnimation();
         }
@@ -83,7 +84,7 @@ public final class GameManager {
     private void startMenu() {
         int select = 0;
         char key;
-        while (select != 3) {
+        while (select != -1) {
             do {
                 io.showStartMenu(select);
                 io.setDRemap(true);
@@ -139,7 +140,40 @@ public final class GameManager {
     }
 
     private void loadSavedGame() {
-
+        String[] fileList = Game.getFileList();
+        if (fileList.length == 0) {
+            io.announce("No game files found!", RED);
+            return;
+        }
+        int select = 0;
+        char key;
+        do {
+            io.showSavedGames(fileList, select);
+            io.setDRemap(true);
+            key = io.getKey(true);
+            io.setDRemap(false);
+            switch (key) {
+                case 27 -> select = -1;
+                case ' ', '\t', 's' -> select = (select + 1) % fileList.length;
+                case 'w' -> select = (select + fileList.length - 1) % fileList.length;
+                default -> {
+                    if (Character.isDigit(key)) {
+                        int t = Integer.parseInt(String.valueOf(key));
+                        if (t < fileList.length) select = t;
+                    }
+                }
+            }
+        } while (key != '\n');
+        if (select == -1) return;
+        game = Game.loadFromFile(fileList[select]);
+        io.announce(String.format("""
+                        Successfully load game from '%s'
+                        Info: '%s' vs '%s'
+                        Press any KEY to start""", fileList[select],
+                game.getPlayerX(), game.getPlayerY()), BLUE);
+        io.getKey(false);
+        io.reset();
+        runGame();
     }
 
     private void runGame() {
@@ -209,10 +243,10 @@ public final class GameManager {
         char key = io.getKey(false);
         switch (key) {
             case 'w', 'W' -> {
-                String fileName = String.format("%s-%s.game", game.getPlayerX().getName(), game.getPlayerY().getName());
+                String fileName = String.format("%s-%s", game.getPlayerX().getName(), game.getPlayerY().getName());
                 io.printLine("Use default file name?");
                 fileName = io.readLine(fileName);
-                game.saveToFile(fileName);
+                game.saveToFile(fileName + ".game");
                 game.setRunning(false);
                 exit(String.format("SAVE and QUIT GAME at %s\nSave in file %s", new Date(), fileName));
             }

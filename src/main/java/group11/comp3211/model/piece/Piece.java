@@ -25,6 +25,8 @@ public abstract class Piece implements Movable, Serializable {
         this.selected = false;
         this.direction = Direction.STAY;
         this.player = player;
+        this.rank = -1;
+        this.type = JungleType.UNDEFINED;
     }
 
     public abstract String getSymbol(Language language);

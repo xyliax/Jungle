@@ -20,6 +20,8 @@ if [ "$1" = "help" ] || [ "$1" = "-h" ]; then
 fi
 
 size=$(stty size)
+rm -f .console_siz
+stty size >.console_siz
 # shellcheck disable=SC2206
 size_arr=($size)
 row=${size_arr[0]}
@@ -64,6 +66,7 @@ if [ "$1" = "build" ]; then
 fi
 
 bin_path=./target/appassembler/bin/
+reset
 stty cbreak && ${bin_path}JungleApp
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then

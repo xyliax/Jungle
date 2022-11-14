@@ -45,11 +45,22 @@ public final class Game implements Serializable {
         initKeyPieceTable();
     }
 
+    public static String[] getFileList() {
+        return gamePath.list((dir, name) -> name.endsWith(".game"));
+    }
+
+    @SneakyThrows
+    public static Game loadFromFile(String fileName) {
+        FileInputStream fileInputStream = new FileInputStream(new File(gamePath, fileName));
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        return (Game) objectInputStream.readObject();
+    }
+
     public void selectPieceByKey(char key) throws VoidObjectException {
         String ks = key + (currentPlayer == playerX ? "@X" : "@Y");
         Piece piece = keyPieceTable.get(ks);
         if (piece == null)
-            throw new VoidObjectException(String.format("Cannot find piece by %s", key));
+            throw new VoidObjectException(String.format("Cannot find piece by '%s'", key));
         selectedPiece = piece;
     }
 
@@ -84,17 +95,6 @@ public final class Game implements Serializable {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
-    }
-
-    @SneakyThrows
-    public Game loadFromFile(String fileName) {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName));
-        return (Game) objectInputStream.readObject();
-    }
-
-    public String[] getFileList() {
-        String[] fileList = gamePath.list((dir, name) -> name.endsWith(".game"));
-        return fileList;
     }
 
     @SneakyThrows

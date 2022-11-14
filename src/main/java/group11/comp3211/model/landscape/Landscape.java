@@ -8,6 +8,7 @@ import group11.comp3211.view.Language;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -21,6 +22,9 @@ public abstract class Landscape implements Loader, Serializable {
     public Landscape(int row, int col) {
         this.row = row;
         this.col = col;
+        this.load = null;
+        this.allowed = new HashSet<>();
+        this.type = JungleType.UNDEFINED;
     }
 
     @Override

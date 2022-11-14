@@ -11,9 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
-import java.io.Console;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -30,6 +28,8 @@ public final class JungleIO {
     public static final String WHITE_SPACE = " ";
     private static final String CLEAR_K_STR = "\b\b\b\b    \b\b\b\b";
     private static final String CLEAR_L_STR = "\r" + " ".repeat(64) + "\r";
+    private int console_row;
+    private int console_col;
     private Console console;
     private String promptStr;
     private Scanner scanner;
@@ -37,7 +37,6 @@ public final class JungleIO {
     private PrintStream writer;
     private boolean dRemap;
 
-    @SneakyThrows
     private JungleIO() {
         this.console = System.console();
         this.promptStr = "\033[33m>>> \033[0m";
@@ -45,6 +44,12 @@ public final class JungleIO {
         this.reader = System.in;
         this.writer = System.out;
         this.dRemap = false;
+        try {
+            Scanner siz = new Scanner(new FileInputStream(".console_siz"));
+            this.console_row = siz.nextInt(10);
+            this.console_col = siz.nextInt(10);
+        } catch (FileNotFoundException ignored) {
+        }
     }
 
     public static JungleIO getInstance() {
@@ -52,26 +57,37 @@ public final class JungleIO {
     }
 
     public synchronized void showLoadingAnimation() {
-        Thread skip = new Thread(() -> getKey(false));
-        skip.start();
         Thread loading = new Thread(() -> {
             announce("Press any KEY", YELLOW);
-            for (int i = 0; i < 80; i++) {
-                reset();
+            setBack(GREY);
+            setCursor(13, 0);
+            writer.print(WHITE_SPACE.repeat(console_col));
+            setCursor(15, 0);
+            writer.print(WHITE_SPACE.repeat(console_col));
+            setBack(RED);
+            setCursor(14, 0);
+            for (int i = 0; i < console_col; i++) {
                 hideCursor();
                 setBold();
                 print("\r");
-                setBack(RED);
                 for (int j = 0; j < i; j++)
-                    print(WHITE_SPACE);
+                    writer.print(WHITE_SPACE);
                 if (!insertFrameDelay(8)) return;
             }
-            skip.interrupt();
         });
+        Thread skip = new Thread(() -> {
+            try {
+                while (reader.available() <= 0) sleep(10);
+                reader.read();
+                loading.interrupt();
+            } catch (IOException | InterruptedException ignored) {
+            }
+        });
+        skip.start();
         loading.start();
         try {
-            skip.join();
-            loading.interrupt();
+            loading.join();
+            skip.interrupt();
         } catch (InterruptedException ignored) {
         } finally {
             reset();
@@ -79,8 +95,8 @@ public final class JungleIO {
     }
 
     public synchronized void showWelcomeAnimation() {
-        clearScreen();
         reset();
+        clearScreen();
         hideCursor();
         setBack(GREY);
         Color front = Color.values()[new Random().nextInt(Color.values().length)];
@@ -90,9 +106,12 @@ public final class JungleIO {
         setBold();
         int chCount = 0;
         for (char character : JCString.WELCOME_BANNER.string.toCharArray()) {
+            if (chCount == 0)
+                writer.print(WHITE_SPACE.repeat((console_col - 80) / 2));
             chCount++;
             if (character == '\n') {
                 while (chCount++ < 80) writer.print(' ');
+                writer.print(WHITE_SPACE.repeat((console_col - 80) / 2));
                 chCount = 0;
                 insertFrameDelay(1);
             }
@@ -100,7 +119,7 @@ public final class JungleIO {
         }
         insertKeyDelay();
         reset();
-        print(WHITE_SPACE.repeat(27));
+        print(WHITE_SPACE.repeat((console_col - 28) / 2));
         print("PRESS");
         setFront(RED);
         setBold();
@@ -109,7 +128,7 @@ public final class JungleIO {
         print(" ENTER/RETURN ");
         reset();
         printLine("TO START!");
-        print(WHITE_SPACE.repeat(18));
+        print(WHITE_SPACE.repeat((console_col - 48) / 2));
         setBack(GREY);
         setBold();
         printLine("Tips: You can always use Ctrl-C to quit Jungle.");
@@ -117,15 +136,18 @@ public final class JungleIO {
     }
 
     public synchronized void showStartMenu(int select) {
-        clearScreen();
         reset();
+        clearScreen();
         hideCursor();
         int chCount = 0;
         int opt = 0;
         for (char character : JCString.START_MENU.string.toCharArray()) {
+            if (chCount == 0)
+                writer.print(WHITE_SPACE.repeat((console_col - 80) / 2));
             chCount++;
             if (character == '\n') {
                 while (chCount++ < 80) print(WHITE_SPACE);
+                writer.print(WHITE_SPACE.repeat((console_col - 80) / 2));
                 chCount = 0;
             }
             switch (character) {
@@ -232,8 +254,24 @@ public final class JungleIO {
         }
     }
 
+    public synchronized void showSavedGames(String[] fileList, int select) {
+        reset();
+        clearScreen();
+        hideCursor();
+        announce("SELECT GAME FILE TO LOAD", CYAN);
+        for (int fileId = 0; fileId < fileList.length; fileId++) {
+            if (fileId == select) {
+                setFront(RED);
+                setBold();
+                setBack(YELLOW);
+            } else setBack(GREY);
+            writer.printf("%-6d%s\n", fileId, fileList[fileId]);
+        }
+        reset();
+    }
+
     public void showExitMessage(String reason) {
-        announce("Exit Jungle: " + reason, BLUE);
+        announceInGame("Exit Jungle: " + reason, BLUE);
         reset();
     }
 
@@ -261,6 +299,10 @@ public final class JungleIO {
     }
 
     public void announceInGame(String msg, Color color) {
+        reset();
+        setCursor(20, 0);
+        for (int r = 20; r < console_row; r++)
+            writer.println(WHITE_SPACE.repeat(console_row));
         setCursor(20, 0);
         announce(msg, color);
     }
@@ -276,8 +318,8 @@ public final class JungleIO {
         setFront(color);
         setUnderlined();
         setCursor(17, 50);
-        writer.print(key);
-        setCursor(16, 50);
+        writer.print(key + WHITE_SPACE.repeat(3));
+        setCursor(17, 50);
         return getKey(true);
     }
 
