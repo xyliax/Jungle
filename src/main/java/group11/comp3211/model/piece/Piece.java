@@ -31,8 +31,17 @@ public abstract class Piece implements Movable, Serializable {
 
     public abstract String getSymbol(Language language);
 
-    @Override
-    public JungleType type() {
-        return type;
+    public void die() {
+        row = col = -1;
+    }
+
+    public boolean isDead() {
+        return row == -1;
+    }
+
+    public void move(int row, int col) {
+        this.row = row;
+        this.col = col;
+        direction = Direction.STAY;
     }
 }

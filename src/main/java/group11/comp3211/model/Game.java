@@ -75,6 +75,7 @@ public final class Game implements Serializable {
         }
     }
 
+    // selectedPiece; piece.direction
     public void runTurn() throws LogicException {
         if (!selectedPiece.isSelected())
             throw new VoidObjectException(String.format("%s is not confirmed!", selectedPiece.getSymbol(language)));

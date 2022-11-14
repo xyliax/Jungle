@@ -26,9 +26,4 @@ public class Wolf extends Piece {
             case EMOJI -> null;
         };
     }
-
-    @Override
-    public void move(Direction direction) throws LogicException {
-
-    }
 }

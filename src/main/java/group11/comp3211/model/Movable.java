@@ -6,7 +6,7 @@ import group11.comp3211.view.Language;
 public interface Movable {
     String getSymbol(Language language);
 
-    void move(Direction direction) throws LogicException;
+    void move(int row, int col);
 
-    JungleType type();
+    JungleType getType();
 }
