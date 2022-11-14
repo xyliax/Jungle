@@ -54,7 +54,7 @@ if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
     if rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6 &&
      tar -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz -C "$JUNGLE_HOME"; then
       echo -e "\033[31;1m\
-  Unable to extract file ./lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
+  Unable to extract file $JUNGLE_HOME/lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
   Please manually install Apache-Maven or add it to PATH\n\
   You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
   Use the following command (e.g., for Homebrew users):\n\
