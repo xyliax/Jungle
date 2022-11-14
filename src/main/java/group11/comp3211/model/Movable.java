@@ -7,4 +7,6 @@ public interface Movable {
     String getSymbol(Language language);
 
     void move(Direction direction) throws LogicException;
+
+    JungleType type();
 }

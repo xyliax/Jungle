@@ -1,6 +1,7 @@
 package group11.comp3211.model.piece;
 
 import group11.comp3211.model.Direction;
+import group11.comp3211.model.JungleType;
 import group11.comp3211.model.Movable;
 import group11.comp3211.model.Player;
 import group11.comp3211.view.Language;
@@ -16,6 +17,7 @@ public abstract class Piece implements Movable, Serializable {
     protected boolean selected;
     protected Direction direction;
     protected Player player;
+    protected JungleType type;
 
     public Piece(int row, int col, Player player) {
         this.row = row;
@@ -26,4 +28,9 @@ public abstract class Piece implements Movable, Serializable {
     }
 
     public abstract String getSymbol(Language language);
+
+    @Override
+    public JungleType type() {
+        return type;
+    }
 }

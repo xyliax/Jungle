@@ -9,4 +9,6 @@ public interface Loader {
     boolean canLoad(Movable movable);
 
     void load(Movable movable) throws LogicException;
+
+    JungleType type();
 }

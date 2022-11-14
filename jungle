@@ -25,10 +25,10 @@ size_arr=($size)
 row=${size_arr[0]}
 col=${size_arr[1]}
 
-if ((row < 24)) || ((col < 80)); then
+if ((row < 30)) || ((col < 100)); then
   echo -e "\033[31;1m\
   Console Size ${row} ${col} Unsatisfied!\n\
-  Minimum Requirement: 24 80
+  Minimum Requirement: 30 100
   Please Resize Console or Font Size.\033[0m"
   exit 2
 fi

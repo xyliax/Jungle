@@ -1,5 +1,6 @@
 package group11.comp3211.model;
 
+import group11.comp3211.common.exceptions.IllegalMovementException;
 import group11.comp3211.common.exceptions.LogicException;
 import group11.comp3211.common.exceptions.VoidObjectException;
 import group11.comp3211.model.landscape.*;
@@ -48,7 +49,7 @@ public final class Game implements Serializable {
         String ks = key + (currentPlayer == playerX ? "@X" : "@Y");
         Piece piece = keyPieceTable.get(ks);
         if (piece == null)
-            throw new VoidObjectException();
+            throw new VoidObjectException(String.format("Cannot find piece by %s", key));
         selectedPiece = piece;
     }
 
@@ -64,6 +65,11 @@ public final class Game implements Serializable {
     }
 
     public void runTurn() throws LogicException {
+        if (!selectedPiece.isSelected())
+            throw new VoidObjectException(String.format("%s is not confirmed!", selectedPiece.getSymbol(language)));
+        if (selectedPiece.getDirection() == STAY)
+            throw new IllegalMovementException(String.format("%s hasn't determine where to move!",
+                    selectedPiece.getSymbol(language)));
         playboard.doMove(selectedPiece);
         clearSelectStatus();
         if (currentPlayer == playerX)

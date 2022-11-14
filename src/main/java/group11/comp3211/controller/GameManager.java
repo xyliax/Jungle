@@ -147,7 +147,6 @@ public final class GameManager {
         game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ? game.getPlayerX() : game.getPlayerY());
         io.setDRemap(true);
         char key = '-';
-        boolean refresh = true;
         StringBuilder notice = new StringBuilder(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
         io.clearScreen();
         io.showPlayBoard(game);
@@ -157,7 +156,7 @@ public final class GameManager {
             try {
                 switch (key) {
                     case ':' -> pauseGame();
-                    case '-', '0' -> game.clearSelectStatus();
+                    case '-', '0', '\n' -> game.clearSelectStatus();
                     default -> {
                         if (game.getSelectedPiece() == null) {
                             game.selectPieceByKey(key);
@@ -178,25 +177,23 @@ public final class GameManager {
                                     case 'a', 'A' -> piece.setDirection(LEFT);
                                     case 's', 'S' -> piece.setDirection(DOWN);
                                     case 'd', 'D' -> piece.setDirection(RIGHT);
-                                    case '\n' -> {
-                                        game.runTurn();
-                                        notice.delete(0, notice.length());
-                                        notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
-                                    }
                                     default -> piece.setDirection(STAY);
                                 }
+                                game.runTurn();
+                                notice.delete(0, notice.length());
+                                notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
                             } else game.selectPieceByKey(key);
                         }
                     }
                 }
             } catch (VoidObjectException voidObjectException) {
-                io.announceInGame(String.format("Unknown Piece Key '%c'", key), game.getCurrentPlayer().getColor());
-                if (game.getSelectedPiece() == null) refresh = false;
+                io.announceInGame(voidObjectException.getMessage(), game.getCurrentPlayer().getColor());
                 game.clearSelectStatus();
             } catch (LogicException logicException) {
-                io.announceInGame(logicException.toString(), game.getCurrentPlayer().getColor());
+                io.announceInGame(logicException.getMessage(), BLUE);
+                game.clearSelectStatus();
             } finally {
-                if (refresh) io.showPlayBoard(game);
+                io.showPlayBoard(game);
                 io.showNoticeBoard(notice.toString());
                 io.reset();
             }
@@ -217,11 +214,11 @@ public final class GameManager {
                 fileName = io.readLine(fileName);
                 game.saveToFile(fileName);
                 game.setRunning(false);
-                //exit(String.format("SAVE and QUIT GAME - %s - %s", fileName, new Date()));
+                exit(String.format("SAVE and QUIT GAME at %s\nSave in file %s", new Date(), fileName));
             }
             case 'q', 'Q' -> {
                 game.setRunning(false);
-                //exit("QUIT GAME without SAVE");
+                exit("QUIT GAME without SAVE");
             }
         }
         io.clearScreen();

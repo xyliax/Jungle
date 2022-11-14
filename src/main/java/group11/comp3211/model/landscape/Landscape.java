@@ -1,6 +1,7 @@
 package group11.comp3211.model.landscape;
 
 import group11.comp3211.common.exceptions.LogicException;
+import group11.comp3211.model.JungleType;
 import group11.comp3211.model.Loader;
 import group11.comp3211.model.Movable;
 import group11.comp3211.view.Language;
@@ -15,6 +16,7 @@ public abstract class Landscape implements Loader, Serializable {
     protected int col;
     protected Movable load;
     protected Set<Movable> allowed;
+    protected JungleType type;
 
     public Landscape(int row, int col) {
         this.row = row;
@@ -35,5 +37,10 @@ public abstract class Landscape implements Loader, Serializable {
     @Override
     public void load(Movable movable) throws LogicException {
         this.load = movable;
+    }
+
+    @Override
+    public JungleType type() {
+        return type;
     }
 }
