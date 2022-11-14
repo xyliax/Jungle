@@ -67,7 +67,7 @@ if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
 
   if [ "$1" = "install" ]; then
     if sed "1a\\
-JUNGLE_HOME=$dir" "$JUNGLE_HOME"/jungle >/usr/local/bin/jungle && chmod +x /usr/local/bin/jungle; then
+JUNGLE_HOME=$JUNGLE_HOME" "$JUNGLE_HOME"/jungle >/usr/local/bin/jungle && chmod +x /usr/local/bin/jungle; then
       echo -e "\033[32;1m\
         JUNGLE successfully installed on your machine.\n\
         Start Command:\n\
