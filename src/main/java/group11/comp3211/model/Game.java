@@ -55,7 +55,9 @@ public final class Game implements Serializable {
 
     @SneakyThrows
     public static Game loadFromFile(String fileName) {
-        FileInputStream fileInputStream = new FileInputStream(new File(gamePath, fileName));
+        File ResDir = new File(Objects.requireNonNull(Game.class.getResource("/")).getFile());
+        File gameFileDir = new File(ResDir, gamePath);
+        FileInputStream fileInputStream = new FileInputStream(new File(gameFileDir, fileName));
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         return (Game) objectInputStream.readObject();
     }
