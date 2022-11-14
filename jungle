@@ -50,9 +50,7 @@ if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
     echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.\033[0m"
-    if ! git -C "$JUNGLE_HOME" pull; then
-      echo -e "Unable to auto-update"
-    fi
+
     if ! rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6 ||
       ! tar --no-same-owner -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz -C "$JUNGLE_HOME"/lib-maven; then
       echo -e "\033[31;1m\
@@ -84,6 +82,9 @@ JUNGLE_HOME=$JUNGLE_HOME" "$JUNGLE_HOME"/jungle >/usr/local/bin/jungle && chmod 
     exit 0
   fi
 
+  if ! git -C "$JUNGLE_HOME" pull; then
+    echo -e "Unable to auto-update"
+  fi
   cd "$JUNGLE_HOME" || exit 4
   if [ "$2" = "dry" ]; then
     "${mvn_path}"mvn clean package appassembler:assemble
