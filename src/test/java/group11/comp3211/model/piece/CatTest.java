@@ -1,6 +1,5 @@
 package group11.comp3211.model.piece;
 
-import group11.comp3211.model.Direction;
 import group11.comp3211.model.PlayBoard;
 import group11.comp3211.model.Player;
 import group11.comp3211.model.landscape.Landscape;
@@ -44,8 +43,6 @@ public class CatTest {
     @Test
     public void moveTest1() {
         Cat cat = new Cat(1, 2, player);
-        playBoard.put(cat);
-        cat.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(1, 1);
         Assert.assertTrue(after.getLoad() == cat && before.getLoad() == null);
@@ -62,8 +59,6 @@ public class CatTest {
     @Test
     public void moveTest2() {
         Cat cat = new Cat(1, 2, player);
-        playBoard.put(cat);
-        cat.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 2);
         Assert.assertTrue(after.getLoad() == cat && before.getLoad() == null);
@@ -80,8 +75,6 @@ public class CatTest {
     @Test
     public void moveTest3() {
         Cat cat = new Cat(8, 0, player);
-        playBoard.put(cat);
-        cat.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(8, 0);
         Landscape after = (Landscape) playBoard.get(8, 0);
         Assert.assertTrue(after.getLoad() != cat && before.getLoad() == cat);
@@ -97,11 +90,7 @@ public class CatTest {
     @Test
     public void moveTest4() {
         Cat cat = new Cat(3, 0, player);
-        playBoard.put(cat);
         Tiger tiger = new Tiger(2, 0, player);
-        playBoard.put(tiger);
-
-        cat.move(Direction.DOWN);
         Landscape catLocation = (Landscape) playBoard.get(3, 0);
         Landscape tigerLocation = (Landscape) playBoard.get(2, 0);
         Assert.assertTrue(catLocation.getLoad() == cat && tigerLocation.getLoad() == tiger);
@@ -118,9 +107,6 @@ public class CatTest {
     @Test
     public void moveTest5() {
         Cat cat = new Cat(3, 0, player);
-        playBoard.put(cat);
-
-        cat.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(3, 0);
         Landscape after = (Landscape) playBoard.get(3, 1);
         Assert.assertTrue(before.getLoad() == cat && after.getLoad() != cat);
@@ -136,11 +122,7 @@ public class CatTest {
     @Test
     public void moveTest6() {
         Cat cat = new Cat(1, 2, player);
-        playBoard.put(cat);
         Rat rat = new Rat(2, 3, player);
-        playBoard.put(rat);
-
-        cat.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 3);
 

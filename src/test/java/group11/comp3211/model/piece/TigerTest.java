@@ -1,6 +1,5 @@
 package group11.comp3211.model.piece;
 
-import group11.comp3211.model.Direction;
 import group11.comp3211.model.PlayBoard;
 import group11.comp3211.model.Player;
 import group11.comp3211.model.landscape.Landscape;
@@ -44,8 +43,6 @@ public class TigerTest {
     @Test
     public void moveTest1() {
         Tiger tiger = new Tiger(1, 2, player);
-        playBoard.put(tiger);
-        tiger.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(1, 1);
         Assert.assertTrue(after.getLoad() == tiger && before.getLoad() == null);
@@ -62,8 +59,6 @@ public class TigerTest {
     @Test
     public void moveTest2() {
         Tiger tiger = new Tiger(1, 2, player);
-        playBoard.put(tiger);
-        tiger.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 2);
         Assert.assertTrue(after.getLoad() == tiger && before.getLoad() == null);
@@ -80,8 +75,6 @@ public class TigerTest {
     @Test
     public void moveTest3() {
         Tiger tiger = new Tiger(8, 0, player);
-        playBoard.put(tiger);
-        tiger.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(8, 0);
         Landscape after = (Landscape) playBoard.get(8, 0);
         Assert.assertTrue(after.getLoad() != tiger && before.getLoad() == tiger);
@@ -97,11 +90,7 @@ public class TigerTest {
     @Test
     public void moveTest4() {
         Tiger tiger = new Tiger(3, 0, player);
-        playBoard.put(tiger);
         Elephant elephant = new Elephant(2, 0, player);
-        playBoard.put(elephant);
-
-        tiger.move(Direction.DOWN);
         Landscape tigerLocation = (Landscape) playBoard.get(3, 0);
         Landscape elephantLocation = (Landscape) playBoard.get(2, 0);
         Assert.assertTrue(tigerLocation.getLoad() == tiger && elephantLocation.getLoad() == elephant);
@@ -118,9 +107,6 @@ public class TigerTest {
     @Test
     public void moveTest5() {
         Tiger tiger = new Tiger(3, 0, player);
-        playBoard.put(tiger);
-
-        tiger.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(3, 0);
         Landscape after = (Landscape) playBoard.get(3, 1);
         Assert.assertTrue(before.getLoad() == tiger && after.getLoad() != tiger);
@@ -136,11 +122,7 @@ public class TigerTest {
     @Test
     public void moveTest6() {
         Tiger tiger = new Tiger(1, 2, player);
-        playBoard.put(tiger);
         Rat rat = new Rat(2, 3, player);
-        playBoard.put(rat);
-
-        tiger.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 3);
 
@@ -156,9 +138,6 @@ public class TigerTest {
     @Test
     public void moveTest7() {
         Tiger tiger = new Tiger(3, 1, player);
-        playBoard.put(tiger);
-
-        tiger.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(3, 1);
         Landscape after = (Landscape) playBoard.get(7, 1);
         Assert.assertTrue(before.getLoad() != tiger && after.getLoad() == tiger);
@@ -173,9 +152,6 @@ public class TigerTest {
     @Test
     public void moveTest8() {
         Tiger tiger = new Tiger(4, 0, player);
-        playBoard.put(tiger);
-
-        tiger.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(4, 0);
         Landscape after = (Landscape) playBoard.get(4, 3);
         Assert.assertTrue(before.getLoad() != tiger && after.getLoad() == tiger);
@@ -192,10 +168,6 @@ public class TigerTest {
     public void moveTest9() {
         Tiger tiger = new Tiger(4, 0, player);
         Rat rat = new Rat(4,1,player);
-        playBoard.put(tiger);
-        playBoard.put(rat);
-
-        tiger.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(4, 0);
         Landscape after = (Landscape) playBoard.get(4, 3);
         Assert.assertTrue(before.getLoad() == tiger && after.getLoad() != tiger);
@@ -212,10 +184,6 @@ public class TigerTest {
     public void moveTest10() {
         Tiger tiger = new Tiger(3, 1, player);
         Rat rat = new Rat(4,1,player);
-        playBoard.put(tiger);
-        playBoard.put(rat);
-
-        tiger.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(3, 1);
         Landscape after = (Landscape) playBoard.get(7, 1);
         Assert.assertTrue(before.getLoad() == tiger && after.getLoad() != tiger);

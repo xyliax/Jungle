@@ -1,6 +1,5 @@
 package group11.comp3211.model.piece;
 
-import group11.comp3211.model.Direction;
 import group11.comp3211.model.PlayBoard;
 import group11.comp3211.model.Player;
 import group11.comp3211.model.landscape.Landscape;
@@ -45,8 +44,6 @@ public class DogTest {
     @Test
     public void moveTest1() {
         Dog dog = new Dog(1, 2, player);
-        playBoard.put(dog);
-        dog.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(1, 1);
         Assert.assertTrue(after.getLoad() == dog && before.getLoad() == null);
@@ -63,8 +60,6 @@ public class DogTest {
     @Test
     public void moveTest2() {
         Dog dog = new Dog(1, 2, player);
-        playBoard.put(dog);
-        dog.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 2);
         Assert.assertTrue(after.getLoad() == dog && before.getLoad() == null);
@@ -81,8 +76,6 @@ public class DogTest {
     @Test
     public void moveTest3() {
         Dog dog = new Dog(8, 0, player);
-        playBoard.put(dog);
-        dog.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(8, 0);
         Landscape after = (Landscape) playBoard.get(8, 0);
         Assert.assertTrue(after.getLoad() != dog && before.getLoad() == dog);
@@ -98,11 +91,7 @@ public class DogTest {
     @Test
     public void moveTest4() {
         Dog dog = new Dog(3, 0, player);
-        playBoard.put(dog);
         Tiger tiger = new Tiger(2, 0, player);
-        playBoard.put(tiger);
-
-        dog.move(Direction.DOWN);
         Landscape dogLodogion = (Landscape) playBoard.get(3, 0);
         Landscape tigerLodogion = (Landscape) playBoard.get(2, 0);
         Assert.assertTrue(dogLodogion.getLoad() == dog && tigerLodogion.getLoad() == tiger);
@@ -119,9 +108,6 @@ public class DogTest {
     @Test
     public void moveTest5() {
         Dog dog = new Dog(3, 0, player);
-        playBoard.put(dog);
-
-        dog.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(3, 0);
         Landscape after = (Landscape) playBoard.get(3, 1);
         Assert.assertTrue(before.getLoad() == dog && after.getLoad() != dog);
@@ -137,11 +123,7 @@ public class DogTest {
     @Test
     public void moveTest6() {
         Dog dog = new Dog(1, 2, player);
-        playBoard.put(dog);
         Rat rat = new Rat(2, 3, player);
-        playBoard.put(rat);
-
-        dog.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 3);
 

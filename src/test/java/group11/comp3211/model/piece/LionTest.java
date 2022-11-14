@@ -1,6 +1,5 @@
 package group11.comp3211.model.piece;
 
-import group11.comp3211.model.Direction;
 import group11.comp3211.model.PlayBoard;
 import group11.comp3211.model.Player;
 import group11.comp3211.model.landscape.Landscape;
@@ -46,8 +45,6 @@ public class LionTest {
     @Test
     public void moveTest1() {
         Lion lion = new Lion(1, 2, player);
-        playBoard.put(lion);
-        lion.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(1, 1);
         Assert.assertTrue(after.getLoad() == lion && before.getLoad() == null);
@@ -64,8 +61,6 @@ public class LionTest {
     @Test
     public void moveTest2() {
         Lion lion = new Lion(1, 2, player);
-        playBoard.put(lion);
-        lion.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 2);
         Assert.assertTrue(after.getLoad() == lion && before.getLoad() == null);
@@ -82,8 +77,6 @@ public class LionTest {
     @Test
     public void moveTest3() {
         Lion lion = new Lion(8, 0, player);
-        playBoard.put(lion);
-        lion.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(8, 0);
         Landscape after = (Landscape) playBoard.get(8, 0);
         Assert.assertTrue(after.getLoad() != lion && before.getLoad() == lion);
@@ -99,11 +92,8 @@ public class LionTest {
     @Test
     public void moveTest4() {
         Lion lion = new Lion(3, 0, player);
-        playBoard.put(lion);
         Elephant elephant = new Elephant(2, 0, player);
-        playBoard.put(elephant);
 
-        lion.move(Direction.DOWN);
         Landscape lionLocation = (Landscape) playBoard.get(3, 0);
         Landscape elephantLocation = (Landscape) playBoard.get(2, 0);
         Assert.assertTrue(lionLocation.getLoad() == lion && elephantLocation.getLoad() == elephant);
@@ -120,9 +110,6 @@ public class LionTest {
     @Test
     public void moveTest5() {
         Lion lion = new Lion(3, 0, player);
-        playBoard.put(lion);
-
-        lion.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(3, 0);
         Landscape after = (Landscape) playBoard.get(3, 1);
         Assert.assertTrue(before.getLoad() == lion && after.getLoad() != lion);
@@ -138,11 +125,7 @@ public class LionTest {
     @Test
     public void moveTest6() {
         Lion lion = new Lion(1, 2, player);
-        playBoard.put(lion);
         Rat rat = new Rat(2, 3, player);
-        playBoard.put(rat);
-
-        lion.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 3);
 
@@ -158,9 +141,6 @@ public class LionTest {
     @Test
     public void moveTest7() {
         Lion lion = new Lion(3, 1, player);
-        playBoard.put(lion);
-
-        lion.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(3, 1);
         Landscape after = (Landscape) playBoard.get(7, 1);
         Assert.assertTrue(before.getLoad() != lion && after.getLoad() == lion);
@@ -175,9 +155,6 @@ public class LionTest {
     @Test
     public void moveTest8() {
         Lion lion = new Lion(4, 0, player);
-        playBoard.put(lion);
-
-        lion.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(4, 0);
         Landscape after = (Landscape) playBoard.get(4, 3);
         Assert.assertTrue(before.getLoad() != lion && after.getLoad() == lion);
@@ -194,10 +171,6 @@ public class LionTest {
     public void moveTest9() {
         Lion lion = new Lion(4, 0, player);
         Rat rat = new Rat(4,1,player);
-        playBoard.put(lion);
-        playBoard.put(rat);
-
-        lion.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(4, 0);
         Landscape after = (Landscape) playBoard.get(4, 3);
         Assert.assertTrue(before.getLoad() == lion && after.getLoad() != lion);
@@ -214,10 +187,6 @@ public class LionTest {
     public void moveTest10() {
         Lion lion = new Lion(3, 1, player);
         Rat rat = new Rat(4,1,player);
-        playBoard.put(lion);
-        playBoard.put(rat);
-
-        lion.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(3, 1);
         Landscape after = (Landscape) playBoard.get(7, 1);
         Assert.assertTrue(before.getLoad() == lion && after.getLoad() != lion);

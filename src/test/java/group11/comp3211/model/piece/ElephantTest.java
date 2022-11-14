@@ -1,6 +1,5 @@
 package group11.comp3211.model.piece;
 
-import group11.comp3211.model.Direction;
 import group11.comp3211.model.PlayBoard;
 import group11.comp3211.model.Player;
 import group11.comp3211.model.landscape.Landscape;
@@ -44,8 +43,6 @@ public class ElephantTest {
     @Test
     public void moveTest1() {
         Elephant elephant = new Elephant(1, 2, player);
-        playBoard.put(elephant);
-        elephant.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(1, 1);
         Assert.assertTrue(after.getLoad() == elephant && before.getLoad() == null);
@@ -62,8 +59,6 @@ public class ElephantTest {
     @Test
     public void moveTest2() {
         Elephant elephant = new Elephant(1, 2, player);
-        playBoard.put(elephant);
-        elephant.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 2);
         Assert.assertTrue(after.getLoad() == elephant && before.getLoad() == null);
@@ -80,8 +75,6 @@ public class ElephantTest {
     @Test
     public void moveTest3() {
         Elephant elephant = new Elephant(8, 0, player);
-        playBoard.put(elephant);
-        elephant.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(8, 0);
         Landscape after = (Landscape) playBoard.get(8, 0);
         Assert.assertTrue(after.getLoad() != elephant && before.getLoad() == elephant);
@@ -98,11 +91,7 @@ public class ElephantTest {
     @Test
     public void moveTest4() {
         Elephant elephant = new Elephant(3, 0, player);
-        playBoard.put(elephant);
         Rat rat = new Rat(2, 0, player);
-        playBoard.put(rat);
-
-        elephant.move(Direction.DOWN);
         Landscape elephantLocation = (Landscape) playBoard.get(3, 0);
         Landscape ratLocation = (Landscape) playBoard.get(2, 0);
         Assert.assertTrue(elephantLocation.getLoad() == elephant && ratLocation.getLoad() == rat);
@@ -119,9 +108,6 @@ public class ElephantTest {
     @Test
     public void moveTest5() {
         Elephant elephant = new Elephant(3, 0, player);
-        playBoard.put(elephant);
-
-        elephant.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(3, 0);
         Landscape after = (Landscape) playBoard.get(3, 1);
         Assert.assertTrue(before.getLoad() == elephant && after.getLoad() != elephant);
@@ -137,11 +123,7 @@ public class ElephantTest {
     @Test
     public void moveTest6() {
         Elephant elephant = new Elephant(1, 2, player);
-        playBoard.put(elephant);
         Lion lion = new Lion(2, 3, player);
-        playBoard.put(lion);
-
-        elephant.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 3);
 

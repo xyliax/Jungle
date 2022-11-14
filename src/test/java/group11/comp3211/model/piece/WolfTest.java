@@ -1,6 +1,5 @@
 package group11.comp3211.model.piece;
 
-import group11.comp3211.model.Direction;
 import group11.comp3211.model.PlayBoard;
 import group11.comp3211.model.Player;
 import group11.comp3211.model.landscape.Landscape;
@@ -45,8 +44,6 @@ public class WolfTest {
     @Test
     public void moveTest1() {
         Wolf wolf = new Wolf(1, 2, player);
-        playBoard.put(wolf);
-        wolf.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(1, 1);
         Assert.assertTrue(after.getLoad() == wolf && before.getLoad() == null);
@@ -63,8 +60,6 @@ public class WolfTest {
     @Test
     public void moveTest2() {
         Wolf wolf = new Wolf(1, 2, player);
-        playBoard.put(wolf);
-        wolf.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 2);
         Assert.assertTrue(after.getLoad() == wolf && before.getLoad() == null);
@@ -81,8 +76,6 @@ public class WolfTest {
     @Test
     public void moveTest3() {
         Wolf wolf = new Wolf(8, 0, player);
-        playBoard.put(wolf);
-        wolf.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(8, 0);
         Landscape after = (Landscape) playBoard.get(8, 0);
         Assert.assertTrue(after.getLoad() != wolf && before.getLoad() == wolf);
@@ -98,11 +91,7 @@ public class WolfTest {
     @Test
     public void moveTest4() {
         Wolf wolf = new Wolf(3, 0, player);
-        playBoard.put(wolf);
         Tiger tiger = new Tiger(2, 0, player);
-        playBoard.put(tiger);
-
-        wolf.move(Direction.DOWN);
         Landscape wolfLowolfion = (Landscape) playBoard.get(3, 0);
         Landscape tigerLowolfion = (Landscape) playBoard.get(2, 0);
         Assert.assertTrue(wolfLowolfion.getLoad() == wolf && tigerLowolfion.getLoad() == tiger);
@@ -119,9 +108,6 @@ public class WolfTest {
     @Test
     public void moveTest5() {
         Wolf wolf = new Wolf(3, 0, player);
-        playBoard.put(wolf);
-
-        wolf.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(3, 0);
         Landscape after = (Landscape) playBoard.get(3, 1);
         Assert.assertTrue(before.getLoad() == wolf && after.getLoad() != wolf);
@@ -137,11 +123,7 @@ public class WolfTest {
     @Test
     public void moveTest6() {
         Wolf wolf = new Wolf(1, 2, player);
-        playBoard.put(wolf);
         Rat rat = new Rat(2, 3, player);
-        playBoard.put(rat);
-
-        wolf.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 3);
 

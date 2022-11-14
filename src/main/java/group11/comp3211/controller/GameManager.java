@@ -141,7 +141,7 @@ public final class GameManager {
 
     private void loadSavedGame() {
         String[] fileList = Game.getFileList();
-        if (fileList.length == 0) {
+        if (fileList == null || fileList.length == 0) {
             io.announce("No game files found!", RED);
             return;
         }

@@ -1,6 +1,5 @@
 package group11.comp3211.model.piece;
 
-import group11.comp3211.model.Direction;
 import group11.comp3211.model.PlayBoard;
 import group11.comp3211.model.Player;
 import group11.comp3211.model.landscape.Landscape;
@@ -44,8 +43,6 @@ public class LeopardTest {
     @Test
     public void moveTest1() {
         Leopard leopard = new Leopard(1, 2, player);
-        playBoard.put(leopard);
-        leopard.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(1, 1);
         Assert.assertTrue(after.getLoad() == leopard && before.getLoad() == null);
@@ -62,8 +59,6 @@ public class LeopardTest {
     @Test
     public void moveTest2() {
         Leopard leopard = new Leopard(1, 2, player);
-        playBoard.put(leopard);
-        leopard.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 2);
         Assert.assertTrue(after.getLoad() == leopard && before.getLoad() == null);
@@ -80,8 +75,6 @@ public class LeopardTest {
     @Test
     public void moveTest3() {
         Leopard leopard = new Leopard(8, 0, player);
-        playBoard.put(leopard);
-        leopard.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(8, 0);
         Landscape after = (Landscape) playBoard.get(8, 0);
         Assert.assertTrue(after.getLoad() != leopard && before.getLoad() == leopard);
@@ -97,11 +90,7 @@ public class LeopardTest {
     @Test
     public void moveTest4() {
         Leopard leopard = new Leopard(3, 0, player);
-        playBoard.put(leopard);
         Tiger tiger = new Tiger(2, 0, player);
-        playBoard.put(tiger);
-
-        leopard.move(Direction.DOWN);
         Landscape leopardLocation = (Landscape) playBoard.get(3, 0);
         Landscape tigerLocation = (Landscape) playBoard.get(2, 0);
         Assert.assertTrue(leopardLocation.getLoad() == leopard && tigerLocation.getLoad() == tiger);
@@ -118,9 +107,6 @@ public class LeopardTest {
     @Test
     public void moveTest5() {
         Leopard leopard = new Leopard(3, 0, player);
-        playBoard.put(leopard);
-
-        leopard.move(Direction.RIGHT);
         Landscape before = (Landscape) playBoard.get(3, 0);
         Landscape after = (Landscape) playBoard.get(3, 1);
         Assert.assertTrue(before.getLoad() == leopard && after.getLoad() != leopard);
@@ -136,11 +122,7 @@ public class LeopardTest {
     @Test
     public void moveTest6() {
         Leopard leopard = new Leopard(1, 2, player);
-        playBoard.put(leopard);
         Rat rat = new Rat(2, 3, player);
-        playBoard.put(rat);
-
-        leopard.move(Direction.UP);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(2, 3);
 

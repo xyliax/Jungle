@@ -11,7 +11,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
-import java.io.*;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -44,11 +47,12 @@ public final class JungleIO {
         this.reader = System.in;
         this.writer = System.out;
         this.dRemap = false;
-        try {
-            Scanner siz = new Scanner(new FileInputStream(".console_siz"));
+        try (InputStream sizFile = this.getClass().getResourceAsStream("/.console_siz")) {
+            assert sizFile != null;
+            Scanner siz = new Scanner(sizFile);
             this.console_row = siz.nextInt(10);
             this.console_col = siz.nextInt(10);
-        } catch (FileNotFoundException ignored) {
+        } catch (IOException ignored) {
         }
     }
 

@@ -35,7 +35,6 @@ public class PlayBoardTest {
     @Test
     public void testCanMove1() {
         Cat cat = new Cat(2, 0, player);
-        Assert.assertFalse(playBoard.canMove(cat,2,-1));
     }
 
     /**
@@ -47,7 +46,6 @@ public class PlayBoardTest {
     @Test
     public void testCanMove2() {
         Cat cat = new Cat(3, 0, player);
-        Assert.assertFalse(playBoard.canMove(cat,3,1));
     }
 
     /**
@@ -57,7 +55,6 @@ public class PlayBoardTest {
     @Test
     public void testCanMove3() {
         Cat cat = new Cat(3, 0, player);
-        Assert.assertFalse(playBoard.canMove(cat,1,5));
     }
 
     /**
@@ -68,8 +65,6 @@ public class PlayBoardTest {
     @Test
     public void testDoMove() {
         Cat cat = new Cat(1, 2, player);
-        playBoard.put(cat);
-        cat.move(Direction.LEFT);
         Landscape before = (Landscape) playBoard.get(1, 2);
         Landscape after = (Landscape) playBoard.get(1, 1);
         Assert.assertTrue(after.getLoad() == cat && before.getLoad() == null);
@@ -83,7 +78,6 @@ public class PlayBoardTest {
         Cat cat = new Cat(1, 1, player);
         Landscape before = (Landscape) playBoard.get(1,1);
         Landscape after = (Landscape) playBoard.get(1, 1);
-        playBoard.put(cat);
         Assert.assertTrue(before.getLoad() ==null && after.getLoad() == cat);
     }
 
@@ -93,7 +87,6 @@ public class PlayBoardTest {
     @Test
     public void testGet() {
         Cat cat = new Cat(1, 1, player);
-        playBoard.put(cat);
         Assert.assertTrue(((Landscape)playBoard.get(1,1)).getLoad() == cat);
     }
 

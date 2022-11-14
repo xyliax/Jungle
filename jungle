@@ -2,26 +2,35 @@
 
 #This is only for Unix platform
 
+cd "$(dirname "$0")" && dir=$(pwd)
+if [ "$JUNGLE_HOME" == '' ]; then
+  JUNGLE_HOME=$dir
+fi
+
 if [ $# -gt 0 ]; then
-  if [ "$1" != "help" ] && [ "$1" != "build" ]; then
+  if [ "$1" != 'help' ] && [ "$1" != 'build' ] && [ "$1" != 'install' ] && [ "$1" != 'version' ]; then
     echo -e "\033[31;1m\
   Unknown argument $1!\033[0m"
     exit 255
   fi
 fi
 
-if [ "$1" = "help" ] || [ "$1" = "-h" ]; then
-  if [ "$2" = "pdf" ]; then
-    open ./docs/README.pdf
+if [ "$1" = 'version' ]; then
+  echo -e "jungle SNAPSHOT-0.0.1"
+  exit 0
+fi
+
+if [ "$1" = 'help' ]; then
+  if [ "$2" = 'pdf' ]; then
+    open "$JUNGLE_HOME"/docs/README.pdf
   else
-    open README.md
+    open "$JUNGLE_HOME"/README.md
   fi
   exit 0
 fi
 
 size=$(stty size)
-rm -f .console_siz
-stty size >.console_siz
+rm -f "$JUNGLE_HOME"/src/main/resources/.console_siz && stty size >"$JUNGLE_HOME"/src/main/resources/.console_siz
 # shellcheck disable=SC2206
 size_arr=($size)
 row=${size_arr[0]}
@@ -35,13 +44,13 @@ if ((row < 30)) || ((col < 100)); then
   exit 2
 fi
 
-if [ "$1" = "build" ]; then
+if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
   if ! mvn -v >/dev/null; then
     echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.\033[0m"
 
-    if ! tar -xzf ./lib-maven/apache-maven-3.8.6-bin.tar.gz; then
+    if ! tar -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz; then
       echo -e "\033[31;1m\
   Unable to extract file ./lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
   Please manually install Apache-Maven or add it to PATH\n\
@@ -51,31 +60,58 @@ if [ "$1" = "build" ]; then
   Official link: https://maven.apache.org/download.cgi\033[0m"
       exit 1
     fi
-    rm -rf ./lib-maven/apache-maven-3.8.6
-    mv apache-maven-3.8.6 ./lib-maven
-    mvn_path=./lib-maven/apache-maven-3.8.6/bin/
+    rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6
+    mv "$JUNGLE_HOME"/apache-maven-3.8.6 "$JUNGLE_HOME"/lib-maven
+    mvn_path="$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6/bin/
   fi
 
-  if [ "$2" = "testing" ]; then
-    ${mvn_path}mvn clean package appassembler:assemble
-  elif [ "$2" = "clean" ]; then
-    ${mvn_path}mvn clean
+  if [ "$1" = "install" ]; then
+    if sed "1a\\
+JUNGLE_HOME=$dir" "$JUNGLE_HOME"/jungle >/usr/local/bin/jungle && chmod +x /usr/local/bin/jungle; then
+      echo -e "\033[32;1m\
+        JUNGLE successfully installed on your machine.\n\
+        Start Command:\n\
+          jungle [arguments]\n\
+        To Uninstall:\n\
+          jungle uninstall\033[0m"
+    else
+      unlink /usr/local/bin/jungle
+      echo -e "\033[31;1m\
+        Install Failure! (maybe need root?)\033[0m"
+    fi
+    exit 0
+  fi
+
+  if ! git -C "$JUNGLE_HOME" pull; then
+    exit 3
+  fi
+
+  cd "$JUNGLE_HOME" || exit 4
+  if [ "$2" = "dry" ]; then
+    "${mvn_path}"mvn clean package appassembler:assemble
+    exit 0
+  elif [ "$2" = 'testing' ]; then
+    "${mvn_path}"mvn clean package appassembler:assemble
+  elif [ "$2" = 'clean' ]; then
+    "${mvn_path}"mvn clean
+    exit 0
   else
-    ${mvn_path}mvn clean package appassembler:assemble -DskipTests
+    "${mvn_path}"mvn clean package appassembler:assemble -DskipTests
   fi
 fi
 
-bin_path=./target/appassembler/bin/
+bin_path="$JUNGLE_HOME"/target/appassembler/bin/
 reset
-stty cbreak && ${bin_path}JungleApp
+stty cbreak && "${bin_path}"JungleApp
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
-  if [ "$1" != "build" ]; then
+  if [ "$1" != 'build' ]; then
     echo -e "\033[31;1m\
   It seems that you have not built the software.\n\
   Use the following command to build & run:
-    ./run build\033[0m"
+    ./jungle build\033[0m"
   else
+    reset
     echo -e "\033[31;1m\
   The minimum requirement of this software is Java17.\n\
   Please update to Java17 (LTS) or higher!
