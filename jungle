@@ -15,10 +15,6 @@ if [ $# -gt 0 ]; then
   fi
 fi
 
-if ! git -C "$JUNGLE_HOME" pull; then
-  echo -e "Unable to auto-update"
-fi
-
 if [ "$1" = 'version' ]; then
   echo -e "jungle SNAPSHOT-0.0.1"
   exit 0
@@ -54,7 +50,9 @@ if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
     echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.\033[0m"
-
+    if ! git -C "$JUNGLE_HOME" pull; then
+      echo -e "Unable to auto-update"
+    fi
     if ! rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6 ||
       ! tar --no-same-owner -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz -C "$JUNGLE_HOME"/lib-maven; then
       echo -e "\033[31;1m\
