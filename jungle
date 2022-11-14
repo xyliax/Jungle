@@ -8,7 +8,8 @@ if [ "$JUNGLE_HOME" == '' ]; then
 fi
 
 if [ $# -gt 0 ]; then
-  if [ "$1" != 'help' ] && [ "$1" != 'build' ] && [ "$1" != 'install' ] && [ "$1" != 'version' ]; then
+  if [ "$1" != 'help' ] && [ "$1" != 'build' ] &&
+  [ "$1" != 'install' ] && [ "$1" != 'uninstall' ] && [ "$1" != 'version' ]; then
     echo -e "\033[31;1m\
   Unknown argument $1!\033[0m"
     exit 255
@@ -23,9 +24,16 @@ fi
 if [ "$1" = 'help' ]; then
   if [ "$2" = 'pdf' ]; then
     open "$JUNGLE_HOME"/docs/README.pdf
+  elif [ "$2" = 'page' ]; then
+    open https://blog.peiyuxing.xyz/Jungle/
   else
     open "$JUNGLE_HOME"/README.md
   fi
+  exit 0
+fi
+
+if [ "$1" = 'uninstall' ]; then
+  rm -f /usr/local/bin/jungle
   exit 0
 fi
 
