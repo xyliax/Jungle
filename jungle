@@ -109,7 +109,7 @@ fi
 
 bin_path="$JUNGLE_HOME"/target/appassembler/bin/
 reset
-stty cbreak && "${bin_path}"JungleApp
+stty cbreak && "${bin_path}"JungleApp && rm -f "$JUNGLE_HOME"/src/main/resources/.console_siz
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
   if [ "$1" != 'build' ]; then
