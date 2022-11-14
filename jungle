@@ -30,7 +30,8 @@ if [ "$1" = 'help' ]; then
 fi
 
 size=$(stty size)
-rm -f "$JUNGLE_HOME"/src/main/resources/.console_siz && stty size >"$JUNGLE_HOME"/src/main/resources/.console_siz
+rm -f "$JUNGLE_HOME"/src/main/resources/.console_siz && sleep 0.1
+stty size >"$JUNGLE_HOME"/src/main/resources/.console_siz
 # shellcheck disable=SC2206
 size_arr=($size)
 row=${size_arr[0]}
@@ -50,7 +51,8 @@ if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.\033[0m"
 
-    if ! tar -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz; then
+    if rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6! &&
+     tar -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz -C "$JUNGLE_HOME"; then
       echo -e "\033[31;1m\
   Unable to extract file ./lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
   Please manually install Apache-Maven or add it to PATH\n\
@@ -60,8 +62,6 @@ if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
   Official link: https://maven.apache.org/download.cgi\033[0m"
       exit 1
     fi
-    rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6
-    mv "$JUNGLE_HOME"/apache-maven-3.8.6 "$JUNGLE_HOME"/lib-maven
     mvn_path="$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6/bin/
   fi
 
