@@ -11,6 +11,6 @@ public class River extends Landscape {
     public River(int row, int col) {
         super(row, col);
         this.type = JungleType.RIVER;
-        this.belong2 = row<4?JungleType.RIVERAREALEFT:JungleType.RIVERAREARIGHT;
+        this.belong2 = col<4?JungleType.RIVERAREALEFT:JungleType.RIVERAREARIGHT;
     }
 }

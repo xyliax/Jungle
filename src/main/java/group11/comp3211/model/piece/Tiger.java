@@ -16,10 +16,8 @@ public final class Tiger extends Piece {
     @Override
     public String getSymbol(Language language) {
         return switch (language) {
-            case ENGLISH -> null;
+            case ENGLISH, EMOJI, CHINESE_TRADITIONAL -> null;
             case CHINESE_SIMPLE -> "虎";
-            case CHINESE_TRADITIONAL -> null;
-            case EMOJI -> null;
         };
     }
 }

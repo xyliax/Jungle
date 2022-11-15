@@ -46,13 +46,13 @@ public final class PlayBoard implements Serializable {
     public boolean ratInRiver(JungleType jungleType) {
         switch (jungleType) {
             case RIVERAREALEFT -> {
-                for(int i=4; i<=6; ++i)
-                    for(int j=2; j<=3; ++j)
-                        if (((River) get(i, j)).getLoad() != null) return true;
+                for(int i=3; i<=5; ++i)
+                    for(int j=1; j<=2; ++j)
+                        if (getLoad(i, j) != null) return true;
             }
             case RIVERAREARIGHT -> {
-                for(int i=4; i<=6; ++i)
-                    for(int j=5; j<=6; ++j)
+                for(int i=3; i<=5; ++i)
+                    for(int j=4; j<=5; ++j)
                         if (getLoad(i, j) != null) return true;
             }
         }
@@ -76,7 +76,7 @@ public final class PlayBoard implements Serializable {
                     }
                     case DOWN -> {
                         if (row == 8)   throw new IllegalMovementException("Trying to get out of the board. ");
-                        if (getType(row-1, col) == JungleType.RIVER) {
+                        if (getType(row+1, col) == JungleType.RIVER) {
                             if (ratInRiver(((River) get(row+1, col)).getBelong2())) throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
                             else row += 4;
                         }
@@ -84,7 +84,7 @@ public final class PlayBoard implements Serializable {
                     }
                     case LEFT -> {
                         if (col == 0)   throw new IllegalMovementException("Trying to get out of the board. ");
-                        if (getType(row-1, col) == JungleType.RIVER) {
+                        if (getType(row, col-1) == JungleType.RIVER) {
                             if (ratInRiver(((River) get(row, col-1)).getBelong2())) throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
                             else col -= 3;
                         }
@@ -92,7 +92,7 @@ public final class PlayBoard implements Serializable {
                     }
                     case RIGHT -> {
                         if (col == 6)   throw new IllegalMovementException("Trying to get out of the board. ");
-                        if (getType(row-1, col) == JungleType.RIVER) {
+                        if (getType(row, col+1) == JungleType.RIVER) {
                             if (ratInRiver(((River) get(row, col+1)).getBelong2())) throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
                             else col += 3;
                         }
