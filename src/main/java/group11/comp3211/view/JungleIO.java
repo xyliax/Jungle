@@ -4,8 +4,6 @@ import group11.comp3211.model.Game;
 import group11.comp3211.model.Loader;
 import group11.comp3211.model.landscape.Den;
 import group11.comp3211.model.landscape.Landscape;
-import group11.comp3211.model.landscape.River;
-import group11.comp3211.model.landscape.Trap;
 import group11.comp3211.model.piece.Piece;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +15,6 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 import static group11.comp3211.view.Color.*;
 import static java.lang.Thread.sleep;
@@ -40,6 +37,7 @@ public final class JungleIO {
     private PrintStream writer;
     private boolean dRemap;
 
+    @SneakyThrows
     private JungleIO() {
         this.console = System.console();
         this.promptStr = "\033[33m>>> \033[0m";
@@ -47,13 +45,6 @@ public final class JungleIO {
         this.reader = System.in;
         this.writer = System.out;
         this.dRemap = false;
-        try (InputStream sizFile = this.getClass().getResourceAsStream("/.console_siz")) {
-            assert sizFile != null;
-            Scanner siz = new Scanner(sizFile);
-            this.console_row = siz.nextInt(10);
-            this.console_col = siz.nextInt(10);
-        } catch (IOException ignored) {
-        }
     }
 
     public static JungleIO getInstance() {
@@ -209,21 +200,24 @@ public final class JungleIO {
             }
             writer.println();
         }
+        showKeyMapping(game.getLanguage());
+        reset();
     }
 
     private synchronized void showBlock(Loader block, Game game) {
         reset();
+        switch (block.type()) {
+            case DEN -> {
+                Den den = (Den) block;
+                setFront(den.getPlayer().getColor());
+                setBold();
+                print(WHITE_SPACE + den.getSymbol(game.getLanguage()) + WHITE_SPACE);
+                return;
+            }
+            case TRAP -> setBack(MAGENTA);
+            case RIVER -> setBack(BLUE);
+        }
         Landscape landscape = (Landscape) block;
-
-        if (landscape instanceof Den den) {
-            if (den.getPlayer() == game.getPlayerX()) setFront(RED);
-            else if (den.getPlayer() == game.getPlayerY()) setFront(GREEN);
-            setBold();
-            print(WHITE_SPACE + den.getSymbol(game.getLanguage()) + WHITE_SPACE);
-            return;
-        } else if (landscape instanceof Trap) setBack(MAGENTA);
-        else if (landscape instanceof River) setBack(CYAN);
-
         if (landscape.getLoad() == null && game.getSelectedPiece() != null) {
             Piece selectedPiece = game.getSelectedPiece();
             int tRow = selectedPiece.getRow(), tCol = selectedPiece.getCol();
@@ -236,22 +230,20 @@ public final class JungleIO {
             }
             if (tRow == landscape.getRow() && tCol == landscape.getCol()) {
                 setFront(YELLOW);
+
                 setBlink();
                 print(selectedPiece.getDirection().getSymbol().repeat(4));
                 return;
             }
         }
-
         Piece piece = (Piece) landscape.getLoad();
         if (piece == null) print(WHITE_SPACE.repeat(4));
         else {
             if (game.getSelectedPiece() == piece) {
                 setBack(YELLOW);
-                if (piece.isSelected()) {
-                    setBold();
-                    setUnderlined();
-                }
+                if (piece.isSelected()) setUnderlined();
             }
+            setBold();
             if (piece.getPlayer() == game.getPlayerX()) setFront(RED);
             else if (piece.getPlayer() == game.getPlayerY()) setFront(GREEN);
             print(WHITE_SPACE + piece.getSymbol(game.getLanguage()) + WHITE_SPACE);
@@ -306,13 +298,13 @@ public final class JungleIO {
         reset();
         setCursor(20, 0);
         for (int r = 20; r < console_row; r++)
-            writer.println(WHITE_SPACE.repeat(console_row));
+            writer.println(WHITE_SPACE.repeat(60));
         setCursor(20, 0);
         announce(msg, color);
     }
 
     public char getKeyInGame(char key, Color color) {
-        setCursor(16, 50);
+        setCursor(18, 50);
         setBack(GREY);
         setFront(YELLOW);
         setUnderlined();
@@ -321,49 +313,67 @@ public final class JungleIO {
         setBack(GREY);
         setFront(color);
         setUnderlined();
-        setCursor(17, 50);
+        setCursor(19, 50);
         writer.print(key + WHITE_SPACE.repeat(3));
-        setCursor(17, 50);
+        setCursor(19, 50);
         return getKey(true);
     }
 
-    public void showNoticeBoard(String notice) {
-        String stripped = notice;
-        if (notice.lines().count() > 10) {
-            Stream<String> lines = notice.lines();
-            stripped = lines.skip(lines.count() - 10).toString();
-        }
-        int col = 50, row = 1;
+    public synchronized void showNoticeBoard(String notice) {
         reset();
-        setCursor(row++, col);
+        int col = 50, row = 0;
+        setCursor(++row, col);
         setBack(GREY);
         setFront(YELLOW);
         setBold();
         setUnderlined();
         writer.print("[NOTICE BOARD]");
         reset();
-        setCursor(row++, col);
+        setCursor(++row, col);
         setBack(GREY);
         setFront(BLUE);
         setBold();
-        int cnt = 0;
-        for (char c : stripped.toCharArray()) {
-            if (c == '\n') {
-                while (cnt++ < 50)
+        int chCount = 0;
+        for (char character : notice.toCharArray()) {
+            if (character == '\n') {
+                while (chCount++ < 50)
                     writer.print(WHITE_SPACE);
-                cnt = -1;
-                setCursor(row++, col);
-            } else writer.print(c);
-            cnt++;
+                chCount = -1;
+                setCursor(++row, col);
+            } else writer.print(character);
+            chCount++;
+            if (character > 127) chCount++;
         }
-        while (row < 15) {
-            while (cnt++ < 50)
+        while (row < 6) {
+            while (chCount++ < 50)
                 writer.print(WHITE_SPACE);
-            cnt = 0;
+            chCount = 0;
             setCursor(row++, col);
         }
         reset();
-        setCursor(row + 1, col);
+    }
+
+    public synchronized void showKeyMapping(Language language) {
+        reset();
+        int row = 6, col = 50;
+        setCursor(row, col);
+        setBack(GREY);
+        setBold();
+        int chCount = 0;
+        char[] charArray = switch (language) {
+            case CHINESE_TRADITIONAL, CHINESE_SIMPLE -> JCString.KEY_MAPPING_CT.string.toCharArray();
+            case ENGLISH -> JCString.KEY_MAPPING_EN.string.toCharArray();
+        };
+        for (char character : charArray) {
+            if (character == '\n') {
+                while (chCount++ < 40) print(WHITE_SPACE);
+                chCount = 0;
+                setCursor(++row, col);
+            } else writer.print(character);
+            chCount++;
+            if (character > 127) chCount++;
+        }
+        reset();
     }
 
     @SneakyThrows
@@ -481,7 +491,9 @@ public final class JungleIO {
     }
 
     public void setBack(Color color) {
-        print("\033[4" + color.value + "m");
+        if (color == WHITE)
+            print("\033[107m");
+        else print("\033[4" + color.value + "m");
     }
 
     public void setBold() {

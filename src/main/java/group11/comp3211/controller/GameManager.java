@@ -5,6 +5,7 @@ import group11.comp3211.common.exceptions.VoidObjectException;
 import group11.comp3211.model.Game;
 import group11.comp3211.model.piece.Piece;
 import group11.comp3211.view.JungleIO;
+import group11.comp3211.view.Language;
 import sun.misc.Signal;
 
 import java.util.Date;
@@ -36,6 +37,19 @@ public final class GameManager {
             io.printLine("不要使用ide环境，仔细看README😅");
             System.exit(1);
         }
+        int cRow = Integer.parseInt(System.getenv("LINES"));
+        int cCol = Integer.parseInt(System.getenv("COLUMNS"));
+        if (cRow < 30 || cCol < 100) {
+            io.announce(String.format("""
+                    Console Size Unsatisfied!
+                    Minimum Requirement:
+                        30 (lines) 100 (columns)
+                    Current Size:
+                        %-3d (lines) %-3d (columns)""", cRow, cCol), RED);
+            System.exit(2);
+        }
+        io.setConsole_row(cRow);
+        io.setConsole_col(cCol);
     }
 
 
@@ -136,6 +150,9 @@ public final class GameManager {
         game.getPlayerX().setName(nameX);
         game.getPlayerY().setName(nameY);
         io.reset();
+        game.setRunning(true);
+        game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ? game.getPlayerX() : game.getPlayerY());
+        game.setLanguage(Language.CHINESE_TRADITIONAL);
         runGame();
     }
 
@@ -171,54 +188,60 @@ public final class GameManager {
         io.announce(String.format("""
                         Successfully load game from '%s'
                         Info: '%s' vs '%s'
+                        Current Player '%s'
                         Press any KEY to start""", fileList[select],
-                game.getPlayerX(), game.getPlayerY()), BLUE);
+                game.getPlayerX(), game.getPlayerY(), game.getCurrentPlayer()), BLUE);
         io.getKey(false);
         io.reset();
         runGame();
     }
 
     private void runGame() {
-        game.setRunning(true);
-        game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ? game.getPlayerX() : game.getPlayerY());
-        io.setDRemap(true);
-        char key = '-';
         StringBuilder notice = new StringBuilder(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
         io.clearScreen();
         io.showPlayBoard(game);
         io.showNoticeBoard(notice.toString());
+        io.setDRemap(true);
+        char key = '-';
         do {
             key = io.getKeyInGame(key, game.getCurrentPlayer().getColor());
             try {
                 switch (key) {
+                    case 27 -> {
+                        return;
+                    }
                     case ':' -> pauseGame();
                     case '-', '0', '\n' -> game.clearSelectStatus();
+                    case '\t' -> game.setLanguage(switch (game.getLanguage()) {
+                        case ENGLISH -> Language.CHINESE_TRADITIONAL;
+                        case CHINESE_TRADITIONAL -> Language.ENGLISH;
+                        default -> throw new IllegalStateException("Language Offline: " + game.getLanguage());
+                    });
                     default -> {
-                        if (game.getSelectedPiece() == null) {
-                            game.selectPieceByKey(key);
-                            notice.append(String.format("%s SELECT %s\n", game.getCurrentPlayer(),
-                                    game.getSelectedPiece().getSymbol(game.getLanguage())));
+                        Piece currentPiece = game.getSelectedPiece();
+                        if (currentPiece != null) {
+                            switch (key) {
+                                case 'w', 'W' -> currentPiece.setDirection(UP);
+                                case 'a', 'A' -> currentPiece.setDirection(LEFT);
+                                case 's', 'S' -> currentPiece.setDirection(DOWN);
+                                case 'd', 'D' -> currentPiece.setDirection(RIGHT);
+                                default -> currentPiece.setDirection(STAY);
+                            }
+                        }
+                        if (currentPiece != null && currentPiece.getDirection() != STAY) {
+                            game.runTurn();
+                            notice.delete(0, notice.length());
+                            notice.append(String.format("%s: %s moves %s\n",
+                                    currentPiece.getPlayer().getName(), currentPiece.getSymbol(game.getLanguage()),
+                                    currentPiece.getDirection().name()));
+                            notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
                         } else {
-                            Piece piece = game.getSelectedPiece();
-                            if (key == ' ') {
-                                if (!piece.isSelected())
-                                    piece.setSelected(true);
-                                else {
-                                    piece.setDirection(STAY);
-                                    piece.setSelected(false);
-                                }
-                            } else if (piece.isSelected()) {
-                                switch (key) {
-                                    case 'w', 'W' -> piece.setDirection(UP);
-                                    case 'a', 'A' -> piece.setDirection(LEFT);
-                                    case 's', 'S' -> piece.setDirection(DOWN);
-                                    case 'd', 'D' -> piece.setDirection(RIGHT);
-                                    default -> piece.setDirection(STAY);
-                                }
-                                game.runTurn();
-                                notice.delete(0, notice.length());
-                                notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
-                            } else game.selectPieceByKey(key);
+                            game.selectPieceByKey(key);
+                            game.getSelectedPiece().setSelected(true);
+                            notice.delete(0, notice.length());
+                            notice.append(String.format("%s SELECT %s\n",
+                                    game.getCurrentPlayer(), game.getSelectedPiece().getSymbol(game.getLanguage())));
+                            notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
                         }
                     }
                 }
@@ -231,7 +254,6 @@ public final class GameManager {
             } finally {
                 io.showPlayBoard(game);
                 io.showNoticeBoard(notice.toString());
-                io.reset();
             }
         } while (game.isRunning());
         io.setDRemap(false);
@@ -239,29 +261,26 @@ public final class GameManager {
 
     private void pauseGame() {
         io.announceInGame("""
-                You are attempting to leave.
-                Save and Quit:      ' w '
-                Do not Save:        ' q '""", BLUE);
-        char key = io.getKey(false);
-        switch (key) {
-            case 'w', 'W' -> {
-                String fileName = String.format("%s-%s", game.getPlayerX().getName(), game.getPlayerY().getName());
-                io.printLine("Use default file name?");
-                fileName = io.readLine(fileName);
-                game.saveToFile(fileName + ".game");
-                game.setRunning(false);
-                exit(String.format("SAVE and QUIT GAME at %s\nSave in file %s", new Date(), fileName));
+                Game Paused -------------
+                Save and Quit  ==>  ' w '
+                Quit           ==>  ' q '
+                Back to Game   ==>  'ESC'
+                """, BLUE);
+        char key;
+        do {
+            key = io.getKey(false);
+            switch (key) {
+                case 'w', 'W' -> {
+                    String fileName = String.format("%s-%s", game.getPlayerX().getName(), game.getPlayerY().getName());
+                    io.printLine("Use default file name?");
+                    fileName = io.readLine(fileName);
+                    game.saveToFile(fileName + ".game");
+                    game.setRunning(false);
+                }
+                case 'q', 'Q' -> game.setRunning(false);
             }
-            case 'q', 'Q' -> {
-                game.setRunning(false);
-                exit("QUIT GAME without SAVE");
-            }
-        }
+        } while (key != 27 && game.isRunning());
         io.clearScreen();
-    }
-
-    private void settlement() {
-
     }
 
     private void manual() {

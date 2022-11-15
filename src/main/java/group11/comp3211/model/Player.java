@@ -13,4 +13,9 @@ public final class Player implements Serializable {
     public Player(Color color) {
         this.color = color;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s)", this.name, this.color);
+    }
 }

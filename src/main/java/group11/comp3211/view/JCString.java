@@ -28,6 +28,30 @@ enum JCString {
             |                Press 'SPACE'/'TAB' => Move to the Next Option               @
             |                Press  'SHIFT+TAB'  => Move to the Previous Option           @
             ===============================================================================
+            """), KEY_MAPPING_CT("""
+            -----------------------------------
+            |[棋子符號][控製鍵] [功能]  [方向鍵]
+            |   象        8  | 向上移动   w/↑
+            |   狮        7  | 向左移动   a/←
+            |   虎        6  | 向下移动   s/↓
+            |   豹        5  | 向右移动   d/→
+            |   狼        4  | 暂停游戏    :
+            |   狗        3  | 切换语言   TAB
+            |   猫        2  | 返回主菜单 ESC
+            |   鼠        1  |
+            -----------------------------------
+            """), KEY_MAPPING_EN("""
+            -----------------------------------
+            |[SYM][KEY]       [FUNC]     [KEY]
+            | EP   8 Elephant| UP         w/↑
+            | LN   7 Lion    | LEFT       a/←
+            | TG   6 Tiger   | DOWN       s/↓
+            | LP   5 Leopard | RIGHT      d/→
+            | WF   4 Wolf    | Pause Game  :
+            | DG   3 Dog     | Language   TAB
+            | CT   2 Cat     | BACK       ESC
+            | MS   1 Mouse   |
+            |----------------------------------
             """);
     final String string;
 

@@ -9,7 +9,7 @@ fi
 
 if [ $# -gt 0 ]; then
   if [ "$1" != 'help' ] && [ "$1" != 'build' ] &&
-  [ "$1" != 'install' ] && [ "$1" != 'uninstall' ] && [ "$1" != 'version' ]; then
+    [ "$1" != 'install' ] && [ "$1" != 'uninstall' ] && [ "$1" != 'version' ]; then
     echo -e "\033[31;1m\
   Unknown argument $1!\033[0m"
     exit 255
@@ -35,23 +35,6 @@ fi
 if [ "$1" = 'uninstall' ]; then
   rm -f /usr/local/bin/jungle
   exit 0
-fi
-
-rm -f "$JUNGLE_HOME"/src/main/resources/.console_siz
-stty size >"$JUNGLE_HOME"/src/main/resources/.console_siz
-
-size=$(stty size)
-# shellcheck disable=SC2206
-size_arr=($size)
-row=${size_arr[0]}
-col=${size_arr[1]}
-
-if ((row < 30)) || ((col < 100)); then
-  echo -e "\033[31;1m\
-  Console Size ${row} ${col} Unsatisfied!\n\
-  Minimum Requirement: 30 100
-  Please Resize Console or Font Size.\033[0m"
-  exit 2
 fi
 
 if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
@@ -94,23 +77,25 @@ JUNGLE_HOME=$JUNGLE_HOME" "$JUNGLE_HOME"/jungle >/usr/local/bin/jungle && chmod 
   if ! git -C "$JUNGLE_HOME" pull; then
     echo -e "Unable to auto-update"
   fi
+
   cd "$JUNGLE_HOME" || exit 4
-  if [ "$2" = "dry" ]; then
+  if [ "$2" = 'testing' ]; then
     "${mvn_path}"mvn clean package appassembler:assemble
     exit 0
-  elif [ "$2" = 'testing' ]; then
-    "${mvn_path}"mvn clean package appassembler:assemble
   elif [ "$2" = 'clean' ]; then
-    "${mvn_path}"mvn clean
+    "${mvn_path}"mvn -q clean
     exit 0
   else
-    "${mvn_path}"mvn clean package appassembler:assemble -DskipTests
+    "${mvn_path}"mvn -q clean package appassembler:assemble -DskipTests
   fi
 fi
 
 bin_path="$JUNGLE_HOME"/target/appassembler/bin/
-reset
-stty cbreak && "${bin_path}"JungleApp
+
+eval "$(resize)"
+reset && stty cbreak
+"${bin_path}"JungleApp && stty icanon
+
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
   if [ "$1" != 'build' ]; then
@@ -119,11 +104,9 @@ if [ $? != 0 ]; then
   Use the following command to build & run:
     ./jungle build\033[0m"
   else
-    reset
     echo -e "\033[31;1m\
   The minimum requirement of this software is Java17.\n\
   Please update to Java17 (LTS) or higher!
   Official link: https://www.oracle.com/java/technologies/downloads/\033[0m"
   fi
 fi
-stty icanon

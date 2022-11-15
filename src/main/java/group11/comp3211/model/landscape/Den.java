@@ -20,10 +20,9 @@ public class Den extends Landscape {
     @Override
     public String getSymbol(Language language) {
         return switch (language) {
-            case ENGLISH -> null;
+            case ENGLISH -> "DN";
             case CHINESE_SIMPLE -> "穴";
-            case CHINESE_TRADITIONAL -> null;
-            case EMOJI -> null;
+            case CHINESE_TRADITIONAL -> "穴";
         };
     }
 }

@@ -18,7 +18,6 @@ import java.util.Objects;
 import static group11.comp3211.model.Direction.STAY;
 import static group11.comp3211.view.Color.GREEN;
 import static group11.comp3211.view.Color.RED;
-import static group11.comp3211.view.Language.CHINESE_SIMPLE;
 
 @Getter
 @Setter
@@ -40,7 +39,7 @@ public final class Game implements Serializable {
         this.playerY = new Player(GREEN);
         this.currentPlayer = null;
         this.selectedPiece = null;
-        this.language = CHINESE_SIMPLE;
+        this.language = null;
         keyPieceTable = new HashMap<>();
         initBoard();
         initKeyPieceTable();
