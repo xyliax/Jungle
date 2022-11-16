@@ -92,9 +92,9 @@ fi
 
 bin_path="$JUNGLE_HOME"/target/appassembler/bin/
 
-eval "$(resize)"
+
 reset && stty cbreak
-"${bin_path}"JungleApp && stty icanon
+eval "$(resize)" && "${bin_path}"JungleApp && stty icanon
 
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
