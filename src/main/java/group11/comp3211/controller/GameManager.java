@@ -37,8 +37,9 @@ public final class GameManager {
             io.printLine("不要使用ide环境，仔细看README😅");
             System.exit(1);
         }
-        int cRow = Integer.parseInt(System.getenv("LINES"));
-        int cCol = Integer.parseInt(System.getenv("COLUMNS"));
+        String size = System.getenv("SIZE_J");
+        int cRow = Integer.parseInt(size.split(" ")[0]);
+        int cCol = Integer.parseInt(size.split(" ")[1]);
         if (cRow < 30 || cCol < 100) {
             io.announce(String.format("""
                     Console Size Unsatisfied!

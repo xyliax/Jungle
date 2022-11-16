@@ -91,10 +91,11 @@ JUNGLE_HOME=$JUNGLE_HOME" "$JUNGLE_HOME"/jungle >/usr/local/bin/jungle && chmod 
 fi
 
 bin_path="$JUNGLE_HOME"/target/appassembler/bin/
-
-eval "$(resize)"
-reset && stty cbreak
-"${bin_path}"JungleApp && stty icanon
+if ! SIZE_J=$(stty size); then
+  SIZE_J='30 100'
+fi
+export SIZE_J
+stty cbreak && "${bin_path}"JungleApp && stty icanon
 
 # shellcheck disable=SC2181
 if [ $? != 0 ]; then
