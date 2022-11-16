@@ -1,9 +1,9 @@
 package group11.comp3211.model;
 
 import group11.comp3211.common.exceptions.IllegalMovementException;
-import group11.comp3211.model.landscape.*;
-import group11.comp3211.model.piece.*;
-import lombok.Builder;
+import group11.comp3211.model.landscape.Landscape;
+import group11.comp3211.model.landscape.River;
+import group11.comp3211.model.piece.Piece;
 
 import java.io.Serializable;
 
@@ -67,12 +67,12 @@ public final class PlayBoard implements Serializable {
             case LION, TIGER -> {
                 switch (piece.getDirection()) {
                     case UP -> {
-                        if (row == 0)   throw new IllegalMovementException("Trying to get out of the board. ");
-                        if (getType(row-1, col) == JungleType.RIVER) {
-                            if (ratInRiver(((River) get(row-1, col)).getBelong2())) throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
+                        if (row == 0) throw new IllegalMovementException("Trying to get out of the board. ");
+                        if (getType(row - 1, col) == JungleType.RIVER) {
+                            if (ratInRiver(((River) get(row - 1, col)).getBelong2()))
+                                throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
                             else row -= 4;
-                        }
-                        else --row;
+                        } else --row;
                     }
                     case DOWN -> {
                         if (row == 8)   throw new IllegalMovementException("Trying to get out of the board. ");

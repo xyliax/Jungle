@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#This is only for Unix platform
+#Only for Unix
 
 cd "$(dirname "$0")" && dir=$(pwd)
 if [ "$JUNGLE_HOME" == '' ]; then
@@ -8,7 +8,7 @@ if [ "$JUNGLE_HOME" == '' ]; then
 fi
 
 if [ $# -gt 0 ]; then
-  if [ "$1" != 'help' ] && [ "$1" != 'build' ] &&
+  if [ "$1" != 'help' ] && [ "$1" != 'build' ] && [ "$1" != 'test' ] &&
     [ "$1" != 'install' ] && [ "$1" != 'uninstall' ] && [ "$1" != 'version' ]; then
     echo -e "\033[31;1m\
   Unknown argument $1!\033[0m"
@@ -37,56 +37,70 @@ if [ "$1" = 'uninstall' ]; then
   exit 0
 fi
 
-if [ "$1" = 'build' ] || [ "$1" = 'install' ]; then
-  if ! mvn -v >/dev/null; then
-    echo -e "\033[32;1m\
+if ! mvn -v >/dev/null; then
+  echo -e "\033[32;1m\
   You don't have maven on your local machine.\n\
   Use provided apache-maven-3.8.6 for building.\033[0m"
 
-    if ! rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6 ||
-      ! tar --no-same-owner -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz -C "$JUNGLE_HOME"/lib-maven; then
-      echo -e "\033[31;1m\
+  if ! rm -rf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6 ||
+    ! tar -xzf "$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6-bin.tar.gz -C "$JUNGLE_HOME"/lib-maven; then
+    echo -e "\033[31;1m\
   Unable to extract file $JUNGLE_HOME/lib-maven/apache-maven-3.8.6-bin.tar.gz\n\
   Please manually install Apache-Maven or add it to PATH\n\
   You are recommended to use a package manager (Homebrew, apt-get, pacman, snap...)\n\
   Use the following command (e.g., for Homebrew users):\n\
     \033[32;1m  brew install maven\033[31;1m\n\
   Official link: https://maven.apache.org/download.cgi\033[0m"
-      exit 1
-    fi
-    mvn_path="$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6/bin/
+    exit 1
   fi
+  mvn_path="$JUNGLE_HOME"/lib-maven/apache-maven-3.8.6/bin/
+fi
 
-  if [ "$1" = "install" ]; then
-    if sed "1a\\
+if [ "$1" = "install" ]; then
+  if sed "1a\\
 JUNGLE_HOME=$JUNGLE_HOME" "$JUNGLE_HOME"/jungle >/usr/local/bin/jungle && chmod +x /usr/local/bin/jungle; then
-      echo -e "\033[32;1m\
+    echo -e "\033[32;1m\
         JUNGLE successfully installed on your machine.\n\
         Start Command:\n\
           jungle [arguments]\n\
         To Uninstall:\n\
           jungle uninstall\033[0m"
-    else
-      unlink /usr/local/bin/jungle
-      echo -e "\033[31;1m\
-        Install Failure! (maybe need root?)\033[0m"
-    fi
-    exit 0
-  fi
-
-  if ! git -C "$JUNGLE_HOME" pull; then
-    echo -e "Unable to auto-update"
-  fi
-
-  cd "$JUNGLE_HOME" || exit 4
-  if [ "$2" = 'testing' ]; then
-    "${mvn_path}"mvn clean package appassembler:assemble
-    exit 0
-  elif [ "$2" = 'clean' ]; then
-    "${mvn_path}"mvn -q clean
-    exit 0
   else
-    "${mvn_path}"mvn -q clean package appassembler:assemble -DskipTests
+    unlink /usr/local/bin/jungle
+    echo -e "\033[31;1m\
+        Install Failure! (maybe need root?)\033[0m"
+  fi
+  exit 0
+fi
+
+if [ "$1" = 'update' ]; then
+  if ! git -C "$JUNGLE_HOME" pull; then
+    echo -e "Unable to auto-update from Git"
+  fi
+fi
+
+if [ "$1" = 'clean' ]; then
+  "${mvn_path}"mvn clean
+  exit 0
+fi
+
+if [ "$1" = 'test' ]; then
+  "${mvn_path}"mvn clean package appassembler:assemble test
+  exit 0
+fi
+
+cd "$JUNGLE_HOME" || exit 4
+
+if [ "$1" = 'build' ]; then
+  echo "Building Project, this may take a while..."
+  "${mvn_path}"mvn -q clean package appassembler:assemble -DskipTests
+  # shellcheck disable=SC2181
+  if [ $? != 0 ]; then
+    echo -e "\033[31;1m\
+      Building Fails!
+      The minimum requirement of this software is Java17.\n\
+      Please update to Java17 (LTS) or higher!
+      Official link: https://www.oracle.com/java/technologies/downloads/\033[0m"
   fi
 fi
 
@@ -95,6 +109,7 @@ if ! SIZE_J=$(stty size); then
   SIZE_J='30 100'
 fi
 export SIZE_J
+reset
 stty cbreak && "${bin_path}"JungleApp && stty icanon
 
 # shellcheck disable=SC2181
@@ -104,10 +119,5 @@ if [ $? != 0 ]; then
   It seems that you have not built the software.\n\
   Use the following command to build & run:
     ./jungle build\033[0m"
-  else
-    echo -e "\033[31;1m\
-  The minimum requirement of this software is Java17.\n\
-  Please update to Java17 (LTS) or higher!
-  Official link: https://www.oracle.com/java/technologies/downloads/\033[0m"
   fi
 fi

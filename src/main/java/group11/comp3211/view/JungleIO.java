@@ -67,7 +67,7 @@ public final class JungleIO {
                 print("\r");
                 for (int j = 0; j < i; j++)
                     writer.print(WHITE_SPACE);
-                if (!insertFrameDelay(8)) return;
+                if (!insertFrameDelay(2)) return;
             }
         });
         Thread skip = new Thread(() -> {

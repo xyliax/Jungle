@@ -7,7 +7,7 @@ import lombok.Value;
 @Value
 @EqualsAndHashCode(callSuper = false)
 public class River extends Landscape {
-    protected JungleType belong2;
+    JungleType belong2;
     public River(int row, int col) {
         super(row, col);
         this.type = JungleType.RIVER;
