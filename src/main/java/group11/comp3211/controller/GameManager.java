@@ -72,7 +72,7 @@ public final class GameManager {
             io.printLine("[JUNGLE WARNING]");
             io.setFront(RED);
             io.printLine(String.format("Your OS is %s - %s, some features are limited", OS, ARCH));
-            io.printLine("We STRONGLY recommend you to use Linux / MacOS for compatibility concerns");
+            io.printLine("We STRONGLY recommend you to use Linux / macOS for compatibility concerns");
             io.printLine("You will not receive this message any more, Continue in 10 Seconds...");
             io.setFront(RED);
             io.printLine("[END OF WARNING]");
@@ -325,7 +325,10 @@ public final class GameManager {
     }
 
     private void manual() {
-
+        try {
+            Runtime.getRuntime().exec(new String[]{"open", "https://blog.peiyuxing.xyz/Jungle/"});
+        } catch (IOException ignored) {
+        }
     }
 
     public Game getGame() {

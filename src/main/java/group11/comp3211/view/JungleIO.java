@@ -382,6 +382,7 @@ public final class JungleIO {
         int row = 6, col = 50;
         setCursor(row, col);
         setBack(GREY);
+        setFront(BLACK);
         setBold();
         int chCount = 0;
         char[] charArray = switch (language) {
