@@ -257,8 +257,10 @@ public final class JungleIO {
             }
         }
         Piece piece = (Piece) landscape.getLoad();
-        if (piece == null) print(WHITE_SPACE.repeat(4));
-        else {
+        if (piece == null) {
+            setFront(WHITE);
+            print(WHITE_SPACE.repeat(4));
+        } else {
             if (game.getSelectedPiece() == piece) {
                 setBack(YELLOW);
                 if (piece.isSelected()) setUnderlined();

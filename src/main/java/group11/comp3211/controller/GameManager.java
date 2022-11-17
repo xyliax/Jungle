@@ -41,7 +41,11 @@ public final class GameManager {
      */
     private void environmentCheck() {
         if (System.console() == null) {
-            io.printLine("不要使用ide环境，仔细看README😅");
+            io.printLine("Please read README carefully!!!");
+            io.printLine("Please read README carefully!!!");
+            io.printLine("Please read README carefully!!!");
+            io.printLine("Please read README carefully!!!");
+            io.printLine("Please read README carefully!!!");
             System.exit(1);
         }
         String size = System.getenv("SIZE_J");
@@ -92,7 +96,7 @@ public final class GameManager {
     public void boot() {
         environmentCheck();
         operatingSystemCheck();
-        welcomeBanner();
+        welcome();
         startMenu();
     }
 
@@ -104,7 +108,7 @@ public final class GameManager {
         runGame();
     }
 
-    private void welcomeBanner() {
+    private void welcome() {
         do {
             io.showWelcomeAnimation();
         } while (io.getKey(false) != '\n');
@@ -217,6 +221,7 @@ public final class GameManager {
     }
 
     private void runGame() {
+        Player winner = null;
         StringBuilder notice = new StringBuilder(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
         io.clearScreen();
         io.showPlayBoard(game);
@@ -255,35 +260,42 @@ public final class GameManager {
                             notice.append(String.format("%s: %s moves %s\n",
                                     currentPiece.getPlayer().getName(), currentPiece.getSymbol(game.getLanguage()),
                                     direction.name()));
-                            notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
                         } else {
                             game.selectPieceByKey(key);
                             game.getSelectedPiece().setSelected(true);
                             notice.delete(0, notice.length());
-                            notice.append(String.format("%s SELECT %s\n",
-                                    game.getCurrentPlayer(), game.getSelectedPiece().getSymbol(game.getLanguage())));
-                            notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
                         }
                     }
                 }
             } catch (VoidObjectException voidObjectException) {
                 io.announceInGame(voidObjectException.getMessage(), RED);
                 game.clearSelectStatus();
+                notice.delete(0, notice.length());
             } catch (LogicException logicException) {
                 io.announceInGame(logicException.getMessage(), BLUE);
                 game.clearSelectStatus();
+                notice.delete(0, notice.length());
             } finally {
                 io.showPlayBoard(game);
-                Player winner = game.findWinner();
-                if (winner != null) {
-                    game.setRunning(false);
-                    notice.delete(0, notice.length());
-                    notice.append(String.format("Congratulations!\n%s WINS!!!", winner));
-                    io.announceInGame(String.format("Game Ends...\n%s Wins", winner), winner.getColor());
-                }
+                if (game.getSelectedPiece() != null)
+                    notice.append(String.format("%s SELECT %s\n", game.getCurrentPlayer(),
+                            game.getSelectedPiece().getSymbol(game.getLanguage())));
+                notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
                 io.showNoticeBoard(notice.toString());
+                if ((winner = game.findWinner()) != null) game.setRunning(false);
             }
         } while (game.isRunning());
+        if (winner != null) {
+            notice.delete(0, notice.length());
+            notice.append("Congratulations!!!\n");
+            notice.append(String.format("%s WINS!!!\n", winner));
+            io.announceInGame(String.format("Game Ends...\n%s Wins\nPress ENTER/RETURN", winner),
+                    winner.getColor());
+            io.showNoticeBoard(notice.toString());
+            do {
+                key = io.getKey(false);
+            } while (key != '\n');
+        }
         io.setDRemap(false);
     }
 
@@ -303,11 +315,10 @@ public final class GameManager {
                     io.printLine("Use default file name?");
                     fileName = io.readLine(fileName);
                     game.saveToFile(fileName + ".game");
-                    game.setRunning(false);
                 }
                 case 'q', 'Q' -> game.setRunning(false);
             }
-        } while (key != 27 && game.isRunning());
+        } while (!(key == 27 || key == ':') && game.isRunning());
         io.clearScreen();
     }
 
