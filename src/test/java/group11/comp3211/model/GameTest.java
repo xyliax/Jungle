@@ -2,8 +2,6 @@ package group11.comp3211.model;
 
 import group11.comp3211.common.exceptions.LogicException;
 import group11.comp3211.common.exceptions.VoidObjectException;
-import group11.comp3211.controller.GameManager;
-import group11.comp3211.model.piece.Piece;
 import group11.comp3211.model.piece.Wolf;
 import group11.comp3211.view.Language;
 import org.junit.Before;
@@ -11,8 +9,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Random;
-
-import static org.junit.Assert.*;
 
 public class GameTest {
     Game game;
@@ -56,7 +52,7 @@ public class GameTest {
         game.setSelectedPiece(wolf);
         try {
             game.runTurn();
-        } catch (LogicException e) {
+        } catch (LogicException ignored) {
         }
     }
 

@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ElephantTest {
 
@@ -32,7 +32,7 @@ public class ElephantTest {
 
     @Test
     public void testHashcode(){
-        Assert.assertTrue(elephant.hashCode() == elephant.hashCode());
+        assertEquals(elephant.hashCode(), elephant.hashCode());
     }
 
 }

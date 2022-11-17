@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TigerTest {
 
@@ -32,7 +32,7 @@ public class TigerTest {
 
     @Test
     public void testHashcode(){
-        Assert.assertTrue(tiger.hashCode() == tiger.hashCode());
+        assertEquals(tiger.hashCode(), tiger.hashCode());
     }
 
 }

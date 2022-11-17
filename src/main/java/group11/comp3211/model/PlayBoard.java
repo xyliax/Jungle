@@ -125,7 +125,7 @@ public final class PlayBoard implements Serializable {
         }
         if (!get(row, col).canLoad(movable)) throw new NotLoadableException(get(row, col), movable);
         else if ((get(row, col).getType() == DEN && ((Den) get(row, col)).getPlayer() == ((Piece) movable).getPlayer()))
-            throw new LogicException("Pieces cannot step on DEN of the same side!");
+            throw new LogicException("Piece cannot step on DEN of the same side!");
         return new int[]{row, col};
     }
 

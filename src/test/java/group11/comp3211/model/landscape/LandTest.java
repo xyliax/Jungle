@@ -15,7 +15,7 @@ public class LandTest{
 
     @Test
     public void testTestEquals() {
-        Assert.assertTrue(land.equals(land));
+        Assert.assertEquals(land, land);
     }
 
     @Test

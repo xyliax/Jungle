@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CatTest {
 
@@ -32,7 +32,7 @@ public class CatTest {
 
     @Test
     public void testHashcode(){
-        Assert.assertTrue(cat.hashCode() == cat.hashCode());
+        assertEquals(cat.hashCode(), cat.hashCode());
     }
 
 }

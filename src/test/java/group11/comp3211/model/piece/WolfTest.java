@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class WolfTest {
 
@@ -32,7 +32,7 @@ public class WolfTest {
 
     @Test
     public void testHashcode(){
-        Assert.assertTrue(wolf.hashCode() == wolf.hashCode());
+        assertEquals(wolf.hashCode(), wolf.hashCode());
     }
 
 }

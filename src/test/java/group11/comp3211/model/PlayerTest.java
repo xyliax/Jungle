@@ -4,10 +4,6 @@ import group11.comp3211.view.Color;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
-import static org.junit.Assert.*;
-
 public class PlayerTest {
     Player player;
 
@@ -41,7 +37,6 @@ public class PlayerTest {
 
     @Test
     public void testEquals() {
-        Player player1 = new Player(C);
         player.equals(player);
     }
 
