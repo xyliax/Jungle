@@ -31,7 +31,7 @@ public final class PlayBoard implements Serializable {
         return this.get(piece.getRow(), (piece.getCol()));
     }
 
-    private boolean canCapture(Piece capturer, Piece capturee) {
+    public boolean canCapture(Piece capturer, Piece capturee) {
         if (capturer.getPlayer() == capturee.getPlayer()) return false;
         if (getPieceLoader(capturee).getType() == TRAP) return true;
         switch (capturer.getType()) {
@@ -39,8 +39,7 @@ public final class PlayBoard implements Serializable {
                 return capturee.getType() != RAT;
             }
             case RAT -> {
-                if (getPieceLoader(capturer).getType() == WATER)
-                    return getPieceLoader(capturee).getType() == WATER;
+                if (getPieceLoader(capturer).getType() == WATER) return getPieceLoader(capturee).getType() == WATER;
                 else return capturee.getType() == RAT || capturee.getType() == ELEPHANT;
             }
             default -> {
@@ -77,22 +76,20 @@ public final class PlayBoard implements Serializable {
             case LEFT -> --col;
             case RIGHT -> ++col;
         }
-        if (!(row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM))
-            throw new OutBoardException(movable);
-        if((movable.getType() == LION || movable.getType() == TIGER) && get(row, col).getType() == WATER) {
-                if (ratInRiver(((Water) get(row, col)).getArea()))
-                    throw new JumpingException(movable, ((Water) get(row, col)).getArea());
-                else {
-                    switch (movable.getDirection()) {
-                        case UP -> row -= 3;
-                        case DOWN -> row += 3;
-                        case LEFT -> col -= 2;
-                        case RIGHT -> col += 2;
-                    }
+        if (!(row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM)) throw new OutBoardException(movable);
+        if ((movable.getType() == LION || movable.getType() == TIGER) && get(row, col).getType() == WATER) {
+            if (ratInRiver(((Water) get(row, col)).getArea()))
+                throw new JumpingException(movable, ((Water) get(row, col)).getArea());
+            else {
+                switch (movable.getDirection()) {
+                    case UP -> row -= 3;
+                    case DOWN -> row += 3;
+                    case LEFT -> col -= 2;
+                    case RIGHT -> col += 2;
                 }
             }
-        if (!get(row, col).canLoad(movable))
-            throw new NotLoadableException(get(row, col), movable);
+        }
+        if (!get(row, col).canLoad(movable)) throw new NotLoadableException(get(row, col), movable);
         else if ((get(row, col).getType() == DEN && ((Den) get(row, col)).getPlayer() == ((Piece) movable).getPlayer()))
             throw new LogicException("Pieces cannot step on DEN of the same side!");
         return new int[]{row, col};

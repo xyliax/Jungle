@@ -8,6 +8,7 @@ import group11.comp3211.model.Player;
 import group11.comp3211.model.piece.Piece;
 import group11.comp3211.view.JungleIO;
 import group11.comp3211.view.Language;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import sun.misc.Signal;
 
@@ -21,7 +22,7 @@ import java.util.Random;
 import static group11.comp3211.model.Direction.*;
 import static group11.comp3211.view.Color.*;
 
-
+@Getter
 public final class GameManager {
     private final JungleIO io;
     private Game game;
@@ -328,10 +329,6 @@ public final class GameManager {
             Runtime.getRuntime().exec(new String[]{"open", "https://blog.peiyuxing.xyz/Jungle/"});
         } catch (IOException ignored) {
         }
-    }
-
-    public Game getGame() {
-        return game;
     }
 
     private void exit(String reason) {
