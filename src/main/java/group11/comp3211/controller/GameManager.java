@@ -260,6 +260,7 @@ public final class GameManager {
                             notice.append(String.format("%s: %s moves %s\n",
                                     currentPiece.getPlayer().getName(), currentPiece.getSymbol(game.getLanguage()),
                                     direction.name()));
+                            io.announceInGame("", BLACK);
                         } else {
                             game.selectPieceByKey(key);
                             game.getSelectedPiece().setSelected(true);

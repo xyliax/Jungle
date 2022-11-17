@@ -303,6 +303,7 @@ public final class JungleIO {
         writer.print("[SYSTEM NOTICE]");
         reset();
         writer.println();
+        setBack(WHITE);
         setFront(color);
         writer.print(msg);
         reset();
