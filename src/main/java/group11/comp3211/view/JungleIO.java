@@ -37,7 +37,7 @@ public final class JungleIO {
     private PrintStream writer;
     private boolean dRemap;
 
-    @SneakyThrows
+
     private JungleIO() {
         this.console = System.console();
         this.promptStr = "\033[33m>>> \033[0m";

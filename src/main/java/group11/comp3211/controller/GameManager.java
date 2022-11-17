@@ -104,7 +104,7 @@ public final class GameManager {
         FileInputStream fileInputStream = new FileInputStream(gameFile);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         game = (Game) objectInputStream.readObject();
-        runGame();
+        //runGame();
     }
 
     private void welcome() {
