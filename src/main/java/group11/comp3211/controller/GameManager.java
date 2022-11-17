@@ -2,6 +2,7 @@ package group11.comp3211.controller;
 
 import group11.comp3211.common.exceptions.LogicException;
 import group11.comp3211.common.exceptions.VoidObjectException;
+import group11.comp3211.model.Direction;
 import group11.comp3211.model.Game;
 import group11.comp3211.model.piece.Piece;
 import group11.comp3211.view.JungleIO;
@@ -247,11 +248,12 @@ public final class GameManager {
                             }
                         }
                         if (currentPiece != null && currentPiece.getDirection() != STAY) {
+                            Direction direction = currentPiece.getDirection();
                             game.runTurn();
                             notice.delete(0, notice.length());
                             notice.append(String.format("%s: %s moves %s\n",
                                     currentPiece.getPlayer().getName(), currentPiece.getSymbol(game.getLanguage()),
-                                    currentPiece.getDirection().name()));
+                                    direction.name()));
                             notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
                         } else {
                             game.selectPieceByKey(key);

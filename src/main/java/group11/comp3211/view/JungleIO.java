@@ -55,6 +55,7 @@ public final class JungleIO {
         int width;
         switch (character) {
             case '↑', '←', '↓', '→' -> width = 1;
+            case '\n' -> width = 0;
             default -> {
                 if (character >= 32 && character < 127) width = 1;
                 else return 2;
@@ -356,8 +357,7 @@ public final class JungleIO {
                 setCursor(++row, col);
             } else {
                 writer.print(character);
-                chCount++;
-                if (character > 127) chCount++;
+                chCount += getCharWidth(character);
             }
         }
         while (row < 6) {
@@ -384,8 +384,7 @@ public final class JungleIO {
                 chCount = 0;
                 setCursor(++row, col);
             } else writer.print(character);
-            chCount++;
-            if (character > 127) chCount++;
+            chCount += getCharWidth(character);
         }
         reset();
     }

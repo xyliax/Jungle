@@ -156,9 +156,9 @@ public final class PlayBoard implements Serializable {
         put(new Trap(0, 4, playerX));
         put(new Trap(1, 3, playerX));
         put(new Den(8, 3, playerY));
-        put(new Trap(8, 2, playerX));
-        put(new Trap(8, 4, playerX));
-        put(new Trap(7, 3, playerX));
+        put(new Trap(8, 2, playerY));
+        put(new Trap(8, 4, playerY));
+        put(new Trap(7, 3, playerY));
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 7; col++) {
                 if (get(row, col) != null) continue;
@@ -184,7 +184,7 @@ public final class PlayBoard implements Serializable {
         initPieces.add(new Dog(7, 5, playerY));
         initPieces.add(new Cat(7, 1, playerY));
         initPieces.add(new Rat(6, 6, playerY));
-        for (Piece piece : initPieces)
-            get(piece.getRow(), piece.getCol()).setLoad(piece);
+
+        for (Piece piece : initPieces) get(piece.getRow(), piece.getCol()).setLoad(piece);
     }
 }

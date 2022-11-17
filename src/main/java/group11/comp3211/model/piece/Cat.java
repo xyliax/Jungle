@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 @Value
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class Cat extends Piece {
     public Cat(int row, int col, Player player) {
         super(row, col, player);
