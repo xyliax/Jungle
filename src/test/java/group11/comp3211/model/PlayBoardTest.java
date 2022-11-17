@@ -1,22 +1,23 @@
 package group11.comp3211.model;
 
 import group11.comp3211.common.exceptions.LogicException;
-import group11.comp3211.model.piece.Cat;
-import group11.comp3211.model.piece.Rat;
-import group11.comp3211.model.piece.Tiger;
-import group11.comp3211.model.piece.Wolf;
+import group11.comp3211.controller.GameManager;
+import group11.comp3211.model.piece.*;
 import group11.comp3211.view.Language;
-import lombok.SneakyThrows;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Random;
 
-import static org.junit.Assert.*;
 
 public class PlayBoardTest {
     Game game;
     PlayBoard playBoard;
+
+    Game game2;
 
     @Before
     public void Before(){
@@ -30,13 +31,20 @@ public class PlayBoardTest {
     }
 
     @Test
+    public void boot2(){
+        File file = new File("/Users/hanjiaming/.game_file/userX-userY.game");
+        GameManager.getInstance().debug(file);
+        game2 = GameManager.getInstance().getGame();
+    }
+
+    @Test
     public void ratInRiver() {
         playBoard.ratInRiver(JungleType.RIVER_AREA_LEFT);
         playBoard.ratInRiver(JungleType.RIVER_AREA_RIGHT);
     }
 
     @Test
-    public void findDestination() throws LogicException {
+    public void findDestination() {
         Tiger tiger = new Tiger(4,4,null);
         tiger.setDirection(Direction.UP);
         try {
@@ -73,11 +81,11 @@ public class PlayBoardTest {
 
     @Test
     public void doMove() {
-        Wolf wolf = new Wolf(1,1,null);
-        wolf.move(0,1);
-        Rat rat = new Rat(1,2,null);
+        Elephant elephant = new Elephant(5,5,null);
+        elephant.move(0,1);
+        Rat rat = new Rat(5,6,null);
         try {
-            playBoard.doMove(wolf);
+            playBoard.doMove(elephant);
         } catch (LogicException e) {
         }
     }
@@ -88,7 +96,6 @@ public class PlayBoardTest {
 
     @Test
     public void gameRun() {
-
 
     }
 

@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 public class GameTest {
     Game game;
 
-
     @Before
     public void Before(){
         game = new Game();
@@ -30,11 +29,6 @@ public class GameTest {
 
     @Test
     public void getFileList() {
-
-    }
-
-    @Test
-    public void loadFromFile() {
         Game.getFileList();
     }
 
@@ -71,5 +65,19 @@ public class GameTest {
         game.clearSelectStatus();
         game.saveToFile("Demo.bin");
         Game.loadFromFile("Demo.bin");
+    }
+
+
+    @Test
+    public void findWinner() {
+        game.findWinner();
+    }
+
+    @Test
+    public void chores(){
+        game.isRunning();
+        game.getCurrentPlayer();
+        game.getSelectedPiece();
+        game.getLanguage();
     }
 }
