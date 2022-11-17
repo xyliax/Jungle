@@ -282,6 +282,7 @@ public final class GameManager {
                             game.getSelectedPiece().getSymbol(game.getLanguage())));
                 notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
                 io.showNoticeBoard(notice.toString());
+                notice.delete(0, notice.length());
                 if ((winner = game.findWinner()) != null) game.setRunning(false);
             }
         } while (game.isRunning());

@@ -237,6 +237,7 @@ public final class JungleIO {
             }
             case TRAP -> setBack(MAGENTA);
             case WATER -> setBack(BLUE);
+            case LAND -> setBack(WHITE);
         }
         Landscape landscape = (Landscape) block;
         if (landscape.getLoad() == null && game.getSelectedPiece() != null) {
@@ -257,10 +258,9 @@ public final class JungleIO {
             }
         }
         Piece piece = (Piece) landscape.getLoad();
-        if (piece == null) {
-            setBack(WHITE);
+        if (piece == null)
             print(WHITE_SPACE.repeat(4));
-        } else {
+        else {
             if (game.getSelectedPiece() == piece) {
                 setBack(YELLOW);
                 if (piece.isSelected()) setUnderlined();
