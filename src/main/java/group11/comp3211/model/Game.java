@@ -63,6 +63,8 @@ public final class Game implements Serializable {
         Piece piece = keyPieceTable.get(ks);
         if (piece == null)
             throw new VoidObjectException(String.format("Cannot find piece by '%s'", key));
+        if (!playboard.getInitPieces().contains(piece))
+            throw new VoidObjectException(String.format("%s has been captured!", piece.getSymbol(language)));
         selectedPiece = piece;
     }
 

@@ -3,26 +3,29 @@ package group11.comp3211.model;
 import group11.comp3211.common.exceptions.*;
 import group11.comp3211.model.landscape.*;
 import group11.comp3211.model.piece.*;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static group11.comp3211.model.JungleType.*;
 
+@Getter
 public final class PlayBoard implements Serializable {
     public static final int ROW_NUM = 9;
     public static final int COL_NUM = 7;
-    private final ArrayList<Piece> initPieces;
+    private final Set<Piece> initPieces;
     private final Loader[][] board;
 
     public PlayBoard() {
-        this.initPieces = new ArrayList<>();
+        this.initPieces = new HashSet<>();
         this.board = new Loader[ROW_NUM][COL_NUM];
     }
 
     public Loader get(int row, int col) {
-        if(row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM)
+        if (row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM)
             return board[row][col];
         else
             throw new IllegalArgumentException();
