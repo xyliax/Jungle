@@ -15,11 +15,11 @@ import static group11.comp3211.model.JungleType.*;
 public final class PlayBoard implements Serializable {
     public static final int ROW_NUM = 9;
     public static final int COL_NUM = 7;
-    private final ArrayList<Piece> initPieces;
+    private final ArrayList<Piece> alivePieces;
     private final Loader[][] board;
 
     public PlayBoard() {
-        this.initPieces = new ArrayList<>();
+        this.alivePieces = new ArrayList<>();
         this.board = new Loader[ROW_NUM][COL_NUM];
     }
 
@@ -167,23 +167,23 @@ public final class PlayBoard implements Serializable {
                 } else put(new Land(row, col));
             }
         }
-        initPieces.add(new Elephant(2, 6, playerX));
-        initPieces.add(new Lion(0, 0, playerX));
-        initPieces.add(new Tiger(0, 6, playerX));
-        initPieces.add(new Leopard(2, 2, playerX));
-        initPieces.add(new Wolf(2, 4, playerX));
-        initPieces.add(new Dog(1, 1, playerX));
-        initPieces.add(new Cat(1, 5, playerX));
-        initPieces.add(new Rat(2, 0, playerX));
-        initPieces.add(new Elephant(6, 0, playerY));
-        initPieces.add(new Lion(8, 6, playerY));
-        initPieces.add(new Tiger(8, 0, playerY));
-        initPieces.add(new Leopard(6, 4, playerY));
-        initPieces.add(new Wolf(6, 2, playerY));
-        initPieces.add(new Dog(7, 5, playerY));
-        initPieces.add(new Cat(7, 1, playerY));
-        initPieces.add(new Rat(6, 6, playerY));
+        alivePieces.add(new Elephant(2, 6, playerX));
+        alivePieces.add(new Lion(0, 0, playerX));
+        alivePieces.add(new Tiger(0, 6, playerX));
+        alivePieces.add(new Leopard(2, 2, playerX));
+        alivePieces.add(new Wolf(2, 4, playerX));
+        alivePieces.add(new Dog(1, 1, playerX));
+        alivePieces.add(new Cat(1, 5, playerX));
+        alivePieces.add(new Rat(2, 0, playerX));
+        alivePieces.add(new Elephant(6, 0, playerY));
+        alivePieces.add(new Lion(8, 6, playerY));
+        alivePieces.add(new Tiger(8, 0, playerY));
+        alivePieces.add(new Leopard(6, 4, playerY));
+        alivePieces.add(new Wolf(6, 2, playerY));
+        alivePieces.add(new Dog(7, 5, playerY));
+        alivePieces.add(new Cat(7, 1, playerY));
+        alivePieces.add(new Rat(6, 6, playerY));
 
-        for (Piece piece : initPieces) get(piece.getRow(), piece.getCol()).setLoad(piece);
+        for (Piece piece : alivePieces) get(piece.getRow(), piece.getCol()).setLoad(piece);
     }
 }

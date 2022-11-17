@@ -62,7 +62,7 @@ public final class Game implements Serializable {
         Piece piece = keyPieceTable.get(ks);
         if (piece == null)
             throw new VoidObjectException(String.format("Cannot find piece by '%s'", key));
-        if (!(playboard.getInitPieces().contains(piece)))
+        if (!(playboard.getAlivePieces().contains(piece)))
             throw new VoidObjectException(String.format("%s has been captured!", piece.getSymbol(language)));
         selectedPiece = piece;
     }
@@ -89,6 +89,25 @@ public final class Game implements Serializable {
         if (currentPlayer == playerX)
             currentPlayer = playerY;
         else currentPlayer = playerX;
+    }
+
+    public Player findWinner() {
+        if (playboard.get(0, 3).getLoad() != null)
+            return playerY;
+        else if(playboard.get(8, 3).getLoad() != null)
+            return playerX;
+        else {
+            boolean aliveX = false, aliveY = false;
+            for(Piece alivePiece: playboard.getAlivePieces()) {
+                if(alivePiece.getPlayer() == playerX)
+                    aliveX = true;
+                else
+                    aliveY = true;
+            }
+            if(!aliveX) return playerY;
+            else if(!aliveY) return playerX;
+        }
+        return null;
     }
 
     @SneakyThrows
