@@ -6,9 +6,13 @@ import group11.comp3211.model.Game;
 import group11.comp3211.model.piece.Piece;
 import group11.comp3211.view.JungleIO;
 import group11.comp3211.view.Language;
+import lombok.SneakyThrows;
 import sun.misc.Signal;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Date;
 import java.util.Random;
 
@@ -88,6 +92,14 @@ public final class GameManager {
         operatingSystemCheck();
         welcomeBanner();
         startMenu();
+    }
+
+    @SneakyThrows
+    public void debug(File gameFile) {
+        FileInputStream fileInputStream = new FileInputStream(gameFile);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        game = (Game) objectInputStream.readObject();
+        runGame();
     }
 
     private void welcomeBanner() {

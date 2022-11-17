@@ -11,7 +11,6 @@ import lombok.SneakyThrows;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Objects;
 
 import static group11.comp3211.model.Direction.STAY;
 import static group11.comp3211.view.Color.GREEN;
@@ -20,7 +19,7 @@ import static group11.comp3211.view.Color.RED;
 @Getter
 @Setter
 public final class Game implements Serializable {
-    private static final String gamePath = "game_file";
+    private static final String gamePath = ".game_file";
     private final PlayBoard playboard;
     private final Player playerX;
     private final Player playerY;
@@ -44,14 +43,14 @@ public final class Game implements Serializable {
     }
 
     public static String[] getFileList() {
-        File ResDir = new File(Objects.requireNonNull(Game.class.getResource("/")).getFile());
+        File ResDir = new File(System.getenv("HOME"));
         File gameFileDir = new File(ResDir, gamePath);
         if (!gameFileDir.exists()) return null;
         return gameFileDir.list((dir, name) -> name.endsWith(".game"));
     }
 
     public static Game loadFromFile(String fileName) throws IOException, ClassNotFoundException {
-        File ResDir = new File(Objects.requireNonNull(Game.class.getResource("/")).getFile());
+        File ResDir = new File(System.getenv("HOME"));
         File gameFileDir = new File(ResDir, gamePath);
         FileInputStream fileInputStream = new FileInputStream(new File(gameFileDir, fileName));
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -94,7 +93,7 @@ public final class Game implements Serializable {
 
     @SneakyThrows
     public void saveToFile(String fileName) {
-        File ResDir = new File(Objects.requireNonNull(Game.class.getResource("/")).getFile());
+        File ResDir = new File(System.getenv("HOME"));
         File gameFileDir = new File(ResDir, gamePath);
         if (!gameFileDir.exists()) gameFileDir.mkdir();
         FileOutputStream fileOutputStream = new FileOutputStream(new File(gameFileDir, fileName));
