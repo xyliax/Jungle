@@ -28,4 +28,9 @@ public class DenTest {
     public void testGetPlayer() {
         Assert.assertNull(den.getPlayer());
     }
+
+    @Test
+    public void testHashcode(){
+        System.out.println(den.hashCode() == den.hashCode());
+    }
 }
