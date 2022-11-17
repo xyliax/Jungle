@@ -71,51 +71,27 @@ public final class PlayBoard implements Serializable {
     public int[] findDestination(Movable movable) throws LogicException {
         int row = movable.getRow();
         int col = movable.getCol();
-        switch (movable.getType()) {
-            case LION, TIGER -> {
-                switch (movable.getDirection()) {
-                    case UP -> {
-                        if (get(row - 1, col).getType() == WATER) {
-                            if (ratInRiver(((Water) get(row - 1, col)).getArea()))
-                                throw new JumpingException(movable, ((Water) get(row - 1, col)).getArea());
-                            else row -= 4;
-                        } else --row;
-                    }
-                    case DOWN -> {
-                        if (get(row + 1, col).getType() == WATER) {
-                            if (ratInRiver(((Water) get(row + 1, col)).getArea()))
-                                throw new JumpingException(movable, ((Water) get(row + 1, col)).getArea());
-                            else row += 4;
-                        } else ++row;
-                    }
-                    case LEFT -> {
-                        if (get(row, col - 1).getType() == WATER) {
-                            if (ratInRiver(((Water) get(row, col - 1)).getArea()))
-                                throw new JumpingException(movable, ((Water) get(row, col - 1)).getArea());
-                            else col -= 3;
-                        } else --col;
-                    }
-                    case RIGHT -> {
-                        if (get(row, col + 1).getType() == WATER) {
-                            if (ratInRiver(((Water) get(row, col + 1)).getArea()))
-                                throw new JumpingException(movable, ((Water) get(row, col + 1)).getArea());
-                            else col += 3;
-                        } else ++col;
-                    }
-                }
-            }
-            default -> {
-                switch (movable.getDirection()) {
-                    case UP -> --row;
-                    case DOWN -> ++row;
-                    case LEFT -> --col;
-                    case RIGHT -> ++col;
-                }
-            }
+        switch (movable.getDirection()) {
+            case UP -> --row;
+            case DOWN -> ++row;
+            case LEFT -> --col;
+            case RIGHT -> ++col;
         }
         if (!(row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM))
             throw new OutBoardException(movable);
-        else if (!get(row, col).canLoad(movable))
+        if((movable.getType() == LION || movable.getType() == TIGER) && get(row, col).getType() == WATER) {
+                if (ratInRiver(((Water) get(row, col)).getArea()))
+                    throw new JumpingException(movable, ((Water) get(row, col)).getArea());
+                else {
+                    switch (movable.getDirection()) {
+                        case UP -> row -= 3;
+                        case DOWN -> row += 3;
+                        case LEFT -> col -= 2;
+                        case RIGHT -> col += 2;
+                    }
+                }
+            }
+        if (!get(row, col).canLoad(movable))
             throw new NotLoadableException(get(row, col), movable);
         else if ((get(row, col).getType() == DEN && ((Den) get(row, col)).getPlayer() == ((Piece) movable).getPlayer()))
             throw new LogicException("Pieces cannot step on DEN of the same side!");
