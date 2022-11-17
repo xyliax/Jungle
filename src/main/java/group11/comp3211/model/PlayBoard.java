@@ -21,31 +21,36 @@ public final class PlayBoard implements Serializable {
         this.board = new Loader[ROW_NUM][COL_NUM];
     }
 
-    private Loader getPieceLoader(Movable movable) {
-        return this.get(((Piece) movable).getRow(), ((Piece) movable).getCol());
+    public Loader get(int row, int col) {
+        if(row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM)
+            return board[row][col];
+        else
+            throw new IllegalArgumentException();
     }
 
-    private boolean canCapture(Movable mover, Movable moved) {
-        Piece captor = (Piece) mover;
-        Piece captured = (Piece) moved;
-        if (captured.getPlayer() == captor.getPlayer()) return false;
-        if (getPieceLoader(captured).type() == TRAP) return true;
-        switch (captor.getType()) {
+    private Loader getPieceLoader(Piece piece) {
+        return this.get(piece.getRow(), (piece.getCol()));
+    }
+
+    private boolean canCapture(Piece capturer, Piece capturee) {
+        if (capturer.getPlayer() == capturee.getPlayer()) return false;
+        if (getPieceLoader(capturee).getType() == TRAP) return true;
+        switch (capturer.getType()) {
             case ELEPHANT -> {
-                return captured.getType() != RAT;
+                return capturee.getType() != RAT;
             }
             case RAT -> {
-                if (getPieceLoader(captor).type() == WATER)
-                    return getPieceLoader(captured).type() == WATER;
-                else return captured.getType() == RAT || captured.getType() == ELEPHANT;
+                if (getPieceLoader(capturer).getType() == WATER)
+                    return getPieceLoader(capturee).getType() == WATER;
+                else return capturee.getType() == RAT || capturee.getType() == ELEPHANT;
             }
             default -> {
-                return captured.getRank() <= captor.getRank();
+                return capturee.getRank() <= capturer.getRank();
             }
         }
     }
-
     // check for illegality of movement assume the destination landscape is empty
+
     public boolean ratInRiver(JungleType jungleType) {
         switch (jungleType) {
             case RIVER_AREA_LEFT -> {
@@ -65,44 +70,43 @@ public final class PlayBoard implements Serializable {
     }
 
     public int[] findDestination(Movable movable) throws LogicException {
-        Piece piece = (Piece) movable;
-        int row = piece.getRow();
-        int col = piece.getCol();
-        switch (piece.getType()) {
+        int row = movable.getRow();
+        int col = movable.getCol();
+        switch (movable.getType()) {
             case LION, TIGER -> {
-                switch (piece.getDirection()) {
+                switch (movable.getDirection()) {
                     case UP -> {
-                        if (get(row - 1, col).type() == WATER) {
+                        if (get(row - 1, col).getType() == WATER) {
                             if (ratInRiver(((Water) get(row - 1, col)).getArea()))
-                                throw new JumpingException(piece, ((Water) get(row - 1, col)).getArea());
+                                throw new JumpingException(movable, ((Water) get(row - 1, col)).getArea());
                             else row -= 4;
                         } else --row;
                     }
                     case DOWN -> {
-                        if (get(row + 1, col).type() == WATER) {
+                        if (get(row + 1, col).getType() == WATER) {
                             if (ratInRiver(((Water) get(row + 1, col)).getArea()))
-                                throw new JumpingException(piece, ((Water) get(row + 1, col)).getArea());
+                                throw new JumpingException(movable, ((Water) get(row + 1, col)).getArea());
                             else row += 4;
                         } else ++row;
                     }
                     case LEFT -> {
-                        if (get(row, col - 1).type() == WATER) {
+                        if (get(row, col - 1).getType() == WATER) {
                             if (ratInRiver(((Water) get(row, col - 1)).getArea()))
-                                throw new JumpingException(piece, ((Water) get(row, col - 1)).getArea());
+                                throw new JumpingException(movable, ((Water) get(row, col - 1)).getArea());
                             else col -= 3;
                         } else --col;
                     }
                     case RIGHT -> {
-                        if (get(row, col + 1).type() == WATER) {
+                        if (get(row, col + 1).getType() == WATER) {
                             if (ratInRiver(((Water) get(row, col + 1)).getArea()))
-                                throw new JumpingException(piece, ((Water) get(row, col + 1)).getArea());
+                                throw new JumpingException(movable, ((Water) get(row, col + 1)).getArea());
                             else col += 3;
                         } else ++col;
                     }
                 }
             }
             default -> {
-                switch (piece.getDirection()) {
+                switch (movable.getDirection()) {
                     case UP -> --row;
                     case DOWN -> ++row;
                     case LEFT -> --col;
@@ -111,10 +115,10 @@ public final class PlayBoard implements Serializable {
             }
         }
         if (!(row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM))
-            throw new OutBoardException(piece);
-        else if (!get(row, col).canLoad(piece))
-            throw new NotLoadableException(get(row, col), piece);
-        else if ((get(row, col).type() == DEN && ((Den) get(row, col)).getPlayer() == piece.getPlayer()))
+            throw new OutBoardException(movable);
+        else if (!get(row, col).canLoad(movable))
+            throw new NotLoadableException(get(row, col), movable);
+        else if ((get(row, col).getType() == DEN && ((Den) get(row, col)).getPlayer() == ((Piece) movable).getPlayer()))
             throw new LogicException("Pieces cannot step on DEN of the same side!");
         return new int[]{row, col};
     }
@@ -123,21 +127,15 @@ public final class PlayBoard implements Serializable {
         Piece piece = (Piece) movable;
         int[] dest = findDestination(movable);
         Piece target = (Piece) get(dest[0], dest[1]).getLoad();
-        if (target != null && !canCapture(movable, target))
+        if (target != null && !canCapture(piece, target))
             throw new IllegalCaptureException(movable, target);
         if (target != null) {
             target.die();
             get(dest[0], dest[1]).setLoad(null);
         }
-        getPieceLoader(movable).setLoad(null);
+        getPieceLoader(piece).setLoad(null);
         piece.move(dest[0], dest[1]);
         get(dest[0], dest[1]).setLoad(movable);
-    }
-
-    public Loader get(int row, int col) {
-        if (row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM)
-            return board[row][col];
-        else throw new IllegalArgumentException();
     }
 
     void put(Loader loader) {
@@ -184,6 +182,6 @@ public final class PlayBoard implements Serializable {
         initPieces.add(new Cat(7, 1, playerY));
         initPieces.add(new Rat(6, 6, playerY));
         for (Piece piece : initPieces)
-            get(piece.getRow(), piece.getCol()).load(piece);
+            get(piece.getRow(), piece.getCol()).setLoad(piece);
     }
 }

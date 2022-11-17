@@ -32,19 +32,8 @@ public abstract class Landscape implements Loader, Serializable {
         return allowed.contains(JungleType.ALL) || allowed.contains(movable.getType());
     }
 
-
-    @Override
-    public void load(Movable movable) {
-        this.load = movable;
-    }
-
     @Override
     public String getSymbol(Language language) {
         return null;
-    }
-
-    @Override
-    public JungleType type() {
-        return type;
     }
 }
