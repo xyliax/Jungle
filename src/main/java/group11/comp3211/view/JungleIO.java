@@ -276,7 +276,9 @@ public final class JungleIO {
         reset();
         clearScreen();
         hideCursor();
-        announce("SELECT GAME FILE TO LOAD", CYAN);
+        announce("""
+                SELECT GAME FILE TO LOAD
+                Press 'ESC' -> Back to Menu""", CYAN);
         for (int fileId = 0; fileId < fileList.length; fileId++) {
             if (fileId == select) {
                 setFront(RED);

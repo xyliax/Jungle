@@ -23,7 +23,6 @@ import static group11.comp3211.view.Color.*;
 
 
 public final class GameManager {
-    private static final char[] loadingStr = {'-', '\\', '|', '/'};
     private final JungleIO io;
     private Game game;
 
@@ -201,7 +200,7 @@ public final class GameManager {
                     }
                 }
             }
-        } while (key != '\n');
+        } while (key != '\n' && select != -1);
         if (select == -1) return;
         try {
             game = Game.loadFromFile(fileList[select]);
