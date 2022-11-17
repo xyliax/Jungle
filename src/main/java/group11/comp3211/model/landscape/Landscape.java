@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Loader -> Landscape
+ */
 @Data
 public abstract class Landscape implements Loader, Serializable {
     protected int row;
@@ -18,6 +21,11 @@ public abstract class Landscape implements Loader, Serializable {
     protected Set<JungleType> allowed;
     protected JungleType type;
 
+    /**
+     * Constructor for Landscape
+     * @param row the initial row number
+     * @param col the initial column number
+     */
     public Landscape(int row, int col) {
         this.row = row;
         this.col = col;

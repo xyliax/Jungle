@@ -9,6 +9,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * Movable -> Piece
+ */
 @Data
 public abstract class Piece implements Movable, Serializable {
     protected int rank;
@@ -19,6 +22,12 @@ public abstract class Piece implements Movable, Serializable {
     protected Player player;
     protected JungleType type;
 
+    /**
+     * Constructor for Piece.
+     * @param row initial row number
+     * @param col initial column number
+     * @param player the player it belongs to
+     */
     public Piece(int row, int col, Player player) {
         this.row = row;
         this.col = col;
@@ -30,10 +39,6 @@ public abstract class Piece implements Movable, Serializable {
     }
 
     public abstract String getSymbol(Language language);
-
-    public void die() {
-        row = col = -1;
-    }
 
     public void move(int row, int col) {
         this.row = row;

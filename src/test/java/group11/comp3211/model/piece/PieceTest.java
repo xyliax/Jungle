@@ -23,12 +23,6 @@ public class PieceTest {
     }
 
     @Test
-    public void die() {
-        rat.die();
-    }
-
-
-    @Test
     public void move() {
         rat.move(3, 5);
     }

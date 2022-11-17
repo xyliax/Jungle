@@ -4,11 +4,19 @@ import group11.comp3211.model.JungleType;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
+/**
+ * Loader -> Landscape -> Water
+ */
 @Value
 @EqualsAndHashCode(callSuper = true)
 public class Water extends Landscape {
     JungleType area;
 
+    /**
+     * Constructor for Water.
+     * @param row initial row number
+     * @param col initial column number
+     */
     public Water(int row, int col) {
         super(row, col);
         this.type = JungleType.WATER;

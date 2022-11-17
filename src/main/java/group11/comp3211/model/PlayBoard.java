@@ -11,18 +11,36 @@ import java.util.ArrayList;
 
 import static group11.comp3211.model.JungleType.*;
 
+/**
+ * Provide a play board and control the pieces and loaders on it to simulate a game.
+ */
 @Getter
 public final class PlayBoard implements Serializable {
+    /**
+     * the row number of the board
+     */
     public static final int ROW_NUM = 9;
+    /**
+     * the column number of the board
+     */
     public static final int COL_NUM = 7;
     private final ArrayList<Piece> alivePieces;
     private final Loader[][] board;
 
+    /**
+     * constructor for an empty board (without any pieces)
+     */
     public PlayBoard() {
         this.alivePieces = new ArrayList<>();
         this.board = new Loader[ROW_NUM][COL_NUM];
     }
 
+    /**
+     * get the loader by coordinate
+     * @param row row number
+     * @param col column number
+     * @return a loader
+     */
     public Loader get(int row, int col) {
         return board[row][col];
     }
@@ -31,6 +49,12 @@ public final class PlayBoard implements Serializable {
         return this.get(piece.getRow(), (piece.getCol()));
     }
 
+    /**
+     * Check whether a piece can capture another piece.
+     * @param capturer the piece to capture
+     * @param capturee the piece to be captured
+     * @return can or cannot
+     */
     public boolean canCapture(Piece capturer, Piece capturee) {
         if (capturer.getPlayer() == capturee.getPlayer()) return false;
         if (getPieceLoader(capturee).getType() == TRAP) return true;
@@ -47,8 +71,12 @@ public final class PlayBoard implements Serializable {
             }
         }
     }
-    // check for illegality of movement assume the destination landscape is empty
 
+    /**
+     * Check whether there is a rat in a certain river area.
+     * @param jungleType RIVER_AREA_LEFT or RIVER_AREA_RIGHT
+     * @return exists or not
+     */
     public boolean ratInRiver(JungleType jungleType) {
         switch (jungleType) {
             case RIVER_AREA_LEFT -> {
@@ -67,6 +95,12 @@ public final class PlayBoard implements Serializable {
         return false;
     }
 
+    /**
+     * Find the destination by a movable and its direction disregarding any other pieces
+     * @param movable the piece
+     * @return the destination coordinate
+     * @throws LogicException illegal movement
+     */
     public int[] findDestination(Movable movable) throws LogicException {
         int row = movable.getRow();
         int col = movable.getCol();
@@ -95,6 +129,11 @@ public final class PlayBoard implements Serializable {
         return new int[]{row, col};
     }
 
+    /**
+     * Do a whole process of move.
+     * @param movable the piece to move with a direction
+     * @throws LogicException illegal movement
+     */
     public void doMove(Movable movable) throws LogicException {
         Piece piece = (Piece) movable;
         int[] dest = findDestination(movable);
@@ -102,7 +141,6 @@ public final class PlayBoard implements Serializable {
         if (target != null && !canCapture(piece, target))
             throw new IllegalCaptureException(movable, target);
         if (target != null) {
-            target.die();
             alivePieces.remove(target);
             get(dest[0], dest[1]).setLoad(null);
         }
@@ -111,16 +149,20 @@ public final class PlayBoard implements Serializable {
         get(dest[0], dest[1]).setLoad(movable);
     }
 
-    void put(Loader loader) {
+    private void put(Loader loader) {
         Landscape landscape;
         if (loader instanceof Landscape) landscape = (Landscape) loader;
         else throw new IllegalArgumentException();
         board[landscape.getRow()][landscape.getCol()] = loader;
     }
 
-
+    /**
+     * Initialize the board by adding pieces on it.
+     * @param playerX upper player
+     * @param playerY lower player
+     */
     @SneakyThrows
-    void initBoard(Player playerX, Player playerY) {
+    public void initBoard(Player playerX, Player playerY) {
         put(new Den(0, 3, playerX));
         put(new Trap(0, 2, playerX));
         put(new Trap(0, 4, playerX));
@@ -158,3 +200,6 @@ public final class PlayBoard implements Serializable {
         for (Piece piece : alivePieces) get(piece.getRow(), piece.getCol()).setLoad(piece);
     }
 }
+
+
+
