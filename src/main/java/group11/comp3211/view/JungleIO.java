@@ -228,7 +228,9 @@ public final class JungleIO {
                     print(WHITE_SPACE + den.getSymbol(game.getLanguage()) + WHITE_SPACE);
                 } else {
                     Piece piece = (Piece) den.getLoad();
+                    setBack(YELLOW);
                     setFront(piece.getPlayer().getColor());
+                    setBold();
                     print(WHITE_SPACE + piece.getSymbol(game.getLanguage()) + WHITE_SPACE);
                 }
                 return;
@@ -353,11 +355,10 @@ public final class JungleIO {
         setCursor(++row, col);
         setBack(GREY);
         setFront(BLUE);
-        setBold();
         int chCount = 0;
         for (char character : notice.toCharArray()) {
             if (character == '\n') {
-                while (chCount++ < 50)
+                while (chCount++ < 40)
                     writer.print(WHITE_SPACE);
                 chCount = 0;
                 setCursor(++row, col);
@@ -367,7 +368,7 @@ public final class JungleIO {
             }
         }
         while (row < 6) {
-            writer.print(WHITE_SPACE.repeat(50));
+            writer.print(WHITE_SPACE.repeat(40));
             setCursor(row++, col);
         }
         reset();

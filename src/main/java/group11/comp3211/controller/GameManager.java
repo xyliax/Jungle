@@ -4,6 +4,7 @@ import group11.comp3211.common.exceptions.LogicException;
 import group11.comp3211.common.exceptions.VoidObjectException;
 import group11.comp3211.model.Direction;
 import group11.comp3211.model.Game;
+import group11.comp3211.model.Player;
 import group11.comp3211.model.piece.Piece;
 import group11.comp3211.view.JungleIO;
 import group11.comp3211.view.Language;
@@ -273,6 +274,13 @@ public final class GameManager {
                 game.clearSelectStatus();
             } finally {
                 io.showPlayBoard(game);
+                Player winner = game.findWinner();
+                if (winner != null) {
+                    game.setRunning(false);
+                    notice.delete(0, notice.length());
+                    notice.append(String.format("Congratulations!\n%s WINS!!!", winner));
+                    io.announceInGame(String.format("Game Ends...\n%s Wins", winner), winner.getColor());
+                }
                 io.showNoticeBoard(notice.toString());
             }
         } while (game.isRunning());

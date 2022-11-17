@@ -94,18 +94,17 @@ public final class Game implements Serializable {
     public Player findWinner() {
         if (playboard.get(0, 3).getLoad() != null)
             return playerY;
-        else if(playboard.get(8, 3).getLoad() != null)
+        else if (playboard.get(8, 3).getLoad() != null)
             return playerX;
         else {
             boolean aliveX = false, aliveY = false;
-            for(Piece alivePiece: playboard.getAlivePieces()) {
-                if(alivePiece.getPlayer() == playerX)
+            for (Piece alivePiece : playboard.getAlivePieces()) {
+                if (alivePiece.getPlayer() == playerX)
                     aliveX = true;
-                else
-                    aliveY = true;
+                else aliveY = true;
             }
-            if(!aliveX) return playerY;
-            else if(!aliveY) return playerX;
+            if (!aliveX) return playerY;
+            else if (!aliveY) return playerX;
         }
         return null;
     }
