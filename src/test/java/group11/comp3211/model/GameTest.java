@@ -57,7 +57,7 @@ public class GameTest {
     @Test
     public void runTurn() {
         Wolf wolf = new Wolf(1,2,null);
-        
+        wolf.setSelected(true);
         wolf.setDirection(Direction.UP);
         game.setSelectedPiece(wolf);
         try {
