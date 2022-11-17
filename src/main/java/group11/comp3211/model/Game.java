@@ -113,7 +113,6 @@ public final class Game implements Serializable {
                 Piece piece = (Piece) landscape.getLoad();
                 if (piece == null) continue;
                 String ks = piece.getRank() + (piece.getPlayer() == playerX ? "@X" : "@Y");
-                System.out.println(piece);
                 keyPieceTable.put(ks, piece);
             }
         }

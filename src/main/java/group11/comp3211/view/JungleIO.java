@@ -222,9 +222,15 @@ public final class JungleIO {
         switch (block.getType()) {
             case DEN -> {
                 Den den = (Den) block;
-                setFront(den.getPlayer().getColor());
                 setBold();
-                print(WHITE_SPACE + den.getSymbol(game.getLanguage()) + WHITE_SPACE);
+                if (den.getLoad() == null) {
+                    setFront(den.getPlayer().getColor());
+                    print(WHITE_SPACE + den.getSymbol(game.getLanguage()) + WHITE_SPACE);
+                } else {
+                    Piece piece = (Piece) den.getLoad();
+                    setFront(piece.getPlayer().getColor());
+                    print(piece.getSymbol(game.getLanguage()));
+                }
                 return;
             }
             case TRAP -> setBack(MAGENTA);

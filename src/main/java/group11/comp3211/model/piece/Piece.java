@@ -8,7 +8,6 @@ import group11.comp3211.view.Language;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 public abstract class Piece implements Movable, Serializable {
@@ -39,19 +38,5 @@ public abstract class Piece implements Movable, Serializable {
     public void move(int row, int col) {
         this.row = row;
         this.col = col;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Piece piece = (Piece) o;
-        return rank == piece.rank && row == piece.row && col == piece.col && selected == piece.selected
-               && direction == piece.direction && player.equals(piece.player) && type == piece.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, row, col, selected, direction, player, type);
     }
 }
