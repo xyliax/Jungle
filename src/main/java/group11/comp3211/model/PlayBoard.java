@@ -1,43 +1,46 @@
 package group11.comp3211.model;
 
-import group11.comp3211.common.exceptions.IllegalMovementException;
-import group11.comp3211.model.landscape.Landscape;
-import group11.comp3211.model.landscape.River;
-import group11.comp3211.model.piece.Piece;
+import group11.comp3211.common.exceptions.*;
+import group11.comp3211.model.landscape.*;
+import group11.comp3211.model.piece.*;
+import lombok.SneakyThrows;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import static group11.comp3211.model.JungleType.*;
 
 public final class PlayBoard implements Serializable {
     public static final int ROW_NUM = 9;
     public static final int COL_NUM = 7;
+    private final ArrayList<Piece> initPieces;
     private final Loader[][] board;
 
     public PlayBoard() {
+        this.initPieces = new ArrayList<>();
         this.board = new Loader[ROW_NUM][COL_NUM];
     }
 
-    public Loader getLoader(Movable movable) {
-        Piece piece = (Piece) movable;
-        return this.get(piece.getRow(), piece.getCol());
+    private Loader getPieceLoader(Movable movable) {
+        return this.get(((Piece) movable).getRow(), ((Piece) movable).getCol());
     }
 
-    public boolean canCapture(Movable movable1, Movable movable2) {
-        Piece piece1 = (Piece) movable1;
-        Piece piece2 = (Piece) movable2;
-        if (piece2.getPlayer() == piece1.getPlayer()) return false;
-        if (getLoader(piece2).type() == JungleType.TRAP) return true;
-        switch(piece1.getType()) {
+    private boolean canCapture(Movable mover, Movable moved) {
+        Piece captor = (Piece) mover;
+        Piece captured = (Piece) moved;
+        if (captured.getPlayer() == captor.getPlayer()) return false;
+        if (getPieceLoader(captured).type() == TRAP) return true;
+        switch (captor.getType()) {
             case ELEPHANT -> {
-                return piece2.getType() != JungleType.RAT;
+                return captured.getType() != RAT;
             }
             case RAT -> {
-                if(getLoader(piece1).type() == JungleType.RIVER)
-                    return getLoader(piece2).type() == JungleType.RIVER;
-                else
-                    return piece2.getType() == JungleType.RAT || piece2.getType() == JungleType.ELEPHANT;
+                if (getPieceLoader(captor).type() == WATER)
+                    return getPieceLoader(captured).type() == WATER;
+                else return captured.getType() == RAT || captured.getType() == ELEPHANT;
             }
             default -> {
-                return piece2.getRank() <= piece1.getRank();
+                return captured.getRank() <= captor.getRank();
             }
         }
     }
@@ -45,69 +48,58 @@ public final class PlayBoard implements Serializable {
     // check for illegality of movement assume the destination landscape is empty
     public boolean ratInRiver(JungleType jungleType) {
         switch (jungleType) {
-            case RIVERAREALEFT -> {
-                for(int i=3; i<=5; ++i)
-                    for(int j=1; j<=2; ++j)
-                        if (getLoad(i, j) != null) return true;
+            case RIVER_AREA_LEFT -> {
+                for (int i = 3; i <= 5; ++i) {
+                    for (int j = 1; j <= 2; ++j)
+                        if (get(i, j).getLoad() != null) return true;
+                }
             }
-            case RIVERAREARIGHT -> {
-                for(int i=3; i<=5; ++i)
-                    for(int j=4; j<=5; ++j)
-                        if (getLoad(i, j) != null) return true;
+            case RIVER_AREA_RIGHT -> {
+                for (int i = 3; i <= 5; ++i) {
+                    for (int j = 4; j <= 5; ++j)
+                        if (get(i, j).getLoad() != null) return true;
+                }
             }
         }
         return false;
     }
 
-    public int[] canMove(Movable movable) throws IllegalMovementException {
+    public int[] findDestination(Movable movable) throws LogicException {
         Piece piece = (Piece) movable;
         int row = piece.getRow();
         int col = piece.getCol();
-        switch(piece.getType()) {
+        switch (piece.getType()) {
             case LION, TIGER -> {
                 switch (piece.getDirection()) {
                     case UP -> {
-                        if (row == 0) throw new IllegalMovementException("Trying to get out of the board. ");
-                        if (getType(row - 1, col) == JungleType.RIVER) {
-                            if (ratInRiver(((River) get(row - 1, col)).getBelong2()))
-                                throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
+                        if (get(row - 1, col).type() == WATER) {
+                            if (ratInRiver(((Water) get(row - 1, col)).getArea()))
+                                throw new JumpingException(piece, ((Water) get(row - 1, col)).getArea());
                             else row -= 4;
                         } else --row;
                     }
                     case DOWN -> {
-                        if (row == 8)   throw new IllegalMovementException("Trying to get out of the board. ");
-                        if (getType(row+1, col) == JungleType.RIVER) {
-                            if (ratInRiver(((River) get(row+1, col)).getBelong2())) throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
+                        if (get(row + 1, col).type() == WATER) {
+                            if (ratInRiver(((Water) get(row + 1, col)).getArea()))
+                                throw new JumpingException(piece, ((Water) get(row + 1, col)).getArea());
                             else row += 4;
-                        }
-                        else ++row;
+                        } else ++row;
                     }
                     case LEFT -> {
-                        if (col == 0)   throw new IllegalMovementException("Trying to get out of the board. ");
-                        if (getType(row, col-1) == JungleType.RIVER) {
-                            if (ratInRiver(((River) get(row, col-1)).getBelong2())) throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
+                        if (get(row, col - 1).type() == WATER) {
+                            if (ratInRiver(((Water) get(row, col - 1)).getArea()))
+                                throw new JumpingException(piece, ((Water) get(row, col - 1)).getArea());
                             else col -= 3;
-                        }
-                        else --col;
+                        } else --col;
                     }
                     case RIGHT -> {
-                        if (col == 6)   throw new IllegalMovementException("Trying to get out of the board. ");
-                        if (getType(row, col+1) == JungleType.RIVER) {
-                            if (ratInRiver(((River) get(row, col+1)).getBelong2())) throw new IllegalMovementException("Cannot jump over the river because there is a rat in. ");
+                        if (get(row, col + 1).type() == WATER) {
+                            if (ratInRiver(((Water) get(row, col + 1)).getArea()))
+                                throw new JumpingException(piece, ((Water) get(row, col + 1)).getArea());
                             else col += 3;
-                        }
-                        else ++col;
+                        } else ++col;
                     }
                 }
-            }
-            case RAT -> {
-                switch (piece.getDirection()) {
-                    case UP -> --row;
-                    case DOWN -> ++row;
-                    case LEFT -> --col;
-                    case RIGHT -> ++col;
-                }
-                if(row < 0 || row > 8 || col < 0 || col > 6) throw new IllegalMovementException("Trying to get out of the board. ");
             }
             default -> {
                 switch (piece.getDirection()) {
@@ -116,47 +108,82 @@ public final class PlayBoard implements Serializable {
                     case LEFT -> --col;
                     case RIGHT -> ++col;
                 }
-                if(row < 0 || row > 8 || col < 0 || col > 6) throw new IllegalMovementException("Trying to get out of the board. ");
-                if(get(row, col).type() == JungleType.RIVER) throw new IllegalMovementException("Cannot get into the river. ");
             }
         }
-        return new int[] {row, col};
+        if (!(row > 0 && row < ROW_NUM && col > 0 && col < COL_NUM))
+            throw new OutBoardException(piece);
+        else if (!get(row, col).canLoad(piece))
+            throw new NotLoadableException(get(row, col), piece);
+        else if ((get(row, col).type() == DEN && ((Den) get(row, col)).getPlayer() == piece.getPlayer()))
+            throw new LogicException("Pieces cannot step on DEN of the same side!");
+        return new int[]{row, col};
     }
 
-    // Move HERE!!!
-    public void doMove(Movable movable) throws IllegalMovementException {
+    public void doMove(Movable movable) throws LogicException {
         Piece piece = (Piece) movable;
-        // System.out.println(piece + " moves " + piece.getDirection());
-        int[] dest = canMove(movable);
-        Piece target = (Piece) getLoad(dest[0], dest[1]);
-        if(target != null && !canCapture(movable, target))
-            throw new IllegalMovementException("Cannot capture the piece. ");
-        if(target != null) {
+        int[] dest = findDestination(movable);
+        Piece target = (Piece) get(dest[0], dest[1]).getLoad();
+        if (target != null && !canCapture(movable, target))
+            throw new IllegalCaptureException(movable, target);
+        if (target != null) {
             target.die();
             get(dest[0], dest[1]).setLoad(null);
         }
-        getLoader(movable).setLoad(null);
+        getPieceLoader(movable).setLoad(null);
         piece.move(dest[0], dest[1]);
         get(dest[0], dest[1]).setLoad(movable);
     }
 
-    public void put(Loader loader) {
+    public Loader get(int row, int col) {
+        if (row > 0 && row < ROW_NUM && col > 0 && col < COL_NUM)
+            return board[row][col];
+        else throw new IllegalArgumentException();
+    }
+
+    void put(Loader loader) {
         Landscape landscape;
-        if (loader instanceof Landscape)
-            landscape = (Landscape) loader;
+        if (loader instanceof Landscape) landscape = (Landscape) loader;
         else throw new IllegalArgumentException();
         board[landscape.getRow()][landscape.getCol()] = loader;
     }
 
-    public Loader get(int row, int col) {
-        return board[row][col];
-    }
 
-    public Movable getLoad(int row, int col) {
-        return board[row][col].getLoad();
-    }
-
-    public JungleType getType(int row, int col) {
-        return board[row][col].type();
+    @SneakyThrows
+    void initBoard(Player playerX, Player playerY) {
+        put(new Den(0, 3, playerX));
+        put(new Trap(0, 2, playerX));
+        put(new Trap(0, 4, playerX));
+        put(new Trap(1, 3, playerX));
+        put(new Den(8, 3, playerY));
+        put(new Trap(8, 2, playerX));
+        put(new Trap(8, 4, playerX));
+        put(new Trap(7, 3, playerX));
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 7; col++) {
+                if (get(row, col) != null) continue;
+                if (row >= 3 && row <= 5) {
+                    if (col == 0 || col == 3 || col == 6) put(new Land(row, col));
+                    else put(new Water(row, col));
+                } else put(new Land(row, col));
+            }
+        }
+        initPieces.add(new Elephant(2, 6, playerX));
+        initPieces.add(new Lion(0, 0, playerX));
+        initPieces.add(new Tiger(0, 6, playerX));
+        initPieces.add(new Leopard(2, 2, playerX));
+        initPieces.add(new Wolf(2, 4, playerX));
+        initPieces.add(new Dog(1, 1, playerX));
+        initPieces.add(new Cat(1, 5, playerX));
+        initPieces.add(new Rat(2, 0, playerX));
+        initPieces.add(new Elephant(6, 0, playerY));
+        initPieces.add(new Lion(8, 6, playerY));
+        initPieces.add(new Tiger(8, 0, playerY));
+        initPieces.add(new Leopard(6, 4, playerY));
+        initPieces.add(new Wolf(6, 2, playerY));
+        initPieces.add(new Dog(7, 5, playerY));
+        initPieces.add(new Cat(7, 1, playerY));
+        initPieces.add(new Rat(6, 6, playerY));
+        for (Piece piece : initPieces)
+            get(piece.getRow(), piece.getCol()).load(piece);
     }
 }

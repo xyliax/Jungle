@@ -4,28 +4,33 @@ Git Repository - COMP3211 Software Engineering Group Project "Jungle" - 2022 Fal
 
 ## Prerequisites (very important)
 
-### Java17
+## macOS
 
-### Apache-Maven
+### Homebrew
 
-### Terminal environment
+#### Preparation
 
-## How to run
-
-### Unix
-
-For Mac OS X, it is highly recommended to use the default terminal.
-
-#### Run application
+Open a terminal. (e.g. Terminal.app) <br>
+If you don't have Homebrew installed before, paste the command in your terminal. <br>
 
 ```shell
-./jungle
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-#### Rebuild and Run (without tests)
+#### Installation
+
+Paste the commands in the terminal. <br>
+The game will be automatically installed. <br>
 
 ```shell
-./jungle build
+brew tap xyliax/homebrew-tap
+brew install xyliax/tap/jungle
+```
+
+To start the game, use this command.
+
+```shell
+jungle-app
 ```
 
 #### Rebuild and Run (with tests)

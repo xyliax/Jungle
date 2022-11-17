@@ -35,13 +35,8 @@ public abstract class Piece implements Movable, Serializable {
         row = col = -1;
     }
 
-    public boolean isDead() {
-        return row == -1;
-    }
-
     public void move(int row, int col) {
         this.row = row;
         this.col = col;
-        direction = Direction.STAY;
     }
 }

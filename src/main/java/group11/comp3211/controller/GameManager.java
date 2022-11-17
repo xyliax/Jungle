@@ -8,6 +8,7 @@ import group11.comp3211.view.JungleIO;
 import group11.comp3211.view.Language;
 import sun.misc.Signal;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
 
@@ -44,15 +45,14 @@ public final class GameManager {
             io.announce(String.format("""
                     Console Size Unsatisfied!
                     Minimum Requirement:
-                        30 (lines) 100 (columns)
+                        %-3d (lines) %-3d (columns)
                     Current Size:
-                        %-3d (lines) %-3d (columns)""", cRow, cCol), RED);
+                        %-3d (lines) %-3d (columns)""", 30, 100, cRow, cCol), RED);
             System.exit(2);
         }
         io.setConsole_row(cRow);
         io.setConsole_col(cCol);
     }
-
 
     private void operatingSystemCheck() {
         String OS = System.getProperty("os.name");
@@ -185,7 +185,12 @@ public final class GameManager {
             }
         } while (key != '\n');
         if (select == -1) return;
-        game = Game.loadFromFile(fileList[select]);
+        try {
+            game = Game.loadFromFile(fileList[select]);
+        } catch (IOException | ClassNotFoundException e) {
+            io.announce(String.format("File '%s' is broken!\nRetry or Start new Game!", fileList[select]), RED);
+            return;
+        }
         io.announce(String.format("""
                         Successfully load game from '%s'
                         Info: '%s' vs '%s'
@@ -205,7 +210,7 @@ public final class GameManager {
         io.setDRemap(true);
         char key = '-';
         do {
-            key = io.getKeyInGame(key, game.getCurrentPlayer().getColor());
+            key = io.getKeyInGame(key);
             try {
                 switch (key) {
                     case 27 -> {
@@ -247,7 +252,7 @@ public final class GameManager {
                     }
                 }
             } catch (VoidObjectException voidObjectException) {
-                io.announceInGame(voidObjectException.getMessage(), game.getCurrentPlayer().getColor());
+                io.announceInGame(voidObjectException.getMessage(), RED);
                 game.clearSelectStatus();
             } catch (LogicException logicException) {
                 io.announceInGame(logicException.getMessage(), BLUE);
@@ -286,6 +291,10 @@ public final class GameManager {
 
     private void manual() {
 
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     private void exit(String reason) {

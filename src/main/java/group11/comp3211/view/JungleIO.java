@@ -51,6 +51,18 @@ public final class JungleIO {
         return JungleIOHolder.JUNGLE_IO;
     }
 
+    public static int getCharWidth(char character) {
+        int width;
+        switch (character) {
+            case '↑', '←', '↓', '→' -> width = 1;
+            default -> {
+                if (character >= 32 && character < 127) width = 1;
+                else return 2;
+            }
+        }
+        return width;
+    }
+
     public synchronized void showLoadingAnimation() {
         Thread loading = new Thread(() -> {
             announce("Press any KEY", YELLOW);
@@ -171,8 +183,8 @@ public final class JungleIO {
     }
 
     public synchronized void showPlayBoard(Game game) {
-        setCursor(0, 0);
         reset();
+        setCursor(0, 0);
         for (int r = 1; r <= 19; r++) {
             if (r % 2 == 1) {
                 for (int c = 1; c <= 46; c++) {
@@ -215,7 +227,7 @@ public final class JungleIO {
                 return;
             }
             case TRAP -> setBack(MAGENTA);
-            case RIVER -> setBack(BLUE);
+            case WATER -> setBack(BLUE);
         }
         Landscape landscape = (Landscape) block;
         if (landscape.getLoad() == null && game.getSelectedPiece() != null) {
@@ -230,7 +242,6 @@ public final class JungleIO {
             }
             if (tRow == landscape.getRow() && tCol == landscape.getCol()) {
                 setFront(YELLOW);
-
                 setBlink();
                 print(selectedPiece.getDirection().getSymbol().repeat(4));
                 return;
@@ -303,7 +314,7 @@ public final class JungleIO {
         announce(msg, color);
     }
 
-    public char getKeyInGame(char key, Color color) {
+    public char getKeyInGame(char key) {
         setCursor(18, 50);
         setBack(GREY);
         setFront(YELLOW);
@@ -311,10 +322,13 @@ public final class JungleIO {
         writer.print("KEY ECHOING");
         reset();
         setBack(GREY);
-        setFront(color);
         setUnderlined();
         setCursor(19, 50);
-        writer.print(key + WHITE_SPACE.repeat(3));
+        switch (key) {
+            case '\t' -> writer.print("\\t" + WHITE_SPACE.repeat(2));
+            case '\n' -> setCursor(19, 50);
+            default -> writer.print(key + WHITE_SPACE.repeat(3));
+        }
         setCursor(19, 50);
         return getKey(true);
     }
@@ -338,16 +352,16 @@ public final class JungleIO {
             if (character == '\n') {
                 while (chCount++ < 50)
                     writer.print(WHITE_SPACE);
-                chCount = -1;
+                chCount = 0;
                 setCursor(++row, col);
-            } else writer.print(character);
-            chCount++;
-            if (character > 127) chCount++;
+            } else {
+                writer.print(character);
+                chCount++;
+                if (character > 127) chCount++;
+            }
         }
         while (row < 6) {
-            while (chCount++ < 50)
-                writer.print(WHITE_SPACE);
-            chCount = 0;
+            writer.print(WHITE_SPACE.repeat(50));
             setCursor(row++, col);
         }
         reset();
