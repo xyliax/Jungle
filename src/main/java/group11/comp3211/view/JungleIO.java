@@ -218,7 +218,7 @@ public final class JungleIO {
 
     private synchronized void showBlock(Loader block, Game game) {
         reset();
-        switch (block.type()) {
+        switch (block.getType()) {
             case DEN -> {
                 Den den = (Den) block;
                 setFront(den.getPlayer().getColor());
