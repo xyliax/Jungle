@@ -17,13 +17,6 @@ public class WolfTest {
     }
 
     @Test
-    public void die() {
-        wolf.die();
-        Assert.assertTrue(wolf.isDead());
-
-    }
-
-    @Test
     public void move() {
         wolf.move(0,1);
         Assert.assertEquals(wolf.getCol(),1);

@@ -110,7 +110,7 @@ public final class PlayBoard implements Serializable {
                 }
             }
         }
-        if (!(row > 0 && row < ROW_NUM && col > 0 && col < COL_NUM))
+        if (!(row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM))
             throw new OutBoardException(piece);
         else if (!get(row, col).canLoad(piece))
             throw new NotLoadableException(get(row, col), piece);
@@ -135,7 +135,7 @@ public final class PlayBoard implements Serializable {
     }
 
     public Loader get(int row, int col) {
-        if (row > 0 && row < ROW_NUM && col > 0 && col < COL_NUM)
+        if (row >= 0 && row < ROW_NUM && col >= 0 && col < COL_NUM)
             return board[row][col];
         else throw new IllegalArgumentException();
     }

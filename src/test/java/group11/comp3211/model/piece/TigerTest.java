@@ -17,13 +17,6 @@ public class TigerTest {
     }
 
     @Test
-    public void die() {
-        tiger.die();
-        Assert.assertTrue(tiger.isDead());
-
-    }
-
-    @Test
     public void move() {
         tiger.move(0,1);
         Assert.assertEquals(tiger.getCol(),1);

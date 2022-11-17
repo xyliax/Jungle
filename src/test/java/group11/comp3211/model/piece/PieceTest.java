@@ -27,10 +27,6 @@ public class PieceTest {
         rat.die();
     }
 
-    @Test
-    public void isDead() {
-        rat.isDead();
-    }
 
     @Test
     public void move() {

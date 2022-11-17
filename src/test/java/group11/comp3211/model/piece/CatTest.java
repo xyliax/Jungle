@@ -17,13 +17,6 @@ public class CatTest {
     }
 
     @Test
-    public void die() {
-        cat.die();
-        Assert.assertTrue(cat.isDead());
-
-    }
-
-    @Test
     public void move() {
         cat.move(0,1);
         Assert.assertEquals(cat.getCol(),1);

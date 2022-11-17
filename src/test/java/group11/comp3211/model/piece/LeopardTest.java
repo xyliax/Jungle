@@ -17,13 +17,6 @@ public class LeopardTest {
     }
 
     @Test
-    public void die() {
-        leopard.die();
-        Assert.assertTrue(leopard.isDead());
-
-    }
-
-    @Test
     public void move() {
         leopard.move(0,1);
         Assert.assertEquals(leopard.getCol(),1);

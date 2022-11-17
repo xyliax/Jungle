@@ -17,13 +17,6 @@ public class ElephantTest {
     }
 
     @Test
-    public void die() {
-        elephant.die();
-        Assert.assertTrue(elephant.isDead());
-
-    }
-
-    @Test
     public void move() {
         elephant.move(0,1);
         Assert.assertEquals(elephant.getCol(),1);

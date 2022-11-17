@@ -17,13 +17,6 @@ public class LionTest {
     }
 
     @Test
-    public void die() {
-        lion.die();
-        Assert.assertTrue(lion.isDead());
-
-    }
-
-    @Test
     public void move() {
         lion.move(0,1);
         Assert.assertEquals(lion.getCol(),1);

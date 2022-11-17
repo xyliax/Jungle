@@ -17,13 +17,6 @@ public class DogTest {
     }
 
     @Test
-    public void die() {
-        dog.die();
-        Assert.assertTrue(dog.isDead());
-
-    }
-
-    @Test
     public void move() {
         dog.move(0,1);
         Assert.assertEquals(dog.getCol(),1);
