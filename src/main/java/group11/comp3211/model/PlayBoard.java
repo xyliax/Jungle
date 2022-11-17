@@ -7,8 +7,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 import static group11.comp3211.model.JungleType.*;
 
@@ -16,11 +15,11 @@ import static group11.comp3211.model.JungleType.*;
 public final class PlayBoard implements Serializable {
     public static final int ROW_NUM = 9;
     public static final int COL_NUM = 7;
-    private final Set<Piece> initPieces;
+    private final ArrayList<Piece> initPieces;
     private final Loader[][] board;
 
     public PlayBoard() {
-        this.initPieces = new HashSet<>();
+        this.initPieces = new ArrayList<>();
         this.board = new Loader[ROW_NUM][COL_NUM];
     }
 
