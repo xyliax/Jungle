@@ -229,7 +229,7 @@ public final class JungleIO {
                 } else {
                     Piece piece = (Piece) den.getLoad();
                     setFront(piece.getPlayer().getColor());
-                    print(piece.getSymbol(game.getLanguage()));
+                    print(WHITE_SPACE + piece.getSymbol(game.getLanguage()) + WHITE_SPACE);
                 }
                 return;
             }
