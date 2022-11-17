@@ -7,6 +7,6 @@ import group11.comp3211.model.Movable;
 public final class NotLoadableException extends IllegalMovementException {
     public NotLoadableException(Loader loader, Movable movable) {
         super(String.format("%s cannot move onto %s!",
-                movable.getSymbol(GameManager.getInstance().getGame().getLanguage()), loader.type().name()));
+                movable.getSymbol(GameManager.getInstance().getGame().getLanguage()), loader.getType().name()));
     }
 }
