@@ -258,7 +258,7 @@ public final class JungleIO {
         }
         Piece piece = (Piece) landscape.getLoad();
         if (piece == null) {
-            setFront(WHITE);
+            setBack(WHITE);
             print(WHITE_SPACE.repeat(4));
         } else {
             if (game.getSelectedPiece() == piece) {
