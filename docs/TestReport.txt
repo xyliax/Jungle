@@ -1,0 +1,15 @@
+Current scope: all classes
+
+
+Overall Coverage Summary
+Package	      Class, %	     Method, %	      Line, %
+all classes	  100% (29/29)	 85.5% (100/117)	90.6% (307/339)
+
+Coverage Breakdown
+Package	                          Class, %	       Method, %	      Line, %
+group11.comp3211.model	          100% (6/6)	     92.7% (38/41)	  91.2% (186/204)
+group11.comp3211.model.landscape	100% (6/6)	     76.9% (20/26)	  86% (37/43)
+group11.comp3211.model.piece	    100% (17/17)	   84% (42/50)	    91.3% (84/92)
+
+
+generated on 2022-11-18 13:41
