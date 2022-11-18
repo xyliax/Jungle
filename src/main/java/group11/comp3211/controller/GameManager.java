@@ -348,7 +348,7 @@ public final class GameManager {
     private void pauseGame() {
         io.announceInGame("""
                 Game Paused -------------
-                Save and Quit  ==>  ' w '
+                Save           ==>  ' w '
                 Quit           ==>  ' q '
                 Back to Game   ==>  'ESC'
                 """, BLUE);
