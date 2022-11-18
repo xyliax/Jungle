@@ -335,7 +335,7 @@ Load the image using the following command. (For Mac and Linux)
 docker load < jungle-image.tar.gz
 ```
 
-For windows, please use the folowing commands instead.
+For windows, please use the following commands instead.
 
 ```shell
 docker load -i jungle-image.tar.gz
@@ -349,7 +349,7 @@ You will see "Loaded image: jungle-docker:TEST".
 docker run -it jungle-docker:TEST /bin/bash
 ```
 
-You will see a bash prompt, which means you have started the interactive shell.
+You will see a bash prompt, which implies that you have started the interactive shell.
 
 Simply use the following command to start the game.
 
