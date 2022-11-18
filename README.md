@@ -329,10 +329,16 @@ On Windows, open PowerShell to use docker commands.
 
 #### Load Jungle image
 
-Load the image using the following command.
+Load the image using the following command. (For Mac and Linux)
 
 ```shell
 docker load < jungle-image.tar.gz
+```
+
+For windows, please use the folowing commands instead.
+
+```shell
+docker load -i jungle-image.tar.gz
 ```
 
 You will see "Loaded image: jungle-docker:TEST".
