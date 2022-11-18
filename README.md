@@ -213,6 +213,41 @@ After doing this, you will find an executable file [jungle-app](jungle-app).
 
 The jungle-app-maker makes developers much easier for publishing their own software!
 
+### External Libraries and Tools
+
+#### Maven
+
+[Maven](https://maven.apache.org/)'s primary goal is to allow a developer to comprehend the complete state of a
+development effort in the shortest
+period of time. In order to attain this goal, Maven deals with several areas of concern.
+
+* Making the build process easy
+* Providing a uniform build system
+* Providing quality project information
+* Encouraging better development practices
+
+Maven is used in the phase of implementation and building, for the sake of maximizing compatibility and making the
+project lifecycle more comprehensive.
+
+#### Lombok
+
+Project [Lombok](https://projectlombok.org/) is a java library that automatically plugs into your editor and build
+tools, spicing up your java.
+Never write another getter or equals method again, with one annotation your class has a fully featured builder, Automate
+your logging variables, and much more.
+
+Lombok is used in the phase of coding only, for the sake of reducing redundant code (Getters and Setters, equals and
+hashCode). And it is customizable.
+
+#### Docker
+
+[Docker](https://www.docker.com/) takes away repetitive, mundane configuration tasks and is used throughout the
+development lifecycle for fast, easy and portable application development – desktop and cloud. Docker’s comprehensive
+end-to-end platform includes UIs, CLIs, APIs and security that are engineered to work together across the entire
+application delivery lifecycle.
+
+In this project, docker is mainly used for solving compatibility for Windows users.
+
 ## For Players
 
 The players are free to follow th above steps, but we have provided more user-friendly methods for those who don't
@@ -271,6 +306,46 @@ chmod +x jungle-app
 ```
 
 And you are free to start the game.
+
+```shell
+./jungle-app
+```
+
+### Docker
+
+This is one possible solution for Windows users who have started Docker service.
+
+Using docker, players can start Jungle at ANY platforms!
+
+On Windows, open PowerShell to use docker commands.
+
+#### Preparation
+
+[Install Docker](https://docs.docker.com/get-docker/)
+
+#### Fetch the compressed Jungle image
+
+[jungle-image.tar.gz](https://github.com/xyliax/Jungle/releases/download/test-developers/jungle-image.tar.gz)
+
+#### Load Jungle image
+
+Load the image using the following command.
+
+```shell
+docker load < jungle-image.tar.gz
+```
+
+You will see "Loaded image: jungle-docker:TEST".
+
+#### Start the game
+
+```shell
+docker run -it jungle-docker /bin/bash
+```
+
+You will see a bash prompt, which means you have started the interactive shell.
+
+Simply use the following command to start the game.
 
 ```shell
 ./jungle-app
