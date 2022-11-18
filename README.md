@@ -346,7 +346,7 @@ You will see "Loaded image: jungle-docker:TEST".
 #### Start the game
 
 ```shell
-docker run -it jungle-docker /bin/bash
+docker run -it jungle-docker:TEST /bin/bash
 ```
 
 You will see a bash prompt, which means you have started the interactive shell.
