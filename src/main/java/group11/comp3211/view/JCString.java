@@ -1,6 +1,12 @@
 package group11.comp3211.view;
 
+/**
+ * The enum Jc string.
+ */
 enum JCString {
+    /**
+     * The Welcome banner.
+     */
     WELCOME_BANNER("""
               888888    888     888    888b    888     .d8888b.     888         8888888888
                 "88b    888     888    8888b   888    d88P  Y88b    888         888
@@ -13,7 +19,11 @@ enum JCString {
                .d88P
              .d88P"
             888P"
-            """), START_MENU("""
+            """),
+    /**
+     * The Start menu.
+     */
+    START_MENU("""
                                   $MM    MM  EEEEEEE  NN   NN  UU   UU%
                                   $MMM  MMM  EE       NNN  NN  UU   UU%
                                   $MM MM MM  EEEEE    NN N NN  UU   UU%
@@ -28,7 +38,11 @@ enum JCString {
             |                Press 'SPACE'/'TAB' => Move to the Next Option               @
             |                Press  'SHIFT+TAB'  => Move to the Previous Option           @
             ===============================================================================
-            """), KEY_MAPPING_CT("""
+            """),
+    /**
+     * Key mapping ct jc string.
+     */
+    KEY_MAPPING_CT("""
             -----------------------------------
             |[棋子符號][控製鍵] [功能]  [方向鍵]
             |   象        8  | 向上移動   w/↑
@@ -40,7 +54,11 @@ enum JCString {
             |   貓        2  | 返回主菜單 ESC
             |   鼠        1  |
             -----------------------------------
-            """), KEY_MAPPING_EN("""
+            """),
+    /**
+     * The Key mapping en.
+     */
+    KEY_MAPPING_EN("""
             -----------------------------------
             |[SYM][KEY]       [FUNC]     [KEY]
             | EP   8 Elephant| UP         w/↑
@@ -53,6 +71,9 @@ enum JCString {
             | MS   1 Mouse   |
             |----------------------------------
             """);
+    /**
+     * The String.
+     */
     final String string;
 
     JCString(String string) {

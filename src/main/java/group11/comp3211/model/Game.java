@@ -16,6 +16,9 @@ import static group11.comp3211.model.Direction.STAY;
 import static group11.comp3211.view.Color.GREEN;
 import static group11.comp3211.view.Color.RED;
 
+/**
+ * The type Game.
+ */
 @Getter
 @Setter
 public final class Game implements Serializable {
@@ -29,6 +32,9 @@ public final class Game implements Serializable {
     private Piece selectedPiece;
     private Language language;
 
+    /**
+     * Instantiates a new Game.
+     */
     public Game() {
         this.playboard = new PlayBoard();
         this.running = false;
@@ -42,6 +48,11 @@ public final class Game implements Serializable {
         initKeyPieceTable();
     }
 
+    /**
+     * Get file list string [ ].
+     *
+     * @return the string [ ]
+     */
     public static String[] getFileList() {
         File ResDir = new File(System.getenv("HOME"));
         File gameFileDir = new File(ResDir, gamePath);
@@ -49,6 +60,14 @@ public final class Game implements Serializable {
         return gameFileDir.list((dir, name) -> name.endsWith(".game"));
     }
 
+    /**
+     * Load from file game.
+     *
+     * @param fileName the file name
+     * @return the game
+     * @throws IOException            the io exception
+     * @throws ClassNotFoundException the class not found exception
+     */
     public static Game loadFromFile(String fileName) throws IOException, ClassNotFoundException {
         File ResDir = new File(System.getenv("HOME"));
         File gameFileDir = new File(ResDir, gamePath);
@@ -57,6 +76,12 @@ public final class Game implements Serializable {
         return (Game) objectInputStream.readObject();
     }
 
+    /**
+     * Select piece by key.
+     *
+     * @param key the key
+     * @throws VoidObjectException the void object exception
+     */
     public void selectPieceByKey(char key) throws VoidObjectException {
         String ks = key + (currentPlayer == playerX ? "@X" : "@Y");
         Piece piece = keyPieceTable.get(ks);
@@ -67,6 +92,9 @@ public final class Game implements Serializable {
         selectedPiece = piece;
     }
 
+    /**
+     * Clear select status.
+     */
     public void clearSelectStatus() {
         if (selectedPiece != null) {
             if (selectedPiece.isSelected()) {
@@ -78,6 +106,11 @@ public final class Game implements Serializable {
         }
     }
 
+    /**
+     * Run turn.
+     *
+     * @throws LogicException the logic exception
+     */
     public void runTurn() throws LogicException {
         if (!selectedPiece.isSelected())
             throw new VoidObjectException(String.format("%s is not confirmed!", selectedPiece.getSymbol(language)));
@@ -91,6 +124,11 @@ public final class Game implements Serializable {
         else currentPlayer = playerX;
     }
 
+    /**
+     * Find winner player.
+     *
+     * @return the player
+     */
     public Player findWinner() {
         if (playboard.get(0, 3).getLoad() != null)
             return playerY;
@@ -109,6 +147,11 @@ public final class Game implements Serializable {
         return null;
     }
 
+    /**
+     * Save to file.
+     *
+     * @param fileName the file name
+     */
     @SneakyThrows
     public void saveToFile(String fileName) {
         File ResDir = new File(System.getenv("HOME"));

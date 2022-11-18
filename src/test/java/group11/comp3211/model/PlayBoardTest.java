@@ -1,10 +1,7 @@
 package group11.comp3211.model;
 
 import group11.comp3211.common.exceptions.LogicException;
-import group11.comp3211.model.piece.Cat;
-import group11.comp3211.model.piece.Elephant;
-import group11.comp3211.model.piece.Rat;
-import group11.comp3211.model.piece.Tiger;
+import group11.comp3211.model.piece.*;
 import group11.comp3211.view.Language;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,12 +26,6 @@ public class PlayBoardTest {
         playBoard = game.getPlayboard();
     }
 
-//    @Test
-//    public void boot2() {
-//        File file = new File(System.getenv("HOME") + "/.game_file/userX-userY.game");
-//        GameManager.getInstance().debug(file);
-//        game2 = GameManager.getInstance().getGame();
-//    }
 
     @Test
     public void ratInRiver() {
@@ -98,7 +89,22 @@ public class PlayBoardTest {
 
     }
 
+
     @Test
     public void initBoard() {
     }
+
+    @Test
+    public void canCapture() {
+        Player player1 = new Player(null);
+        Player player2 = new Player(null);
+        Elephant elephant = new Elephant(1,2,player1);
+        Rat rat = new Rat(2,2,player2);
+        playBoard.canCapture(elephant, rat);
+        playBoard.canCapture(rat,elephant);
+        Wolf wolf = new Wolf(1,1,null);
+        playBoard.canCapture(wolf,rat);
+    }
+
+
 }

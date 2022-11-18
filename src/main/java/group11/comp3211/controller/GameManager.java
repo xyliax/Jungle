@@ -22,6 +22,12 @@ import java.util.Random;
 import static group11.comp3211.model.Direction.*;
 import static group11.comp3211.view.Color.*;
 
+
+/**
+ * Game controller, including control of IO
+ *
+ * @author PeiYuxing
+ */
 @Getter
 public final class GameManager {
     private final JungleIO io;
@@ -32,6 +38,11 @@ public final class GameManager {
         io = JungleIO.getInstance();
     }
 
+    /**
+     * Get an instantiated GameManager
+     *
+     * @return the instance
+     */
     public static GameManager getInstance() {
         return GameManagerHolder.GAME_MANAGER;
     }
@@ -64,6 +75,9 @@ public final class GameManager {
         io.setConsole_col(cCol);
     }
 
+    /**
+     *  Check whether the system meets the requirements, and prompt
+     */
     private void operatingSystemCheck() {
         String OS = System.getProperty("os.name");
         String ARCH = System.getProperty("os.arch");
@@ -93,6 +107,9 @@ public final class GameManager {
         }
     }
 
+    /**
+     * The game's loading logic, in four steps
+     */
     public void boot() {
         environmentCheck();
         operatingSystemCheck();
@@ -100,6 +117,12 @@ public final class GameManager {
         startMenu();
     }
 
+
+    /**
+     * Debug mode, available for Junit testing
+     *
+     * @param gameFile the game file
+     */
     @SneakyThrows
     public void debug(File gameFile) {
         FileInputStream fileInputStream = new FileInputStream(gameFile);
@@ -108,12 +131,20 @@ public final class GameManager {
         //runGame();
     }
 
+
+    /**
+     *  welcome for prompt, and listen the key
+     */
     private void welcome() {
         do {
             io.showWelcomeAnimation();
         } while (io.getKey(false) != '\n');
     }
 
+
+    /**
+     *  Debug mode, available for Junit testing
+     */
     private void startMenu() {
         int select = 0;
         char key;
@@ -142,6 +173,9 @@ public final class GameManager {
         }
     }
 
+    /**
+     *  Create a new game turn and get basic information
+     */
     private void createNewGame() {
         io.clearScreen();
         this.game = new Game();
@@ -175,6 +209,8 @@ public final class GameManager {
         runGame();
     }
 
+
+    // Get the game from a saved file
     private void loadSavedGame() {
         String[] fileList = Game.getFileList();
         if (fileList == null || fileList.length == 0) {
@@ -220,6 +256,9 @@ public final class GameManager {
         runGame();
     }
 
+    /**
+     *  A game turn that transfers control to another player
+     */
     private void runGame() {
         Player winner = null;
         StringBuilder notice = new StringBuilder(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
@@ -301,6 +340,9 @@ public final class GameManager {
         io.setDRemap(false);
     }
 
+    /**
+     * Pause the game
+     */
     private void pauseGame() {
         io.announceInGame("""
                 Game Paused -------------
@@ -324,6 +366,9 @@ public final class GameManager {
         io.clearScreen();
     }
 
+    /**
+     * Access to user manuals
+     */
     private void manual() {
         try {
             Runtime.getRuntime().exec(new String[]{"open", "https://blog.peiyuxing.xyz/Jungle/"});
@@ -331,11 +376,17 @@ public final class GameManager {
         }
     }
 
+    /**
+     * Exit game logic
+     */
     private void exit(String reason) {
         io.showExitMessage(reason);
         System.exit(0);
     }
 
+    /**
+     * Get Game Controller
+     */
     private static final class GameManagerHolder {
         private static final GameManager GAME_MANAGER = new GameManager();
     }

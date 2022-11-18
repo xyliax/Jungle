@@ -20,11 +20,23 @@ import static group11.comp3211.view.Color.*;
 import static java.lang.Thread.sleep;
 
 
+/**
+ * The type Jungle io.
+ */
 @Getter
 @Setter
 public final class JungleIO {
+    /**
+     * The constant FRAME_DELAY.
+     */
     public static final int FRAME_DELAY = 10;
+    /**
+     * The constant KEY_DELAY.
+     */
     public static final int KEY_DELAY = 200;
+    /**
+     * The constant WHITE_SPACE.
+     */
     public static final String WHITE_SPACE = " ";
     private static final String CLEAR_K_STR = "\b\b\b\b    \b\b\b\b";
     private static final String CLEAR_L_STR = "\r" + " ".repeat(64) + "\r";
@@ -47,10 +59,21 @@ public final class JungleIO {
         this.dRemap = false;
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static JungleIO getInstance() {
         return JungleIOHolder.JUNGLE_IO;
     }
 
+    /**
+     * Gets char width.
+     *
+     * @param character the character
+     * @return the char width
+     */
     public static int getCharWidth(char character) {
         int width;
         switch (character) {
@@ -64,6 +87,9 @@ public final class JungleIO {
         return width;
     }
 
+    /**
+     * Show loading animation.
+     */
     public synchronized void showLoadingAnimation() {
         Thread loading = new Thread(() -> {
             announce("Press any KEY", YELLOW);
@@ -102,6 +128,9 @@ public final class JungleIO {
         }
     }
 
+    /**
+     * Show welcome animation.
+     */
     public synchronized void showWelcomeAnimation() {
         reset();
         clearScreen();
@@ -143,6 +172,11 @@ public final class JungleIO {
         reset();
     }
 
+    /**
+     * Show start menu.
+     *
+     * @param select the select
+     */
     public synchronized void showStartMenu(int select) {
         reset();
         clearScreen();
@@ -183,6 +217,11 @@ public final class JungleIO {
         reset();
     }
 
+    /**
+     * Show play board.
+     *
+     * @param game the game
+     */
     public synchronized void showPlayBoard(Game game) {
         reset();
         setCursor(0, 0);
@@ -272,6 +311,12 @@ public final class JungleIO {
         }
     }
 
+    /**
+     * Show saved games.
+     *
+     * @param fileList the file list
+     * @param select   the select
+     */
     public synchronized void showSavedGames(String[] fileList, int select) {
         reset();
         clearScreen();
@@ -290,11 +335,22 @@ public final class JungleIO {
         reset();
     }
 
+    /**
+     * Show exit message.
+     *
+     * @param reason the reason
+     */
     public void showExitMessage(String reason) {
         announceInGame("Exit Jungle: " + reason, BLUE);
         reset();
     }
 
+    /**
+     * Announce.
+     *
+     * @param msg   the msg
+     * @param color the color
+     */
     public void announce(String msg, Color color) {
         reset();
         writer.println();
@@ -319,6 +375,12 @@ public final class JungleIO {
         writer.println();
     }
 
+    /**
+     * Announce in game.
+     *
+     * @param msg   the msg
+     * @param color the color
+     */
     public void announceInGame(String msg, Color color) {
         reset();
         setCursor(20, 0);
@@ -328,6 +390,12 @@ public final class JungleIO {
         announce(msg, color);
     }
 
+    /**
+     * Gets key in game.
+     *
+     * @param key the key
+     * @return the key in game
+     */
     public char getKeyInGame(char key) {
         setCursor(18, 50);
         setBack(GREY);
@@ -347,6 +415,11 @@ public final class JungleIO {
         return getKey(true);
     }
 
+    /**
+     * Show notice board.
+     *
+     * @param notice the notice
+     */
     public synchronized void showNoticeBoard(String notice) {
         reset();
         int col = 50, row = 0;
@@ -379,6 +452,11 @@ public final class JungleIO {
         reset();
     }
 
+    /**
+     * Show key mapping.
+     *
+     * @param language the language
+     */
     public synchronized void showKeyMapping(Language language) {
         reset();
         int row = 6, col = 50;
@@ -402,6 +480,12 @@ public final class JungleIO {
         reset();
     }
 
+    /**
+     * Read line string.
+     *
+     * @param preload the preload
+     * @return the string
+     */
     @SneakyThrows
     public synchronized String readLine(String preload) {
         StringBuilder line = new StringBuilder(preload);
@@ -434,6 +518,12 @@ public final class JungleIO {
         return line.toString();
     }
 
+    /**
+     * Gets key.
+     *
+     * @param echo the echo
+     * @return the key
+     */
     @SneakyThrows
     public char getKey(boolean echo) {
         hideCursor();
@@ -465,7 +555,7 @@ public final class JungleIO {
      * Prints a string. Act exactly the same as writer.print(String).
      *
      * @param string the {@code String} to be printed
-     * @see java.io.PrintStream#print(String)
+     * @see java.io.PrintStream#print(String) java.io.PrintStream#print(String)
      */
     public void print(String string) {
         writer.print(string);
@@ -475,7 +565,7 @@ public final class JungleIO {
      * Prints a string and then terminates the line.
      *
      * @param line the {@code String} to be printed
-     * @see java.io.PrintStream#print(String)
+     * @see java.io.PrintStream#print(String) java.io.PrintStream#print(String)
      */
     public void printLine(String line) {
         writer.println(line);
@@ -497,6 +587,9 @@ public final class JungleIO {
         }
     }
 
+    /**
+     * Clear screen.
+     */
     public void clearScreen() {
         writer.print("\033c");
     }
@@ -512,40 +605,74 @@ public final class JungleIO {
         showCursor();
     }
 
+    /**
+     * Sets front.
+     *
+     * @param color the color
+     */
     public void setFront(Color color) {
         print("\033[3" + color.value + "m");
     }
 
+    /**
+     * Sets back.
+     *
+     * @param color the color
+     */
     public void setBack(Color color) {
         if (color == WHITE)
             print("\033[107m");
         else print("\033[4" + color.value + "m");
     }
 
+    /**
+     * Sets bold.
+     */
     public void setBold() {
         print("\033[1m");
     }
 
+    /**
+     * Sets dim.
+     */
     public void setDim() {
         print("\033[2m");
     }
 
+    /**
+     * Sets underlined.
+     */
     public void setUnderlined() {
         print("\033[4m");
     }
 
+    /**
+     * Sets blink.
+     */
     public void setBlink() {
         print("\033[5m");
     }
 
+    /**
+     * Sets cursor.
+     *
+     * @param row the row
+     * @param col the col
+     */
     public void setCursor(int row, int col) {
         print("\033[" + row + ";" + col + "H");
     }
 
+    /**
+     * Hide cursor.
+     */
     public void hideCursor() {
         print("\033[?25l");
     }
 
+    /**
+     * Show cursor.
+     */
     public void showCursor() {
         print("\033[?25h");
     }

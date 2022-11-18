@@ -14,8 +14,9 @@ import lombok.Value;
 public class Wolf extends Piece {
     /**
      * Constructor for Wolf.
-     * @param row initial row number
-     * @param col initial column number
+     *
+     * @param row    initial row number
+     * @param col    initial column number
      * @param player the player it belongs to
      */
     public Wolf(int row, int col, Player player) {
