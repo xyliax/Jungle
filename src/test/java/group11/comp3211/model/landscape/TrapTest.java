@@ -2,6 +2,7 @@ package group11.comp3211.model.landscape;
 
 import group11.comp3211.model.piece.Rat;
 import group11.comp3211.view.Language;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,8 +22,8 @@ public class TrapTest {
 
     @Test
     public void getSymbol() {
-        trap.getSymbol(Language.ENGLISH);
-        trap.getSymbol(Language.CHINESE_TRADITIONAL);
-        trap.getSymbol(Language.CHINESE_TRADITIONAL);
+        Assert.assertNull(trap.getSymbol(Language.ENGLISH));
+        Assert.assertNull(trap.getSymbol(Language.CHINESE_TRADITIONAL));
+        Assert.assertNull(trap.getSymbol(Language.CHINESE_SIMPLE));
     }
 }

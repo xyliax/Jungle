@@ -25,52 +25,9 @@ public class LandTest {
 
     @Test
     public void testTestToString() {
-        land.getCol();
+        Assert.assertNotNull(land.getCol());
     }
 
-    @Test
-    public void getRow() {
-    }
-
-    @Test
-    public void getCol() {
-    }
-
-    @Test
-    public void getLoad() {
-    }
-
-    @Test
-    public void getAllowed() {
-    }
-
-    @Test
-    public void getType() {
-    }
-
-    @Test
-    public void setRow() {
-    }
-
-    @Test
-    public void setCol() {
-    }
-
-    @Test
-    public void setLoad() {
-    }
-
-    @Test
-    public void setType() {
-    }
-
-    @Test
-    public void testToString() {
-    }
-
-    @Test
-    public void testEquals() {
-    }
 
 
 }
