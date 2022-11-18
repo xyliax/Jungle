@@ -33,7 +33,7 @@ public class PlayerTest {
 
     @Test
     public void testEquals() {
-        player.equals(player);
+        Assert.assertEquals(player, player);
     }
 
 }

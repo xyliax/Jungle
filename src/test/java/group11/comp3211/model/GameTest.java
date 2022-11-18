@@ -22,6 +22,7 @@ public class GameTest {
         game.setRunning(true);
         game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ? game.getPlayerX() : game.getPlayerY());
         game.setLanguage(Language.CHINESE_TRADITIONAL);
+        Assert.assertTrue(game.isRunning());
     }
 
     @Test
@@ -34,6 +35,7 @@ public class GameTest {
         try {
             game.selectPieceByKey('1');
         } catch (VoidObjectException e) {
+            System.out.println("Get it.");
         }
     }
 
@@ -43,6 +45,7 @@ public class GameTest {
         wolf.setDirection(Direction.UP);
         game.setSelectedPiece(wolf);
         game.clearSelectStatus();
+        Assert.assertNull(game.getSelectedPiece());
     }
 
     @Test
@@ -51,9 +54,11 @@ public class GameTest {
         wolf.setSelected(true);
         wolf.setDirection(Direction.UP);
         game.setSelectedPiece(wolf);
+        Assert.assertEquals(wolf.getDirection(), Direction.UP);
         try {
             game.runTurn();
         } catch (LogicException ignored) {
+            System.out.println("Got it.");
         }
     }
 
@@ -67,14 +72,20 @@ public class GameTest {
 
     @Test
     public void findWinner() {
-        game.findWinner();
+        Assert.assertNull(game.findWinner());
     }
 
     @Test
     public void chores() {
-        game.isRunning();
-        game.getCurrentPlayer();
-        game.getSelectedPiece();
-        game.getLanguage();
+        game.setRunning(true);
+        Assert.assertTrue(game.isRunning());
+        Player player = new Player(null);
+        game.setCurrentPlayer(player);
+        Assert.assertEquals(game.getCurrentPlayer(), player);
+        Wolf wolf = new Wolf(1,6,null);
+        game.setSelectedPiece(wolf);
+        Assert.assertEquals(game.getSelectedPiece(), wolf);
+        game.setLanguage(Language.ENGLISH);
+        Assert.assertEquals(game.getLanguage(), Language.ENGLISH);
     }
 }

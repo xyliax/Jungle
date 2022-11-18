@@ -3,6 +3,7 @@ package group11.comp3211.model;
 import group11.comp3211.common.exceptions.LogicException;
 import group11.comp3211.model.piece.*;
 import group11.comp3211.view.Language;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,8 +27,8 @@ public class PlayBoardTest {
 
     @Test
     public void ratInRiver() {
-        playBoard.ratInRiver(JungleType.RIVER_AREA_LEFT);
-        playBoard.ratInRiver(JungleType.RIVER_AREA_RIGHT);
+        Assert.assertFalse(playBoard.ratInRiver(JungleType.RIVER_AREA_LEFT));
+        Assert.assertFalse(playBoard.ratInRiver(JungleType.RIVER_AREA_RIGHT));
     }
 
     @Test
@@ -63,18 +64,19 @@ public class PlayBoardTest {
             playBoard.findDestination(cat);
         } catch (Exception ignored) {
         }
-
+        Assert.assertEquals(tiger.getRow(),4);
     }
 
     @Test
     public void doMove() {
         Elephant elephant = new Elephant(5, 5, null);
         elephant.move(0, 1);
-        Rat rat = new Rat(5, 6, null);
         try {
             playBoard.doMove(elephant);
         } catch (LogicException ignored) {
+            System.out.println("Got it");
         }
+        Assert.assertEquals(elephant.getCol(),1);
     }
 
     @Test
@@ -83,10 +85,10 @@ public class PlayBoardTest {
         Player player2 = new Player(null);
         Elephant elephant = new Elephant(1, 2, player1);
         Rat rat = new Rat(2, 2, player2);
-        playBoard.canCapture(elephant, rat);
-        playBoard.canCapture(rat, elephant);
+        Assert.assertFalse(playBoard.canCapture(elephant, rat));
+        Assert.assertTrue(playBoard.canCapture(rat, elephant));
         Wolf wolf = new Wolf(1, 1, null);
-        playBoard.canCapture(wolf, rat);
+        Assert.assertTrue(playBoard.canCapture(wolf, rat));
     }
 
 
