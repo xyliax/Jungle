@@ -8,7 +8,7 @@ public class PlayerTest {
     Player player;
 
     @Before
-    public void before(){
+    public void before() {
         player = new Player(Color.RED);
     }
 

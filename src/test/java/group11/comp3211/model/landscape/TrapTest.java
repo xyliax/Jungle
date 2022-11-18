@@ -10,13 +10,13 @@ public class TrapTest {
     Trap trap;
 
     @Before
-    public void before(){
-        trap = new Trap(2,4,null);
+    public void before() {
+        trap = new Trap(2, 4, null);
     }
 
     @Test
     public void canLoad() {
-        trap.canLoad(new Rat(1,1,null));
+        trap.canLoad(new Rat(1, 1, null));
     }
 
     @Test

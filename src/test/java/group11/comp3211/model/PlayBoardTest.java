@@ -98,12 +98,12 @@ public class PlayBoardTest {
     public void canCapture() {
         Player player1 = new Player(null);
         Player player2 = new Player(null);
-        Elephant elephant = new Elephant(1,2,player1);
-        Rat rat = new Rat(2,2,player2);
+        Elephant elephant = new Elephant(1, 2, player1);
+        Rat rat = new Rat(2, 2, player2);
         playBoard.canCapture(elephant, rat);
-        playBoard.canCapture(rat,elephant);
-        Wolf wolf = new Wolf(1,1,null);
-        playBoard.canCapture(wolf,rat);
+        playBoard.canCapture(rat, elephant);
+        Wolf wolf = new Wolf(1, 1, null);
+        playBoard.canCapture(wolf, rat);
     }
 
 

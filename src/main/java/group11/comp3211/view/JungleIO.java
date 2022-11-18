@@ -71,7 +71,9 @@ public final class JungleIO {
     /**
      * Gets char width.
      *
-     * @param character the character
+     * @param character
+     *         the character
+     *
      * @return the char width
      */
     public static int getCharWidth(char character) {
@@ -175,7 +177,8 @@ public final class JungleIO {
     /**
      * Show start menu.
      *
-     * @param select the select
+     * @param select
+     *         the select
      */
     public synchronized void showStartMenu(int select) {
         reset();
@@ -220,7 +223,8 @@ public final class JungleIO {
     /**
      * Show play board.
      *
-     * @param game the game
+     * @param game
+     *         the game
      */
     public synchronized void showPlayBoard(Game game) {
         reset();
@@ -314,8 +318,10 @@ public final class JungleIO {
     /**
      * Show saved games.
      *
-     * @param fileList the file list
-     * @param select   the select
+     * @param fileList
+     *         the file list
+     * @param select
+     *         the select
      */
     public synchronized void showSavedGames(String[] fileList, int select) {
         reset();
@@ -338,7 +344,8 @@ public final class JungleIO {
     /**
      * Show exit message.
      *
-     * @param reason the reason
+     * @param reason
+     *         the reason
      */
     public void showExitMessage(String reason) {
         announceInGame("Exit Jungle: " + reason, BLUE);
@@ -348,8 +355,10 @@ public final class JungleIO {
     /**
      * Announce.
      *
-     * @param msg   the msg
-     * @param color the color
+     * @param msg
+     *         the msg
+     * @param color
+     *         the color
      */
     public void announce(String msg, Color color) {
         reset();
@@ -378,8 +387,10 @@ public final class JungleIO {
     /**
      * Announce in game.
      *
-     * @param msg   the msg
-     * @param color the color
+     * @param msg
+     *         the msg
+     * @param color
+     *         the color
      */
     public void announceInGame(String msg, Color color) {
         reset();
@@ -393,7 +404,9 @@ public final class JungleIO {
     /**
      * Gets key in game.
      *
-     * @param key the key
+     * @param key
+     *         the key
+     *
      * @return the key in game
      */
     public char getKeyInGame(char key) {
@@ -418,7 +431,8 @@ public final class JungleIO {
     /**
      * Show notice board.
      *
-     * @param notice the notice
+     * @param notice
+     *         the notice
      */
     public synchronized void showNoticeBoard(String notice) {
         reset();
@@ -455,7 +469,8 @@ public final class JungleIO {
     /**
      * Show key mapping.
      *
-     * @param language the language
+     * @param language
+     *         the language
      */
     public synchronized void showKeyMapping(Language language) {
         reset();
@@ -483,7 +498,9 @@ public final class JungleIO {
     /**
      * Read line string.
      *
-     * @param preload the preload
+     * @param preload
+     *         the preload
+     *
      * @return the string
      */
     @SneakyThrows
@@ -521,7 +538,9 @@ public final class JungleIO {
     /**
      * Gets key.
      *
-     * @param echo the echo
+     * @param echo
+     *         the echo
+     *
      * @return the key
      */
     @SneakyThrows
@@ -554,7 +573,9 @@ public final class JungleIO {
     /**
      * Prints a string. Act exactly the same as writer.print(String).
      *
-     * @param string the {@code String} to be printed
+     * @param string
+     *         the {@code String} to be printed
+     *
      * @see java.io.PrintStream#print(String) java.io.PrintStream#print(String)
      */
     public void print(String string) {
@@ -564,7 +585,9 @@ public final class JungleIO {
     /**
      * Prints a string and then terminates the line.
      *
-     * @param line the {@code String} to be printed
+     * @param line
+     *         the {@code String} to be printed
+     *
      * @see java.io.PrintStream#print(String) java.io.PrintStream#print(String)
      */
     public void printLine(String line) {
@@ -608,7 +631,8 @@ public final class JungleIO {
     /**
      * Sets front.
      *
-     * @param color the color
+     * @param color
+     *         the color
      */
     public void setFront(Color color) {
         print("\033[3" + color.value + "m");
@@ -617,7 +641,8 @@ public final class JungleIO {
     /**
      * Sets back.
      *
-     * @param color the color
+     * @param color
+     *         the color
      */
     public void setBack(Color color) {
         if (color == WHITE)
@@ -656,8 +681,10 @@ public final class JungleIO {
     /**
      * Sets cursor.
      *
-     * @param row the row
-     * @param col the col
+     * @param row
+     *         the row
+     * @param col
+     *         the col
      */
     public void setCursor(int row, int col) {
         print("\033[" + row + ";" + col + "H");

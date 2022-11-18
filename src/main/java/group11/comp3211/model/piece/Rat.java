@@ -14,9 +14,13 @@ import lombok.Value;
 public class Rat extends Piece {
     /**
      * Constructor for Rat.
-     * @param row initial row number
-     * @param col initial column number
-     * @param player the player it belongs to
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
+     * @param player
+     *         the player it belongs to
      */
     public Rat(int row, int col, Player player) {
         super(row, col, player);

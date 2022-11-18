@@ -5,8 +5,8 @@ import group11.comp3211.model.Loader;
 import group11.comp3211.model.Movable;
 
 /**
- *  Throws an exception if cannot be loaded
- *  For Logical judgement with front and back end communication
+ * Throws an exception if cannot be loaded
+ * For Logical judgement with front and back end communication
  */
 public final class NotLoadableException extends IllegalMovementException {
     public NotLoadableException(Loader loader, Movable movable) {

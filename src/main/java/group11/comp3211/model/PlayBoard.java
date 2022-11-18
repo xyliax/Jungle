@@ -37,8 +37,12 @@ public final class PlayBoard implements Serializable {
 
     /**
      * get the loader by coordinate
-     * @param row row number
-     * @param col column number
+     *
+     * @param row
+     *         row number
+     * @param col
+     *         column number
+     *
      * @return a loader
      */
     public Loader get(int row, int col) {
@@ -51,8 +55,12 @@ public final class PlayBoard implements Serializable {
 
     /**
      * Check whether a piece can capture another piece.
-     * @param capturer the piece to capture
-     * @param capturee the piece to be captured
+     *
+     * @param capturer
+     *         the piece to capture
+     * @param capturee
+     *         the piece to be captured
+     *
      * @return can or cannot
      */
     public boolean canCapture(Piece capturer, Piece capturee) {
@@ -74,7 +82,10 @@ public final class PlayBoard implements Serializable {
 
     /**
      * Check whether there is a rat in a certain river area.
-     * @param jungleType RIVER_AREA_LEFT or RIVER_AREA_RIGHT
+     *
+     * @param jungleType
+     *         RIVER_AREA_LEFT or RIVER_AREA_RIGHT
+     *
      * @return exists or not
      */
     public boolean ratInRiver(JungleType jungleType) {
@@ -97,9 +108,14 @@ public final class PlayBoard implements Serializable {
 
     /**
      * Find the destination by a movable and its direction disregarding any other pieces
-     * @param movable the piece
+     *
+     * @param movable
+     *         the piece
+     *
      * @return the destination coordinate
-     * @throws LogicException illegal movement
+     *
+     * @throws LogicException
+     *         illegal movement
      */
     public int[] findDestination(Movable movable) throws LogicException {
         int row = movable.getRow();
@@ -131,8 +147,12 @@ public final class PlayBoard implements Serializable {
 
     /**
      * Do a whole process of move.
-     * @param movable the piece to move with a direction
-     * @throws LogicException illegal movement
+     *
+     * @param movable
+     *         the piece to move with a direction
+     *
+     * @throws LogicException
+     *         illegal movement
      */
     public void doMove(Movable movable) throws LogicException {
         Piece piece = (Piece) movable;
@@ -158,8 +178,11 @@ public final class PlayBoard implements Serializable {
 
     /**
      * Initialize the board by adding pieces on it.
-     * @param playerX upper player
-     * @param playerY lower player
+     *
+     * @param playerX
+     *         upper player
+     * @param playerY
+     *         lower player
      */
     @SneakyThrows
     public void initBoard(Player playerX, Player playerY) {

@@ -14,7 +14,8 @@ public final class Player implements Serializable {
     private Color color;
 
     /**
-     * @param color the color of the player
+     * @param color
+     *         the color of the player
      */
     public Player(Color color) {
         this.color = color;

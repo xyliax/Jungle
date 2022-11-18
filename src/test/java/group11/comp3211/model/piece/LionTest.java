@@ -12,15 +12,15 @@ public class LionTest {
     Lion lion;
 
     @Before
-    public void before(){
-        lion = new Lion(0,2,null);
+    public void before() {
+        lion = new Lion(0, 2, null);
     }
 
     @Test
     public void move() {
-        lion.move(0,1);
-        Assert.assertEquals(lion.getCol(),1);
-        Assert.assertEquals(lion.getRow(),0);
+        lion.move(0, 1);
+        Assert.assertEquals(lion.getCol(), 1);
+        Assert.assertEquals(lion.getRow(), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class LionTest {
     }
 
     @Test
-    public void testHashcode(){
+    public void testHashcode() {
         assertEquals(lion.hashCode(), lion.hashCode());
     }
 

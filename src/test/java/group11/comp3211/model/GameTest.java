@@ -14,7 +14,7 @@ public class GameTest {
     Game game;
 
     @Before
-    public void Before(){
+    public void Before() {
         game = new Game();
         game.getPlayerX().setName("NameX");
         game.getPlayerY().setName("NameY");
@@ -38,7 +38,7 @@ public class GameTest {
 
     @Test
     public void clearSelectStatus() {
-        Wolf wolf = new Wolf(1,2,null);
+        Wolf wolf = new Wolf(1, 2, null);
         wolf.setDirection(Direction.UP);
         game.setSelectedPiece(wolf);
         game.clearSelectStatus();
@@ -46,7 +46,7 @@ public class GameTest {
 
     @Test
     public void runTurn() {
-        Wolf wolf = new Wolf(1,2,null);
+        Wolf wolf = new Wolf(1, 2, null);
         wolf.setSelected(true);
         wolf.setDirection(Direction.UP);
         game.setSelectedPiece(wolf);
@@ -70,7 +70,7 @@ public class GameTest {
     }
 
     @Test
-    public void chores(){
+    public void chores() {
         game.isRunning();
         game.getCurrentPlayer();
         game.getSelectedPiece();

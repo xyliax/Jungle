@@ -12,15 +12,15 @@ public class LeopardTest {
     Leopard leopard;
 
     @Before
-    public void before(){
-        leopard = new Leopard(0,2,null);
+    public void before() {
+        leopard = new Leopard(0, 2, null);
     }
 
     @Test
     public void move() {
-        leopard.move(0,1);
-        Assert.assertEquals(leopard.getCol(),1);
-        Assert.assertEquals(leopard.getRow(),0);
+        leopard.move(0, 1);
+        Assert.assertEquals(leopard.getCol(), 1);
+        Assert.assertEquals(leopard.getRow(), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class LeopardTest {
     }
 
     @Test
-    public void testHashcode(){
+    public void testHashcode() {
         assertEquals(leopard.hashCode(), leopard.hashCode());
     }
 

@@ -23,8 +23,11 @@ public abstract class Landscape implements Loader, Serializable {
 
     /**
      * Constructor for Landscape
-     * @param row the initial row number
-     * @param col the initial column number
+     *
+     * @param row
+     *         the initial row number
+     * @param col
+     *         the initial column number
      */
     public Landscape(int row, int col) {
         this.row = row;

@@ -14,8 +14,11 @@ public class Water extends Landscape {
 
     /**
      * Constructor for Water.
-     * @param row initial row number
-     * @param col initial column number
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
      */
     public Water(int row, int col) {
         super(row, col);

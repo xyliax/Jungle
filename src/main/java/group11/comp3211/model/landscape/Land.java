@@ -12,8 +12,11 @@ import lombok.Value;
 public class Land extends Landscape {
     /**
      * Constructor for Land.
-     * @param row initial row number
-     * @param col initial column number
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
      */
     public Land(int row, int col) {
         super(row, col);

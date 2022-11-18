@@ -14,9 +14,13 @@ import lombok.Value;
 public class Elephant extends Piece {
     /**
      * Constructor for Piece.
-     * @param row initial row number
-     * @param col initial column number
-     * @param player the player it belongs to
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
+     * @param player
+     *         the player it belongs to
      */
     public Elephant(int row, int col, Player player) {
         super(row, col, player);

@@ -12,15 +12,15 @@ public class CatTest {
     Cat cat;
 
     @Before
-    public void before(){
-        cat = new Cat(0,2,null);
+    public void before() {
+        cat = new Cat(0, 2, null);
     }
 
     @Test
     public void move() {
-        cat.move(0,1);
-        Assert.assertEquals(cat.getCol(),1);
-        Assert.assertEquals(cat.getRow(),0);
+        cat.move(0, 1);
+        Assert.assertEquals(cat.getCol(), 1);
+        Assert.assertEquals(cat.getRow(), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class CatTest {
     }
 
     @Test
-    public void testHashcode(){
+    public void testHashcode() {
         assertEquals(cat.hashCode(), cat.hashCode());
     }
 

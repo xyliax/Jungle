@@ -76,7 +76,7 @@ public final class GameManager {
     }
 
     /**
-     *  Check whether the system meets the requirements, and prompt
+     * Check whether the system meets the requirements, and prompt
      */
     private void operatingSystemCheck() {
         String OS = System.getProperty("os.name");
@@ -121,7 +121,8 @@ public final class GameManager {
     /**
      * Debug mode, available for Junit testing
      *
-     * @param gameFile the game file
+     * @param gameFile
+     *         the game file
      */
     @SneakyThrows
     public void debug(File gameFile) {
@@ -133,7 +134,7 @@ public final class GameManager {
 
 
     /**
-     *  welcome for prompt, and listen the key
+     * welcome for prompt, and listen the key
      */
     private void welcome() {
         do {
@@ -143,7 +144,7 @@ public final class GameManager {
 
 
     /**
-     *  Debug mode, available for Junit testing
+     * Debug mode, available for Junit testing
      */
     private void startMenu() {
         int select = 0;
@@ -174,7 +175,7 @@ public final class GameManager {
     }
 
     /**
-     *  Create a new game turn and get basic information
+     * Create a new game turn and get basic information
      */
     private void createNewGame() {
         io.clearScreen();
@@ -257,7 +258,7 @@ public final class GameManager {
     }
 
     /**
-     *  A game turn that transfers control to another player
+     * A game turn that transfers control to another player
      */
     private void runGame() {
         Player winner = null;

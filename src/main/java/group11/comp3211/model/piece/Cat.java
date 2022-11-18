@@ -14,9 +14,13 @@ import lombok.Value;
 public class Cat extends Piece {
     /**
      * Constructor for Cat.
-     * @param row initial row number
-     * @param col initial column number
-     * @param player the player it belongs to
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
+     * @param player
+     *         the player it belongs to
      */
     public Cat(int row, int col, Player player) {
         super(row, col, player);

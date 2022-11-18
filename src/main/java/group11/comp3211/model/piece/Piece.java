@@ -24,9 +24,13 @@ public abstract class Piece implements Movable, Serializable {
 
     /**
      * Constructor for Piece.
-     * @param row initial row number
-     * @param col initial column number
-     * @param player the player it belongs to
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
+     * @param player
+     *         the player it belongs to
      */
     public Piece(int row, int col, Player player) {
         this.row = row;

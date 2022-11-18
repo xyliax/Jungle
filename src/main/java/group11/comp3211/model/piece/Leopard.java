@@ -14,9 +14,13 @@ import lombok.Value;
 public class Leopard extends Piece {
     /**
      * Constructor for Leopard.
-     * @param row initial row number
-     * @param col initial column number
-     * @param player the player it belongs to
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
+     * @param player
+     *         the player it belongs to
      */
     public Leopard(int row, int col, Player player) {
         super(row, col, player);

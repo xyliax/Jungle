@@ -12,15 +12,15 @@ public class TigerTest {
     Tiger tiger;
 
     @Before
-    public void before(){
-        tiger = new Tiger(0,2,null);
+    public void before() {
+        tiger = new Tiger(0, 2, null);
     }
 
     @Test
     public void move() {
-        tiger.move(0,1);
-        Assert.assertEquals(tiger.getCol(),1);
-        Assert.assertEquals(tiger.getRow(),0);
+        tiger.move(0, 1);
+        Assert.assertEquals(tiger.getCol(), 1);
+        Assert.assertEquals(tiger.getRow(), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class TigerTest {
     }
 
     @Test
-    public void testHashcode(){
+    public void testHashcode() {
         assertEquals(tiger.hashCode(), tiger.hashCode());
     }
 

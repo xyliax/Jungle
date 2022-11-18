@@ -12,15 +12,15 @@ public class DogTest {
     Dog dog;
 
     @Before
-    public void before(){
-        dog = new Dog(0,2,null);
+    public void before() {
+        dog = new Dog(0, 2, null);
     }
 
     @Test
     public void move() {
-        dog.move(0,1);
-        Assert.assertEquals(dog.getCol(),1);
-        Assert.assertEquals(dog.getRow(),0);
+        dog.move(0, 1);
+        Assert.assertEquals(dog.getCol(), 1);
+        Assert.assertEquals(dog.getRow(), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class DogTest {
     }
 
     @Test
-    public void testHashcode(){
+    public void testHashcode() {
         assertEquals(dog.hashCode(), dog.hashCode());
     }
 

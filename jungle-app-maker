@@ -1,0 +1,16 @@
+#!/bin/sh
+#Usage
+#cat jungle-app-maker target/Jungle-1.0-SNAPSHOT.jar > jungle-app && chmod +x jungle-app
+#./jungle-app
+MYSELF=$(which "$0" 2>/dev/null)
+[ $? -gt 0 ] && [ -f "$0" ] && MYSELF="./$0"
+java=java
+if test -n "$JAVA_HOME"; then
+    java="$JAVA_HOME/bin/java"
+fi
+SIZE_J=$(stty size)
+export SIZE_J
+reset
+stty cbreak
+exec "$java" -jar "$MYSELF" "$@"
+exit 1

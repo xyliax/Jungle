@@ -14,9 +14,13 @@ import lombok.Value;
 public class Tiger extends Piece {
     /**
      * Constructor for Tiger.
-     * @param row initial row number
-     * @param col initial column number
-     * @param player the player it belongs to
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
+     * @param player
+     *         the player it belongs to
      */
     public Tiger(int row, int col, Player player) {
         super(row, col, player);

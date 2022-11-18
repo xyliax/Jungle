@@ -4,8 +4,6 @@ import group11.comp3211.view.Language;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class PieceTest {
 
     Rat rat;
@@ -63,7 +61,7 @@ public class PieceTest {
     }
 
     @Test
-    public void getJungleType(){
+    public void getJungleType() {
         rat.getType();
     }
 }

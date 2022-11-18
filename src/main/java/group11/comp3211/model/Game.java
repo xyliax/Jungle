@@ -63,10 +63,15 @@ public final class Game implements Serializable {
     /**
      * Load from file game.
      *
-     * @param fileName the file name
+     * @param fileName
+     *         the file name
+     *
      * @return the game
-     * @throws IOException            the io exception
-     * @throws ClassNotFoundException the class not found exception
+     *
+     * @throws IOException
+     *         the io exception
+     * @throws ClassNotFoundException
+     *         the class not found exception
      */
     public static Game loadFromFile(String fileName) throws IOException, ClassNotFoundException {
         File ResDir = new File(System.getenv("HOME"));
@@ -79,8 +84,11 @@ public final class Game implements Serializable {
     /**
      * Select piece by key.
      *
-     * @param key the key
-     * @throws VoidObjectException the void object exception
+     * @param key
+     *         the key
+     *
+     * @throws VoidObjectException
+     *         the void object exception
      */
     public void selectPieceByKey(char key) throws VoidObjectException {
         String ks = key + (currentPlayer == playerX ? "@X" : "@Y");
@@ -109,7 +117,8 @@ public final class Game implements Serializable {
     /**
      * Run turn.
      *
-     * @throws LogicException the logic exception
+     * @throws LogicException
+     *         the logic exception
      */
     public void runTurn() throws LogicException {
         if (!selectedPiece.isSelected())
@@ -150,7 +159,8 @@ public final class Game implements Serializable {
     /**
      * Save to file.
      *
-     * @param fileName the file name
+     * @param fileName
+     *         the file name
      */
     @SneakyThrows
     public void saveToFile(String fileName) {

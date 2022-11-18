@@ -12,15 +12,15 @@ public class WolfTest {
     Wolf wolf;
 
     @Before
-    public void before(){
-        wolf = new Wolf(0,2,null);
+    public void before() {
+        wolf = new Wolf(0, 2, null);
     }
 
     @Test
     public void move() {
-        wolf.move(0,1);
-        Assert.assertEquals(wolf.getCol(),1);
-        Assert.assertEquals(wolf.getRow(),0);
+        wolf.move(0, 1);
+        Assert.assertEquals(wolf.getCol(), 1);
+        Assert.assertEquals(wolf.getRow(), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class WolfTest {
     }
 
     @Test
-    public void testHashcode(){
+    public void testHashcode() {
         assertEquals(wolf.hashCode(), wolf.hashCode());
     }
 

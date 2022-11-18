@@ -4,13 +4,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LandTest{
+public class LandTest {
 
     Land land;
 
     @Before
-    public void Before(){
-        land = new Land(2,4);
+    public void Before() {
+        land = new Land(2, 4);
     }
 
     @Test

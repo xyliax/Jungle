@@ -15,9 +15,13 @@ public class Trap extends Landscape {
 
     /**
      * Constructor for Trap.
-     * @param row initial row number
-     * @param col initial column number
-     * @param player the player it belongs to
+     *
+     * @param row
+     *         initial row number
+     * @param col
+     *         initial column number
+     * @param player
+     *         the player it belongs to
      */
     public Trap(int row, int col, Player player) {
         super(row, col);
