@@ -7,9 +7,14 @@ if [ "$JUNGLE_HOME" == '' ]; then
   JUNGLE_HOME=$dir
 fi
 
+if ! SIZE_J=$(stty size); then
+  SIZE_J='30 100'
+fi
+export SIZE_J
+
 if [ $# -gt 0 ]; then
   if [ "$1" != 'help' ] && [ "$1" != 'build' ] && [ "$1" != 'test' ] && [ "$1" != 'clean' ] &&
-    [ "$1" != 'install' ] && [ "$1" != 'uninstall' ] && [ "$1" != 'version' ]; then
+    [ "$1" != 'install' ] && [ "$1" != 'uninstall' ] && [ "$1" != 'version' ] && [ "$1" != 'debug' ]; then
     echo -e "\033[31;1m\
   Unknown argument $1!\033[0m"
     exit 255
@@ -89,6 +94,20 @@ if [ "$1" = 'test' ]; then
   exit 0
 fi
 
+if [ "$1" = 'debug' ]; then
+  "${mvn_path}"mvn -q clean package appassembler:assemble
+  echo -e "\033[32;1m\
+      The debugger has started!\n\
+      Open another terminal window and use the following command:\n\
+        jdb -attach 8000\n\
+      More details about how to use jdb can be found at:\n\
+        https://www.tutorialspoint.com/jdb/jdb_quick_guide.htm\033[0m"
+  stty cbreak && reset
+  java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000 -cp target/classes -jar target/Jungle-1.0-SNAPSHOT.jar
+  stty icanon
+  exit 0
+fi
+
 cd "$JUNGLE_HOME" || exit 4
 
 if [ "$1" = 'build' ]; then
@@ -105,10 +124,7 @@ if [ "$1" = 'build' ]; then
 fi
 
 bin_path="$JUNGLE_HOME"/target/appassembler/bin/
-if ! SIZE_J=$(stty size); then
-  SIZE_J='30 100'
-fi
-export SIZE_J
+
 reset
 stty cbreak && "${bin_path}"JungleApp && stty icanon
 

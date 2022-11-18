@@ -57,6 +57,7 @@ public final class GameManager {
             io.printLine("Please read README carefully!!!");
             io.printLine("Please read README carefully!!!");
             io.printLine("Please read README carefully!!!");
+            manual();
             System.exit(1);
         }
         String size = System.getenv("SIZE_J");
@@ -261,7 +262,7 @@ public final class GameManager {
      * A game turn that transfers control to another player
      */
     private void runGame() {
-        Player winner = null;
+        Player winner;
         StringBuilder notice = new StringBuilder(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
         io.clearScreen();
         io.showPlayBoard(game);
