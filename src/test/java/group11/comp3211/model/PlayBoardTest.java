@@ -13,8 +13,6 @@ public class PlayBoardTest {
     Game game;
     PlayBoard playBoard;
 
-    Game game2;
-
     @Before
     public void Before() {
         game = new Game();
@@ -25,7 +23,6 @@ public class PlayBoardTest {
         game.setLanguage(Language.CHINESE_TRADITIONAL);
         playBoard = game.getPlayboard();
     }
-
 
     @Test
     public void ratInRiver() {
@@ -78,20 +75,6 @@ public class PlayBoardTest {
             playBoard.doMove(elephant);
         } catch (LogicException ignored) {
         }
-    }
-
-    @Test
-    public void get() {
-    }
-
-    @Test
-    public void gameRun() {
-
-    }
-
-
-    @Test
-    public void initBoard() {
     }
 
     @Test

@@ -4,6 +4,7 @@ import group11.comp3211.common.exceptions.LogicException;
 import group11.comp3211.common.exceptions.VoidObjectException;
 import group11.comp3211.model.piece.Wolf;
 import group11.comp3211.view.Language;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ public class GameTest {
 
     @Test
     public void getFileList() {
-        Game.getFileList();
+        Assert.assertNotNull(Game.getFileList());
     }
 
     @Test
@@ -60,7 +61,7 @@ public class GameTest {
     public void saveToFile() throws IOException, ClassNotFoundException {
         game.clearSelectStatus();
         game.saveToFile("Demo.bin");
-        Game.loadFromFile("Demo.bin");
+        Assert.assertNotNull(Game.loadFromFile("Demo.bin"));
     }
 
 
