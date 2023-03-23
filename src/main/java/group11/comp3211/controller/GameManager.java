@@ -48,7 +48,8 @@ public final class GameManager {
     }
 
     /**
-     * Check running environment. Any environmental checking should be performed in this method.
+     * Check running environment. Any environmental checking should be performed
+     * in this method.
      */
     private void environmentCheck() {
         if (System.console() == null) {
@@ -65,11 +66,13 @@ public final class GameManager {
         int cCol = Integer.parseInt(size.split(" ")[1]);
         if (cRow < 30 || cCol < 100) {
             io.announce(String.format("""
-                    Console Size Unsatisfied!
-                    Minimum Requirement:
-                        %-3d (lines) %-3d (columns)
-                    Current Size:
-                        %-3d (lines) %-3d (columns)""", 30, 100, cRow, cCol), RED);
+                            Console Size Unsatisfied!
+                            Minimum Requirement:
+                                %-3d (lines) %-3d (columns)
+                            Current Size:
+                                %-3d (lines) %-3d (columns)""", 30, 100, cRow
+                            , cCol),
+                    RED);
             System.exit(2);
         }
         io.setConsole_row(cRow);
@@ -83,13 +86,14 @@ public final class GameManager {
         String OS = System.getProperty("os.name");
         String ARCH = System.getProperty("os.arch");
         if (OS.matches("Windows*")) {
-            io.setFront(RED);
+            io.getWriter().print(io.setFront(RED));
             io.printLine("[JUNGLE WARNING]");
-            io.setFront(RED);
-            io.printLine(String.format("Your OS is %s - %s, some features are limited", OS, ARCH));
-            io.printLine("We STRONGLY recommend you to use Linux / macOS for compatibility concerns");
-            io.printLine("You will not receive this message any more, Continue in 10 Seconds...");
-            io.setFront(RED);
+            io.printLine(String.format("Your OS is %s - %s, some features are" +
+                                       " limited", OS, ARCH));
+            io.printLine("We STRONGLY recommend you to use Linux / macOS for " +
+                         "compatibility concerns");
+            io.printLine("You will not receive this message any more, " +
+                         "Continue in 10 Seconds...");
             io.printLine("[END OF WARNING]");
             try {
                 Thread.sleep(10000);
@@ -103,7 +107,8 @@ public final class GameManager {
                             You are not recommended to resize window ***
                             Full features unlocked!!!""", OS, ARCH,
                     io.getConsole_row(), io.getConsole_col()), GREEN);
-            Signal.handle(new Signal("INT"), handle -> exit("SIGINT received at " + new Date()));
+            Signal.handle(new Signal("INT"), handle -> exit("SIGINT received " +
+                                                            "at " + new Date()));
             io.showLoadingAnimation();
         }
     }
@@ -122,13 +127,13 @@ public final class GameManager {
     /**
      * Debug mode, available for Junit testing
      *
-     * @param gameFile
-     *         the game file
+     * @param gameFile the game file
      */
     @SneakyThrows
     public void debug(File gameFile) {
         FileInputStream fileInputStream = new FileInputStream(gameFile);
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        ObjectInputStream objectInputStream =
+                new ObjectInputStream(fileInputStream);
         game = (Game) objectInputStream.readObject();
         //runGame();
     }
@@ -170,7 +175,8 @@ public final class GameManager {
                 case 0 -> createNewGame();
                 case 1 -> loadSavedGame();
                 case 2 -> manual();
-                case 3 -> exit(String.format("QUIT GAME from Start Menu - %s", new Date()));
+                case 3 -> exit(String.format("QUIT GAME from Start Menu - %s",
+                        new Date()));
             }
         }
     }
@@ -188,25 +194,30 @@ public final class GameManager {
                 You may edit the preload name   ***
                 To clear a character    click 'BACKSPACE'
                 To clear a line         click 'ESCAPE'""", BLUE);
-        io.reset();
+        io.getWriter().print(io.reset());
         String nameX, nameY;
         do {
-            io.setFront(game.getPlayerX().getColor());
+            io.getWriter().print(io.setFront(game.getPlayerX().getColor()));
             io.printLine(" - Please Input Player 1's Username");
             nameX = io.readLine("userX");
-            if (nameX.length() > 8) io.announce("The username should no longer than '8' characters!", BLUE);
+            if (nameX.length() > 8)
+                io.announce("The username should no longer than '8' " +
+                            "characters!", BLUE);
         } while (nameX.length() > 8);
         do {
-            io.setFront(game.getPlayerY().getColor());
+            io.getWriter().print(io.setFront(game.getPlayerY().getColor()));
             io.printLine(" - Please Input Player 2's Username");
             nameY = io.readLine("userY");
-            if (nameY.length() > 8) io.announce("The username should no longer than '8' characters!", BLUE);
+            if (nameY.length() > 8)
+                io.announce("The username should no longer than '8' " +
+                            "characters!", BLUE);
         } while (nameY.length() > 8);
         game.getPlayerX().setName(nameX);
         game.getPlayerY().setName(nameY);
-        io.reset();
+        io.getWriter().print(io.reset());
         game.setRunning(true);
-        game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ? game.getPlayerX() : game.getPlayerY());
+        game.setCurrentPlayer(new Random().nextInt() % 2 == 1 ?
+                game.getPlayerX() : game.getPlayerY());
         game.setLanguage(Language.CHINESE_TRADITIONAL);
         runGame();
     }
@@ -231,20 +242,24 @@ public final class GameManager {
             switch (key) {
                 case 27 -> select = -1;
                 case ' ', '\t', 's' -> select = (select + 1) % fileList.length;
-                case 'w' -> select = (select + fileList.length - 1) % fileList.length;
+                case 'w' -> select =
+                        (select + fileList.length - 1) % fileList.length;
                 default -> {
                     if (Character.isDigit(key)) {
                         int t = Integer.parseInt(String.valueOf(key));
-                        if (t < fileList.length) select = t;
+                        if (t < fileList.length)
+                            select = t;
                     }
                 }
             }
         } while (key != '\n' && select != -1);
-        if (select == -1) return;
+        if (select == -1)
+            return;
         try {
             game = Game.loadFromFile(fileList[select]);
         } catch (IOException | ClassNotFoundException e) {
-            io.announce(String.format("File '%s' is broken!\nRetry or Start new Game!", fileList[select]), RED);
+            io.announce(String.format("File '%s' is broken!\nRetry or Start " +
+                                      "new Game!", fileList[select]), RED);
             return;
         }
         io.announce(String.format("""
@@ -252,9 +267,10 @@ public final class GameManager {
                         Info: '%s' vs '%s'
                         Current Player '%s'
                         Press any KEY to start""", fileList[select],
-                game.getPlayerX(), game.getPlayerY(), game.getCurrentPlayer()), BLUE);
+                game.getPlayerX(), game.getPlayerY(),
+                game.getCurrentPlayer()), BLUE);
         io.getKey(false);
-        io.reset();
+        io.getWriter().print(io.reset());
         runGame();
     }
 
@@ -263,7 +279,9 @@ public final class GameManager {
      */
     private void runGame() {
         Player winner;
-        StringBuilder notice = new StringBuilder(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
+        StringBuilder notice = new StringBuilder(String.format("Your Turn: " +
+                                                               "%s\n",
+                game.getCurrentPlayer()));
         io.clearScreen();
         io.showPlayBoard(game);
         io.showNoticeBoard(notice.toString());
@@ -276,21 +294,29 @@ public final class GameManager {
                     case 27 -> {
                         return;
                     }
-                    case ':' -> pauseGame();
+                    case ':' -> {
+                        pauseGame();
+                        continue;
+                    }
                     case '-', '0', '\n' -> game.clearSelectStatus();
                     case '\t' -> game.setLanguage(switch (game.getLanguage()) {
                         case ENGLISH -> Language.CHINESE_TRADITIONAL;
                         case CHINESE_TRADITIONAL -> Language.ENGLISH;
-                        default -> throw new IllegalStateException("Language Offline: " + game.getLanguage());
+                        default -> throw new IllegalStateException("Language " +
+                                                                   "Offline: "
+                                                                   + game.getLanguage());
                     });
                     default -> {
                         Piece currentPiece = game.getSelectedPiece();
                         if (currentPiece != null) {
                             switch (key) {
                                 case 'w', 'W' -> currentPiece.setDirection(UP);
-                                case 'a', 'A' -> currentPiece.setDirection(LEFT);
-                                case 's', 'S' -> currentPiece.setDirection(DOWN);
-                                case 'd', 'D' -> currentPiece.setDirection(RIGHT);
+                                case 'a', 'A' ->
+                                        currentPiece.setDirection(LEFT);
+                                case 's', 'S' ->
+                                        currentPiece.setDirection(DOWN);
+                                case 'd', 'D' ->
+                                        currentPiece.setDirection(RIGHT);
                                 default -> currentPiece.setDirection(STAY);
                             }
                         }
@@ -299,7 +325,8 @@ public final class GameManager {
                             game.runTurn();
                             notice.delete(0, notice.length());
                             notice.append(String.format("%s: %s moves %s\n",
-                                    currentPiece.getPlayer().getName(), currentPiece.getSymbol(game.getLanguage()),
+                                    currentPiece.getPlayer().getName(),
+                                    currentPiece.getSymbol(game.getLanguage()),
                                     direction.name()));
                             io.announceInGame("", BLACK);
                         } else {
@@ -320,19 +347,23 @@ public final class GameManager {
             } finally {
                 io.showPlayBoard(game);
                 if (game.getSelectedPiece() != null)
-                    notice.append(String.format("%s SELECT %s\n", game.getCurrentPlayer(),
+                    notice.append(String.format("%s SELECT %s\n",
+                            game.getCurrentPlayer(),
                             game.getSelectedPiece().getSymbol(game.getLanguage())));
-                notice.append(String.format("Your Turn: %s\n", game.getCurrentPlayer()));
+                notice.append(String.format("Your Turn: %s\n",
+                        game.getCurrentPlayer()));
                 io.showNoticeBoard(notice.toString());
                 notice.delete(0, notice.length());
-                if ((winner = game.findWinner()) != null) game.setRunning(false);
+                if ((winner = game.findWinner()) != null)
+                    game.setRunning(false);
             }
         } while (game.isRunning());
         if (winner != null) {
             notice.delete(0, notice.length());
             notice.append("Congratulations!!!\n");
             notice.append(String.format("%s WINS!!!\n", winner));
-            io.announceInGame(String.format("Game Ends...\n%s Wins\nPress ENTER/RETURN", winner),
+            io.announceInGame(String.format("Game Ends...\n%s Wins\nPress " +
+                                            "ENTER/RETURN", winner),
                     winner.getColor());
             io.showNoticeBoard(notice.toString());
             do {
@@ -357,7 +388,9 @@ public final class GameManager {
             key = io.getKey(false);
             switch (key) {
                 case 'w', 'W' -> {
-                    String fileName = String.format("%s-%s", game.getPlayerX().getName(), game.getPlayerY().getName());
+                    String fileName = String.format("%s-%s",
+                            game.getPlayerX().getName(),
+                            game.getPlayerY().getName());
                     io.printLine("Use default file name?");
                     fileName = io.readLine(fileName);
                     game.saveToFile(fileName + ".game");
@@ -365,7 +398,8 @@ public final class GameManager {
                 case 'q', 'Q' -> game.setRunning(false);
             }
         } while (!(key == 27 || key == ':') && game.isRunning());
-        io.clearScreen();
+        io.announceInGame(String.format("Continued --- %s's Turn",
+                game.getCurrentPlayer()), BLUE);
     }
 
     /**
@@ -373,7 +407,9 @@ public final class GameManager {
      */
     private void manual() {
         try {
-            Runtime.getRuntime().exec(new String[]{"open", "https://blog.peiyuxing.xyz/Jungle/"});
+            Runtime.getRuntime().exec(new String[] {"open", "https://blog" +
+                                                            ".peiyuxing" +
+                                                            ".xyz/Jungle/"});
         } catch (IOException ignored) {
         }
     }
@@ -383,6 +419,8 @@ public final class GameManager {
      */
     private void exit(String reason) {
         io.showExitMessage(reason);
+        io.getWriter().print(io.reset());
+        io.getWriter().print(io.showCursor());
         System.exit(0);
     }
 
