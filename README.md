@@ -298,10 +298,10 @@ We have provided releases on GitHub.
 
 #### Release Binaries
 
-[jungle-app](https://github.com/xyliax/Jungle/releases/download/test-developers/jungle-app)
+[jungle-app](https://github.com/xyliax/Jungle/releases/download/release/jungle-app)
 
 ```shell
-wget https://github.com/xyliax/Jungle/releases/download/test-developers/jungle-app
+wget https://github.com/xyliax/Jungle/releases/download/release/jungle-app
 chmod +x jungle-app
 ```
 
@@ -325,7 +325,7 @@ On Windows, open PowerShell to use docker commands.
 
 #### Fetch the compressed Jungle image
 
-[jungle-image.tar.gz](https://github.com/xyliax/Jungle/releases/download/test-developers/jungle-image.tar.gz)
+[jungle-image.tar.gz](https://github.com/xyliax/Jungle/releases/download/release/jungle-image.tar.gz)
 
 #### Load Jungle image
 
